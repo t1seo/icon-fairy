@@ -119,7 +119,7 @@ Programming Languages/       </> 폴더 아이콘
 
 ### Obsidian 커뮤니티 플러그인
 
-Folder Fairy는 새 플러그인 ID `icon-studio`와 저장소 `t1seo/icon-studio`를 사용하며 **Obsidian 1.5.7 이상**이 필요합니다. [커뮤니티 소개 페이지](https://community.obsidian.md/plugins/icon-studio)의 자동 심사가 완료됐고 **Add to Obsidian** 링크가 활성화됐습니다. 2026년 9월 13일 확인 당시 공식 디렉터리 원본 목록에는 등록됐으며, GitHub 미러와 테스트한 앱 내 목록은 동기화를 기다리고 있었습니다. 아직 검색되지 않으면 BRAT 또는 수동 설치를 이용해 주세요. 검색에 나타나면 다음처럼 설치할 수 있습니다.
+Folder Fairy는 새 플러그인 ID `icon-studio`와 저장소 `t1seo/icon-studio`를 사용하며 **Obsidian 1.5.7 이상**이 필요합니다. [Obsidian 커뮤니티 플러그인](https://community.obsidian.md/plugins/icon-studio)에 등록되어 있으며 앱 내 검색에서도 찾을 수 있습니다. 다음 순서로 설치해 주세요.
 
 1. **설정 → 커뮤니티 플러그인 → 탐색**을 엽니다.
 2. **Folder Fairy**를 검색합니다.

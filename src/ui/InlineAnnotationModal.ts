@@ -19,6 +19,7 @@ interface InlineAnnotationModalOptions {
 export class InlineAnnotationModal extends Modal {
 	private previewComponent: Component | null = null;
 	private previewTimer: number | null = null;
+	private previewWindow: Window | null = null;
 	private renderVersion = 0;
 
 	constructor(
@@ -49,7 +50,7 @@ export class InlineAnnotationModal extends Modal {
 		editor.setPlaceholder("Add a comment or annotation…");
 		editor.setValue(this.options.markdown);
 
-		const previewTitle = this.contentEl.createEl("div", {
+		const previewTitle = this.contentEl.createDiv({
 			cls: "custom-icon-annotation-preview-title",
 		});
 		previewTitle.createSpan({ text: "Preview" });
@@ -94,7 +95,6 @@ export class InlineAnnotationModal extends Modal {
 		if (this.options.canRemove) {
 			removeButton = new ButtonComponent(destructiveActionsEl)
 				.setButtonText("Remove annotation")
-				.setWarning()
 				.onClick(async () => {
 					if (busy) return;
 					setBusy(true);
@@ -108,6 +108,7 @@ export class InlineAnnotationModal extends Modal {
 						setBusy(false);
 					}
 				});
+			removeButton.buttonEl.addClass("mod-warning");
 		}
 
 		saveButton.onClick(save);
@@ -127,8 +128,9 @@ export class InlineAnnotationModal extends Modal {
 	}
 
 	onClose() {
-		if (this.previewTimer !== null) window.clearTimeout(this.previewTimer);
+		if (this.previewTimer !== null) this.previewWindow?.clearTimeout(this.previewTimer);
 		this.previewTimer = null;
+		this.previewWindow = null;
 		this.renderVersion += 1;
 		this.previewComponent?.unload();
 		this.previewComponent = null;
@@ -136,8 +138,9 @@ export class InlineAnnotationModal extends Modal {
 	}
 
 	private schedulePreview(markdown: string, previewEl: HTMLElement, delay = 150) {
-		if (this.previewTimer !== null) window.clearTimeout(this.previewTimer);
-		this.previewTimer = window.setTimeout(() => {
+		if (this.previewTimer !== null) this.previewWindow?.clearTimeout(this.previewTimer);
+		this.previewWindow = previewEl.win;
+		this.previewTimer = this.previewWindow.setTimeout(() => {
 			this.previewTimer = null;
 			void this.renderPreview(markdown, previewEl);
 		}, delay);
@@ -145,7 +148,7 @@ export class InlineAnnotationModal extends Modal {
 
 	private async renderPreview(markdown: string, previewEl: HTMLElement) {
 		const version = ++this.renderVersion;
-		const nextPreview = document.createElement("div");
+		const nextPreview = previewEl.doc.adoptNode(createDiv());
 		const nextComponent = new Component();
 		nextComponent.load();
 

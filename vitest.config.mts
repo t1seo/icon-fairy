@@ -1,7 +1,11 @@
+import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
 	test: {
+		alias: {
+			obsidian: fileURLToPath(new URL("./tests/helpers/obsidianRuntime.ts", import.meta.url)),
+		},
 		environment: "jsdom",
 		globals: true,
 		include: ["tests/**/*.test.ts"],
@@ -14,10 +18,12 @@ export default defineConfig({
 				"src/types.ts",
 				"src/ui/**",
 				"src/features/ExplorerIcons.ts",
+				"src/features/explorer/**",
 				"src/features/TabIcons.ts",
 				"src/features/TitleIcons.ts",
 				"src/features/ContextMenu.ts",
 				"src/features/InlineIcons.ts",
+				"src/features/inline/InlineHoverPreview.ts",
 				"src/features/InlineIconSuggest.ts",
 			],
 			thresholds: {

@@ -14,8 +14,8 @@
 }
 
 /* .custom-icon-picker IS the modal-content element */
-.custom-icon-picker.modal-content {
-	padding: 0 !important;
+.modal.custom-icon-modal .custom-icon-picker.modal-content {
+	padding: 0;
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
@@ -23,9 +23,9 @@
 }
 
 /* Remove padding from parent .modal container (class added via JS) */
-.custom-icon-modal {
-	padding: 0 !important;
-	width: min(580px, calc(100vw - 32px)) !important;
+.modal.custom-icon-modal {
+	padding: 0;
+	width: min(580px, calc(100vw - 32px));
 	max-width: none;
 	overflow: hidden;
 }
@@ -728,8 +728,10 @@
 
 /* ─── Utility ─── */
 
-.custom-icon-hidden {
-	display: none !important;
+.custom-icon-hidden,
+.nav-file-title .tree-item-icon.custom-icon-hidden,
+.workspace-tab-header-inner-icon svg.custom-icon-hidden {
+	display: none;
 }
 
 /* ─── File Explorer Icon ─── */
@@ -754,9 +756,8 @@
 
 /* ─── Tab Header Icon ─── */
 
-/* Force the icon area visible when our custom icon is inside */
-.workspace-tab-header-inner-icon:has(.custom-icon-tab-icon) {
-	display: flex !important;
+.workspace .mod-root .workspace-tabs .workspace-tab-header .workspace-tab-header-inner-icon.custom-icon-has-tab-icon {
+	display: flex;
 	align-items: center;
 	justify-content: center;
 }
@@ -1040,8 +1041,8 @@
 }
 
 @media (max-width: 480px) {
-	.custom-icon-modal {
-		width: calc(100vw - 20px) !important;
+	.modal.custom-icon-modal {
+		width: calc(100vw - 20px);
 	}
 
 	.custom-icon-modal .modal-title {

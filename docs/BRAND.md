@@ -30,6 +30,10 @@ The mark is a friendly folder fairy: a rounded folder body, broad front pocket, 
 
 Use the PNG in documentation, the sample vault, and screenshots. The Community directory only offers built-in Lucide glyphs for its small listing icon; the published entry uses the purple `folder-heart` glyph, while its overview and screenshot show the original folder fairy. Keep the generated original unchanged; the previous SVG image-tile mark is retained only as historical artwork. Exact generation instructions are recorded in [folder-fairy-prompt.txt](folder-fairy-prompt.txt).
 
+## Logo candidates
+
+All six original folder-fairy candidates, prompts, and palettes are available in the [comparison gallery](../assets/logo-candidates/index.html). Open the HTML locally to compare them; A1 remains the current artwork until a different candidate is selected.
+
 ## Rename history
 
 The project started as Custom Icon and briefly used Vault Icon Studio. Version 1.3.1 adopts Icon Studio because it is easier to read, say, and find in Obsidian settings. This is a product naming decision, not legal trademark clearance.

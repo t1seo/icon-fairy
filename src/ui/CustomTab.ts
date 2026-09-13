@@ -4,31 +4,42 @@ import type IconStudioPlugin from "../main";
 import type { CustomIcon } from "../types";
 import type { IconPickerModal, TabRenderer } from "./IconPickerModal";
 
+type CustomTabPlugin = Pick<IconStudioPlugin, "iconMap" | "removeIcon"> & {
+	readonly iconLibrary: Pick<
+		IconStudioPlugin["iconLibrary"],
+		"getAll" | "search" | "getIconUrl" | "rename" | "remove"
+	>;
+};
+
 /**
  * Custom tab: displays saved custom icons from the workspace library.
  * Supports search, selection, and removal.
  */
 export class CustomTab implements TabRenderer {
-	private container!: HTMLElement;
 	private gridContainer!: HTMLElement;
 	private visibleIcons: CustomIcon[] = [];
-	private searchTimeout: ReturnType<typeof setTimeout> | null = null;
+	private searchTimeout: number | null = null;
+	private searchWindow: Window | null = null;
 
 	constructor(
-		private plugin: IconStudioPlugin,
-		private modal: IconPickerModal,
+		private plugin: CustomTabPlugin,
+		private modal: Pick<IconPickerModal, "selectIcon">,
 	) {}
 
 	render(container: HTMLElement): void {
-		this.container = container;
+		this.destroy();
+		this.searchWindow = container.win;
 		this.gridContainer = container.createDiv({ cls: `${CSS_PREFIX}-custom-grid-area` });
 		this.renderIcons(this.plugin.iconLibrary.getAll());
 	}
 
 	onSearch(query: string): void {
-		if (this.searchTimeout) clearTimeout(this.searchTimeout);
+		const ownerWindow = this.searchWindow;
+		if (!ownerWindow) return;
+		if (this.searchTimeout !== null) ownerWindow.clearTimeout(this.searchTimeout);
 
-		this.searchTimeout = setTimeout(() => {
+		this.searchTimeout = ownerWindow.setTimeout(() => {
+			this.searchTimeout = null;
 			const results = this.plugin.iconLibrary.search(query);
 			this.renderIcons(results);
 		}, 150);
@@ -41,13 +52,17 @@ export class CustomTab implements TabRenderer {
 	}
 
 	destroy(): void {
-		if (this.searchTimeout) clearTimeout(this.searchTimeout);
+		if (this.searchTimeout !== null) this.searchWindow?.clearTimeout(this.searchTimeout);
+		this.searchTimeout = null;
+		this.searchWindow = null;
 	}
 
 	// ─── Private ────────────────────────────────────
 
 	private startRename(label: HTMLElement, icon: CustomIcon) {
-		const input = document.createElement("input");
+		label.textContent = "";
+		label.removeAttribute("title");
+		const input = label.createEl("input");
 		input.type = "text";
 		input.value = icon.name;
 		input.className = `${CSS_PREFIX}-rename-input`;
@@ -77,9 +92,6 @@ export class CustomTab implements TabRenderer {
 			}
 		});
 
-		label.textContent = "";
-		label.removeAttribute("title");
-		label.appendChild(input);
 		input.focus();
 		input.select();
 	}
@@ -102,7 +114,7 @@ export class CustomTab implements TabRenderer {
 			return;
 		}
 
-		this.gridContainer.createEl("div", {
+		this.gridContainer.createDiv({
 			text: "Select an icon to apply it. Double-click a name to rename.",
 			cls: `${CSS_PREFIX}-grid-hint`,
 		});

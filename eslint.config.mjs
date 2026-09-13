@@ -8,7 +8,6 @@ export default tseslint.config(
 			globals: globals.browser,
 			parserOptions: {
 				projectService: true,
-				allowDefaultProject: ["eslint.config.mjs", "manifest.json"],
 				tsconfigRootDir: import.meta.dirname,
 				extraFileExtensions: [".json"],
 			},
@@ -16,6 +15,7 @@ export default tseslint.config(
 	},
 	...obsidianmd.configs.recommended,
 	{
+		files: ["src/**/*.ts"],
 		rules: {
 			"@typescript-eslint/require-await": "error",
 		},

@@ -41,6 +41,16 @@ for (const asset of ["main.js", "manifest.json", "styles.css"]) {
 	}
 }
 
+if (existsSync("styles.css")) {
+	const stylesheet = readFileSync("styles.css", "utf8");
+	if (/!\s*important\b/i.test(stylesheet)) {
+		errors.push("styles.css must use scoped selectors instead of !important");
+	}
+	if (/:has\s*\(/i.test(stylesheet)) {
+		errors.push("styles.css must use explicit state classes instead of :has()");
+	}
+}
+
 if (errors.length > 0) {
 	for (const error of errors) console.error(`Release check failed: ${error}`);
 	process.exit(1);

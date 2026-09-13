@@ -1,0 +1,147 @@
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { processImage } from "../src/services/ImageProcessor";
+import { UploadTab } from "../src/ui/UploadTab";
+import { createPickerWindow, installPickerDom } from "./helpers/pickerDom";
+
+vi.mock("obsidian", () => ({ setIcon: vi.fn() }));
+vi.mock("../src/services/ImageProcessor", () => ({
+	isSvgFile: (file: File) => file.name.endsWith(".svg"),
+	processImage: vi.fn(() =>
+		Promise.resolve({ data: new ArrayBuffer(4), dataUrl: "data:image/png;base64,AAAA" }),
+	),
+	processSvg: vi.fn(() =>
+		Promise.resolve({ data: new ArrayBuffer(4), dataUrl: "data:image/svg+xml;base64,AAAA" }),
+	),
+}));
+
+function makeFileList(files: readonly File[]): FileList & Iterable<File> {
+	return {
+		...files,
+		length: files.length,
+		item: (index: number) => files[index] ?? null,
+		[Symbol.iterator]: function* () {
+			yield* files;
+		},
+	};
+}
+
+function pasteImage(doc: Document) {
+	const file = new File(["image"], "fairy.png", { type: "image/png" });
+	const event = new Event("paste", { bubbles: true, cancelable: true });
+	Object.defineProperty(event, "clipboardData", {
+		value: { items: [{ type: file.type, getAsFile: () => file }] },
+	});
+	doc.dispatchEvent(event);
+	return event;
+}
+
+function createTab() {
+	const owner = createPickerWindow();
+	const tab = new UploadTab(
+		{
+			app: {
+				vault: {
+					adapter: {
+						exists: vi.fn(() => Promise.resolve(true)),
+						mkdir: vi.fn(() => Promise.resolve()),
+						writeBinary: vi.fn(() => Promise.resolve()),
+					},
+				},
+			},
+			manifest: { dir: ".obsidian/plugins/icon-studio" },
+			iconLibrary: {
+				add: vi.fn(() => Promise.resolve()),
+				addBatch: vi.fn(() => Promise.resolve()),
+			},
+		},
+		{ selectIcon: vi.fn(), close: vi.fn() },
+	);
+	tab.render(owner.doc.body);
+	return { ...owner, tab };
+}
+
+beforeEach(() => {
+	installPickerDom(document);
+	vi.stubGlobal(
+		"DataTransfer",
+		class {
+			private entries: File[] = [];
+			items = { add: (file: File) => this.entries.push(file) };
+			get files() {
+				return makeFileList(this.entries);
+			}
+		},
+	);
+	vi.spyOn(URL, "createObjectURL").mockReturnValue("blob:preview");
+	vi.spyOn(URL, "revokeObjectURL").mockImplementation(() => {});
+	vi.mocked(processImage).mockClear();
+});
+
+afterEach(() => {
+	vi.restoreAllMocks();
+	vi.unstubAllGlobals();
+	document.body.replaceChildren();
+});
+
+describe("UploadTab document ownership", () => {
+	it("previews clipboard images pasted into its owning window", async () => {
+		// Given an upload picker in a separate window.
+		const { tab, doc } = createTab();
+		// When an image is pasted into that window.
+		const event = pasteImage(doc);
+		await Promise.resolve();
+		// Then the image is processed and previewed in that document.
+		expect(event.defaultPrevented).toBe(true);
+		expect(processImage).toHaveBeenCalledOnce();
+		expect(doc.querySelectorAll("img")).toHaveLength(2);
+		tab.destroy();
+	});
+
+	it("leaves clipboard events in other windows untouched", () => {
+		// Given an upload picker owned by a different document.
+		const { tab } = createTab();
+		// When an image is pasted into the main window.
+		const event = pasteImage(document);
+		// Then this picker does not intercept or process the paste.
+		expect(event.defaultPrevented).toBe(false);
+		expect(processImage).not.toHaveBeenCalled();
+		tab.destroy();
+	});
+
+	it("removes the paste listener from the same document on close", () => {
+		// Given an upload picker that has been closed.
+		const { tab, doc } = createTab();
+		tab.destroy();
+		// When the user pastes into its former window.
+		const event = pasteImage(doc);
+		// Then no closed picker consumes that image.
+		expect(event.defaultPrevented).toBe(false);
+		expect(processImage).not.toHaveBeenCalled();
+	});
+
+	it("retains an edited batch name when another row is removed", () => {
+		// Given two batch images and an edited first name.
+		const { tab, doc } = createTab();
+		const files = ["fairy", "moon"].map(
+			(name) => new File([name], `${name}.png`, { type: "image/png" }),
+		);
+		const fileInput = doc.querySelector<HTMLInputElement>('input[type="file"]');
+		if (!fileInput) throw new Error("Missing file input");
+		Object.defineProperty(fileInput, "files", { value: makeFileList(files) });
+		fileInput.dispatchEvent(new Event("change", { bubbles: true }));
+		const name = doc.querySelector<HTMLInputElement>(".custom-icon-batch-row-name");
+		const remove = doc.querySelectorAll<HTMLButtonElement>(".custom-icon-batch-row-remove")[1];
+		if (!name || !remove) throw new Error("Missing batch review controls");
+		name.value = "My fairy";
+		name.dispatchEvent(new Event("input", { bubbles: true }));
+		// When the neighboring image is removed.
+		remove.click();
+		// Then the retained image keeps the edited name and old previews are released.
+		expect(doc.querySelector<HTMLInputElement>(".custom-icon-batch-row-name")?.value).toBe(
+			"My fairy",
+		);
+		expect(doc.querySelectorAll(".custom-icon-batch-row")).toHaveLength(1);
+		expect(URL.revokeObjectURL).toHaveBeenCalled();
+		tab.destroy();
+	});
+});

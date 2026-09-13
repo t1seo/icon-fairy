@@ -9,7 +9,7 @@ npm ci
 npm run verify
 ```
 
-`verify` checks formatting, Obsidian lint rules, unit coverage, TypeScript, the production bundle, manifest rules, version consistency, and required release assets.
+`verify` checks formatting, current Obsidian lint rules with zero warnings, unit coverage, TypeScript, the production bundle, manifest rules, version consistency, required release assets, and the CSS review rules for `!important` and `:has()`. Check development dependencies with `npm audit` when updating the toolchain.
 
 ## New installation identity
 
@@ -17,14 +17,14 @@ Starting with 2.0.0, the plugin ID is `icon-studio` and releases are published f
 
 `versions.json` only lists versions published from the new repository. Historical changelog entries describe releases in the old repository; do not push their tags to the new one.
 
-## Publish the prepared 2.0.2 release
+## Publish the prepared 2.0.3 release
 
 The release is aligned across `package.json`, `manifest.json`, `versions.json`, and `CHANGELOG.md`. In the transition checkout, `origin` still points to the previous repository and `relaunch` points to the new repository. Push explicitly to the new remote:
 
 ```sh
 git push relaunch HEAD:main
-git tag 2.0.2
-git push relaunch 2.0.2
+git tag 2.0.3
+git push relaunch 2.0.3
 ```
 
 Verify that the new repository's default branch is `main` and its CI passed before pushing the tag. The tag must exactly match `manifest.json`, without a `v` prefix. Pushing it starts the release workflow, verifies the plugin, attests the artifacts, and publishes a GitHub release containing:
@@ -33,7 +33,7 @@ Verify that the new repository's default branch is `main` and its CI passed befo
 - `manifest.json`
 - `styles.css`
 
-Versions 2.0.0 and 2.0.1 are already published and must not be retagged. Version 2.0.1 changed the display name to Folder Fairy after the directory rejected the occupied Icon Studio name. Version 2.0.2 corrects `minAppVersion` to 1.5.7 for the existing `Vault.getFileByPath` call; it does not change the runtime bundle. Keep historical compatibility entries intact when adding a new version.
+Versions 2.0.0 through 2.0.2 are already published and must not be retagged. Version 2.0.1 changed the display name to Folder Fairy after the directory rejected the occupied Icon Studio name. Version 2.0.2 corrected `minAppVersion` to 1.5.7. Version 2.0.3 resolves review warnings and fixes window ownership and cleanup, while retaining that minimum version and the existing data format. Keep historical compatibility entries intact when adding a new version.
 
 ## Prepare a future version
 

@@ -1,5 +1,5 @@
-import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
-import { loadImage, processImage, isSvgFile, processSvg } from "../src/services/ImageProcessor";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { isSvgFile, loadImage, processImage, processSvg } from "../src/services/ImageProcessor";
 import type { ProcessedImage } from "../src/services/ImageProcessor";
 
 // Polyfill File.arrayBuffer for jsdom (not natively supported)
@@ -7,7 +7,10 @@ if (!File.prototype.arrayBuffer) {
 	File.prototype.arrayBuffer = function () {
 		return new Promise((resolve, reject) => {
 			const reader = new FileReader();
-			reader.onload = () => resolve(reader.result as ArrayBuffer);
+			reader.onload = () => {
+				if (reader.result instanceof ArrayBuffer) resolve(reader.result);
+				else reject(new Error("Expected file bytes"));
+			};
 			reader.onerror = reject;
 			reader.readAsArrayBuffer(this);
 		});
@@ -23,31 +26,28 @@ function createMockBlob() {
 	const blob = new Blob(["fake-image-data"], { type: "image/png" });
 	// Ensure arrayBuffer is available (jsdom may not have it)
 	if (!blob.arrayBuffer) {
-		(blob as any).arrayBuffer = () => Promise.resolve(new ArrayBuffer(8));
+		blob.arrayBuffer = () => Promise.resolve(new ArrayBuffer(8));
 	}
 	return blob;
 }
 
-const mockCanvas = {
-	width: 0,
-	height: 0,
-	getContext: vi.fn(() => mockCtx),
-	toBlob: vi.fn((cb: (blob: Blob | null) => void) => cb(createMockBlob())),
-	toDataURL: vi.fn(() => "data:image/png;base64,fakedata"),
-};
-
-let imageInstances: any[] = [];
+const mockCanvas = document.createElement("canvas");
+const mockToBlob = vi.fn((cb: (blob: Blob | null) => void) => cb(createMockBlob()));
+const mockToDataURL = vi.fn(() => "data:image/png;base64,fakedata");
+Object.defineProperties(mockCanvas, {
+	getContext: { value: vi.fn(() => mockCtx) },
+	toBlob: { value: mockToBlob },
+	toDataURL: { value: mockToDataURL },
+});
 
 beforeEach(() => {
-	imageInstances = [];
 	mockCtx.drawImage.mockClear();
-	mockCanvas.toBlob.mockImplementation((cb: (blob: Blob | null) => void) => cb(createMockBlob()));
-	mockCanvas.toDataURL.mockReturnValue("data:image/png;base64,fakedata");
+	mockToBlob.mockImplementation((cb: (blob: Blob | null) => void) => cb(createMockBlob()));
+	mockToDataURL.mockReturnValue("data:image/png;base64,fakedata");
 
-	vi.spyOn(document, "createElement").mockImplementation((tag: string) => {
-		if (tag === "canvas") return mockCanvas as any;
-		// Call through for non-canvas elements
-		return document.createElementNS("http://www.w3.org/1999/xhtml", tag) as any;
+	vi.stubGlobal("createEl", (tag: string) => {
+		if (tag === "canvas") return mockCanvas;
+		return document.createElement(tag);
 	});
 
 	vi.spyOn(URL, "createObjectURL").mockReturnValue("blob:fake-url");
@@ -55,27 +55,30 @@ beforeEach(() => {
 
 afterEach(() => {
 	vi.restoreAllMocks();
+	vi.unstubAllGlobals();
 });
 
 function stubImage(props: { naturalWidth: number; naturalHeight: number; shouldFail?: boolean }) {
-	vi.stubGlobal("Image", class MockImage {
-		onload: (() => void) | null = null;
-		onerror: ((e: any) => void) | null = null;
-		src = "";
-		naturalWidth = props.naturalWidth;
-		naturalHeight = props.naturalHeight;
+	vi.stubGlobal(
+		"Image",
+		class MockImage {
+			onload: (() => void) | null = null;
+			onerror: ((e: Error) => void) | null = null;
+			src = "";
+			naturalWidth = props.naturalWidth;
+			naturalHeight = props.naturalHeight;
 
-		constructor() {
-			imageInstances.push(this);
-			setTimeout(() => {
-				if (props.shouldFail) {
-					this.onerror?.(new Error("load failed"));
-				} else {
-					this.onload?.();
-				}
-			}, 0);
-		}
-	});
+			constructor() {
+				setTimeout(() => {
+					if (props.shouldFail) {
+						this.onerror?.(new Error("load failed"));
+					} else {
+						this.onload?.();
+					}
+				}, 0);
+			}
+		},
+	);
 }
 
 describe("loadImage", () => {
@@ -134,20 +137,20 @@ describe("processImage", () => {
 		// srcSize = min(400, 200) = 200, sx = (400-200)/2 = 100, sy = 0
 		const call = mockCtx.drawImage.mock.calls[0];
 		expect(call[1]).toBe(100); // sx
-		expect(call[2]).toBe(0);   // sy
+		expect(call[2]).toBe(0); // sy
 		expect(call[3]).toBe(200); // srcSize
 		expect(call[4]).toBe(200); // srcSize
-		expect(call[5]).toBe(0);   // dx
-		expect(call[6]).toBe(0);   // dy
-		expect(call[7]).toBe(64);  // size
-		expect(call[8]).toBe(64);  // size
+		expect(call[5]).toBe(0); // dx
+		expect(call[6]).toBe(0); // dy
+		expect(call[7]).toBe(64); // size
+		expect(call[8]).toBe(64); // size
 	});
 
 	it("rejects when toBlob returns null", async () => {
 		stubImage({ naturalWidth: 100, naturalHeight: 100 });
 		const file = new File(["data"], "icon.png", { type: "image/png" });
 
-		mockCanvas.toBlob.mockImplementationOnce((cb: (blob: Blob | null) => void) => cb(null));
+		mockToBlob.mockImplementationOnce((cb: (blob: Blob | null) => void) => cb(null));
 
 		await expect(processImage(file)).rejects.toThrow("Failed to create blob");
 	});
@@ -205,7 +208,7 @@ describe("processSvg", () => {
 	});
 
 	it("preserves binary-safe encoding for complex SVGs", async () => {
-		const svg = '<svg><text>Hello &amp; World</text></svg>';
+		const svg = "<svg><text>Hello &amp; World</text></svg>";
 		const file = new File([svg], "complex.svg", { type: "image/svg+xml" });
 
 		const result = await processSvg(file);

@@ -1,183 +1,134 @@
 import { CSS_PREFIX, EXPLORER_ICON_SIZE } from "../constants";
 import type IconStudioPlugin from "../main";
 import type { IconData } from "../types";
+import { ExplorerObserver } from "./explorer/ExplorerObserver";
 
-/**
- * Injects custom icons into the file explorer.
- * Watches for DOM changes and theme switches to keep icons in sync.
- */
+/** Injects custom icons into every file explorer without replacing folder chevrons. */
 export class ExplorerIcons {
-	private observer: MutationObserver | null = null;
-	private debounceTimer: ReturnType<typeof setTimeout> | null = null;
+	private readonly observers = new Map<HTMLElement, ExplorerObserver>();
+	private enabled = false;
+	private eventsRegistered = false;
 
 	constructor(private plugin: IconStudioPlugin) {}
 
-	/** Start observing and apply all icons */
 	enable() {
-		this.applyAllIcons();
-		this.startObserver();
-
-		// Re-apply when layout changes (e.g. file explorer opens)
-		this.plugin.registerEvent(
-			this.plugin.app.workspace.on("layout-change", () => {
-				this.applyAllIcons();
-			}),
-		);
-
-		// Handle file renames
+		if (this.enabled) return;
+		this.enabled = true;
+		this.refresh();
+		if (this.eventsRegistered) return;
+		this.eventsRegistered = true;
+		this.plugin.registerEvent(this.plugin.app.workspace.on("layout-change", () => this.refresh()));
 		this.plugin.registerEvent(
 			this.plugin.app.vault.on("rename", (file, oldPath) => {
-				if (this.plugin.iconMap[oldPath]) {
+				if (this.enabled && this.plugin.iconMap[oldPath]) {
 					this.plugin.iconMap[file.path] = this.plugin.iconMap[oldPath];
 					delete this.plugin.iconMap[oldPath];
 					void this.plugin.saveSettings();
-					this.applyAllIcons();
+					this.refresh();
 				}
 			}),
 		);
-
-		// Handle file deletes
 		this.plugin.registerEvent(
 			this.plugin.app.vault.on("delete", (file) => {
-				if (this.plugin.iconMap[file.path]) {
+				if (this.enabled && this.plugin.iconMap[file.path]) {
 					delete this.plugin.iconMap[file.path];
 					void this.plugin.saveSettings();
+					this.refresh();
 				}
 			}),
 		);
 	}
 
-	/** Stop observing and remove all injected icons */
 	disable() {
-		this.stopObserver();
-		if (this.debounceTimer) clearTimeout(this.debounceTimer);
-		this.removeAllIcons();
+		this.enabled = false;
+		for (const [container, observer] of this.observers) {
+			observer.stop();
+			this.removeIcons(container);
+		}
+		this.observers.clear();
 	}
 
-	/** Re-apply all icons (call after icon changes) */
 	refresh() {
-		this.removeAllIcons();
-		this.applyAllIcons();
+		if (!this.enabled) return;
+		const containers = this.getExplorerContainers();
+		for (const [container, observer] of this.observers) {
+			if (!containers.has(container) || container.win !== observer.win) {
+				observer.stop();
+				this.removeIcons(container);
+				this.observers.delete(container);
+			}
+		}
+		for (const container of containers) {
+			if (!this.observers.has(container)) {
+				this.observers.set(
+					container,
+					new ExplorerObserver(container, () => this.applyAllIcons(container)),
+				);
+			}
+			this.removeIcons(container);
+			this.applyAllIcons(container);
+		}
 	}
 
-	/** Apply icon to a single file/folder path */
 	applyIcon(path: string, icon: IconData) {
-		const el = this.findExplorerItem(path);
-		if (!el) return;
-
-		const isFolder = el.classList.contains("nav-folder-title");
-
-		// Remove existing custom icon if present (allows icon changes)
-		const existing = el.querySelector(`.${CSS_PREFIX}-explorer-icon`);
-		if (existing) existing.remove();
-
-		const iconEl = this.createIconElement(icon);
-		if (!iconEl) return;
-
-		if (isFolder) {
-			// For folders: .tree-item-icon IS the collapse chevron — never hide it.
-			// Insert our icon after the collapse indicator.
-			const collapseEl =
-				el.querySelector(":scope > .nav-folder-collapse-indicator") ??
-				el.querySelector(":scope > .tree-item-icon");
-			if (collapseEl) {
-				collapseEl.after(iconEl);
-			} else {
-				el.insertBefore(iconEl, el.firstChild);
-			}
-		} else {
-			// For files: insert before everything and hide default icon
-			el.insertBefore(iconEl, el.firstChild);
-			const defaultIcon = el.querySelector(":scope > .tree-item-icon");
-			if (defaultIcon instanceof HTMLElement) {
-				defaultIcon.classList.add("custom-icon-hidden");
-			}
-		}
+		if (!this.enabled) return;
+		for (const container of this.getExplorerContainers())
+			this.applyIconInContainer(container, path, icon);
 	}
 
-	// ─── Private ────────────────────────────────────
-
-	private applyAllIcons() {
+	private applyAllIcons(container: HTMLElement) {
 		for (const [path, icon] of Object.entries(this.plugin.iconMap)) {
-			this.applyIcon(path, icon);
+			this.applyIconInContainer(container, path, icon);
 		}
 	}
 
-	private removeAllIcons() {
-		const icons = document.querySelectorAll(`.${CSS_PREFIX}-explorer-icon`);
-		icons.forEach((el) => {
-			const parent = el.parentElement;
-			if (parent) {
-				// Restore hidden default icon (for both files and folders)
-				const treeIcon = parent.querySelector(":scope > .tree-item-icon");
-				if (treeIcon instanceof HTMLElement) {
-					treeIcon.classList.remove("custom-icon-hidden");
-				}
-			}
-			el.remove();
-		});
-	}
-
-	private startObserver() {
-		const explorerEl = this.getExplorerContainer();
-		if (!explorerEl) return;
-
-		this.observer = new MutationObserver((mutations) => {
-			let needsUpdate = false;
-			for (const mutation of mutations) {
-				for (let i = 0; i < mutation.addedNodes.length; i++) {
-					const node = mutation.addedNodes[i];
-					// Skip our own icon insertions to avoid infinite loop
-					if (node instanceof Element && node.closest(`.${CSS_PREFIX}-explorer-icon`)) {
-						continue;
-					}
-					if (node.parentElement?.closest(`.${CSS_PREFIX}-explorer-icon`)) {
-						continue;
-					}
-					needsUpdate = true;
-					break;
-				}
-				if (needsUpdate) break;
-			}
-			if (needsUpdate) {
-				// Debounce rapid DOM changes (e.g. expanding folders)
-				if (this.debounceTimer) clearTimeout(this.debounceTimer);
-				this.debounceTimer = setTimeout(() => {
-					requestAnimationFrame(() => this.applyAllIcons());
-				}, 50);
-			}
-		});
-
-		this.observer.observe(explorerEl, { childList: true, subtree: true });
-	}
-
-	private stopObserver() {
-		this.observer?.disconnect();
-		this.observer = null;
-	}
-
-	private getExplorerContainer(): HTMLElement | null {
-		return document.querySelector(".nav-files-container");
-	}
-
-	private findExplorerItem(path: string): HTMLElement | null {
-		return document.querySelector(
+	private applyIconInContainer(container: HTMLElement, path: string, icon: IconData) {
+		const items = container.querySelectorAll<HTMLElement>(
 			`.nav-file-title[data-path="${CSS.escape(path)}"], .nav-folder-title[data-path="${CSS.escape(path)}"]`,
 		);
+		for (const el of Array.from(items)) {
+			el.querySelector(`.${CSS_PREFIX}-explorer-icon`)?.remove();
+			const iconEl = this.createIconElement(el, icon);
+			if (el.classList.contains("nav-folder-title")) {
+				const collapseEl =
+					el.querySelector(":scope > .nav-folder-collapse-indicator") ??
+					el.querySelector(":scope > .tree-item-icon");
+				if (collapseEl) collapseEl.after(iconEl);
+				else el.prepend(iconEl);
+			} else {
+				el.prepend(iconEl);
+				el.querySelector(":scope > .tree-item-icon")?.classList.add("custom-icon-hidden");
+			}
+		}
 	}
 
-	private createIconElement(icon: IconData): HTMLElement | null {
-		const wrapper = document.createElement("span");
-		wrapper.className = `${CSS_PREFIX}-explorer-icon is-img`;
+	private removeIcons(container: HTMLElement) {
+		container.querySelectorAll(`.${CSS_PREFIX}-explorer-icon`).forEach((el) => el.remove());
+		container
+			.querySelectorAll(".tree-item-icon.custom-icon-hidden")
+			.forEach((el) => el.classList.remove("custom-icon-hidden"));
+	}
 
-		const img = document.createElement("img");
+	private getExplorerContainers(): Set<HTMLElement> {
+		const containers = new Set<HTMLElement>();
+		for (const leaf of this.plugin.app.workspace.getLeavesOfType("file-explorer")) {
+			leaf.view.containerEl
+				.querySelectorAll<HTMLElement>(".nav-files-container")
+				.forEach((container) => {
+					if (container.isConnected) containers.add(container);
+				});
+		}
+		return containers;
+	}
+
+	private createIconElement(parent: HTMLElement, icon: IconData): HTMLElement {
+		const wrapper = parent.createSpan({ cls: `${CSS_PREFIX}-explorer-icon is-img` });
+		const img = wrapper.createEl("img");
 		img.width = EXPLORER_ICON_SIZE;
 		img.height = EXPLORER_ICON_SIZE;
 		img.src = this.plugin.iconLibrary.getIconUrl(icon.value);
 		img.alt = "";
-		wrapper.appendChild(img);
 		wrapper.dataset.customIconActive = "true";
-
 		return wrapper;
 	}
 }

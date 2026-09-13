@@ -11,6 +11,19 @@ import {
 import type { CustomIcon } from "../types";
 import type { IconPickerModal, TabRenderer } from "./IconPickerModal";
 
+type UploadPlugin = {
+	readonly app: {
+		readonly vault: {
+			readonly adapter: Pick<
+				IconStudioPlugin["app"]["vault"]["adapter"],
+				"exists" | "mkdir" | "writeBinary"
+			>;
+		};
+	};
+	readonly manifest: Pick<IconStudioPlugin["manifest"], "dir">;
+	readonly iconLibrary: Pick<IconStudioPlugin["iconLibrary"], "add" | "addBatch">;
+};
+
 /** Accepted file extensions for the file picker */
 const ACCEPT_TYPES = ".png,.jpg,.jpeg,.svg,.webp";
 
@@ -37,14 +50,16 @@ export class UploadTab implements TabRenderer {
 	private processed: ProcessedFile | null = null;
 	private fileInputEl: HTMLInputElement | null = null;
 	private pasteHandler: ((e: ClipboardEvent) => void) | null = null;
+	private pasteDocument: Document | null = null;
 	private objectUrls = new Set<string>();
 
 	constructor(
-		private plugin: IconStudioPlugin,
-		private modal: IconPickerModal,
+		private plugin: UploadPlugin,
+		private modal: Pick<IconPickerModal, "selectIcon" | "close">,
 	) {}
 
 	render(container: HTMLElement): void {
+		this.destroy();
 		this.container = container;
 		this.processed = null;
 		this.renderUploadZone();
@@ -52,9 +67,10 @@ export class UploadTab implements TabRenderer {
 
 	destroy(): void {
 		if (this.pasteHandler) {
-			document.removeEventListener("paste", this.pasteHandler);
+			this.pasteDocument?.removeEventListener("paste", this.pasteHandler);
 			this.pasteHandler = null;
 		}
+		this.pasteDocument = null;
 		this.fileInputEl = null;
 		this.clearObjectUrls();
 	}
@@ -134,7 +150,10 @@ export class UploadTab implements TabRenderer {
 			void this.handleFiles(files);
 		});
 
-		if (this.pasteHandler) document.removeEventListener("paste", this.pasteHandler);
+		if (this.pasteHandler) {
+			this.pasteDocument?.removeEventListener("paste", this.pasteHandler);
+		}
+		this.pasteDocument = this.container.ownerDocument;
 		this.pasteHandler = (e: ClipboardEvent) => {
 			const items = e.clipboardData?.items;
 			if (!items) return;
@@ -149,7 +168,7 @@ export class UploadTab implements TabRenderer {
 				}
 			}
 		};
-		document.addEventListener("paste", this.pasteHandler);
+		this.pasteDocument.addEventListener("paste", this.pasteHandler);
 	}
 
 	private openFilePicker() {
@@ -350,7 +369,7 @@ export class UploadTab implements TabRenderer {
 
 		const header = this.container.createDiv({ cls: `${CSS_PREFIX}-batch-header` });
 		header.createEl("strong", { text: `${entries.length} icons ready to import` });
-		header.createEl("span", {
+		header.createSpan({
 			text: "Review their library names before importing.",
 		});
 

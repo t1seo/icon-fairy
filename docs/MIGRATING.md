@@ -1,6 +1,6 @@
 # Move from Custom Icon / Icon Studio 1.x
 
-Folder Fairy is the same maintainer's successor, published from [t1seo/icon-studio](https://github.com/t1seo/icon-studio) with plugin ID `icon-studio`. Version 2.0.2 requires Obsidian 1.5.7 or later. The previous repository, [t1seo/obsidian-icon-studio](https://github.com/t1seo/obsidian-icon-studio), continues to hold the `custom-icon` releases.
+Folder Fairy is the same maintainer's successor, published from [t1seo/icon-studio](https://github.com/t1seo/icon-studio) with plugin ID `icon-studio`. Version 2.0.2 and later require Obsidian 1.5.7 or later. The previous repository, [t1seo/obsidian-icon-studio](https://github.com/t1seo/obsidian-icon-studio), continues to hold the `custom-icon` releases.
 
 This is a separate installation. An existing BRAT subscription does not switch repositories automatically. Full command IDs also change, so you must assign your hotkeys again. Notes keep their existing `:ci-...:` syntax, including annotation suffixes.
 

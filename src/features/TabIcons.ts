@@ -1,41 +1,37 @@
-import type { View, WorkspaceLeaf } from "obsidian";
+import { MarkdownView, type WorkspaceLeaf } from "obsidian";
 import { CSS_PREFIX, TAB_ICON_SIZE } from "../constants";
 import type IconStudioPlugin from "../main";
 import type { IconData } from "../types";
 
-/** Internal Obsidian API — not in public type declarations */
-interface MarkdownFileView extends View {
-	file?: { path: string };
-}
-
-/** Internal Obsidian API — not in public type declarations */
+/** Internal Obsidian tab DOM; the public API does not expose the header element. */
 interface LeafWithTabHeader extends WorkspaceLeaf {
-	tabHeaderEl?: HTMLElement;
+	readonly tabHeaderEl?: HTMLElement;
 }
 
-/**
- * Replaces tab header icons with user-set icons.
- */
+/** Replaces tab header icons in their own windows. */
 export class TabIcons {
+	private readonly hosts = new Set<HTMLElement>();
+	private enabled = false;
+	private eventsRegistered = false;
+
 	constructor(private plugin: IconStudioPlugin) {}
 
 	enable() {
-		this.plugin.registerEvent(
-			this.plugin.app.workspace.on("layout-change", () => {
-				this.applyAllTabIcons();
-			}),
-		);
-
-		this.plugin.registerEvent(
-			this.plugin.app.workspace.on("active-leaf-change", () => {
-				this.applyAllTabIcons();
-			}),
-		);
-
+		if (this.enabled) return;
+		this.enabled = true;
 		this.applyAllTabIcons();
+		if (this.eventsRegistered) return;
+		this.eventsRegistered = true;
+		this.plugin.registerEvent(
+			this.plugin.app.workspace.on("layout-change", () => this.applyAllTabIcons()),
+		);
+		this.plugin.registerEvent(
+			this.plugin.app.workspace.on("active-leaf-change", () => this.applyAllTabIcons()),
+		);
 	}
 
 	disable() {
+		this.enabled = false;
 		this.removeAllTabIcons();
 	}
 
@@ -43,64 +39,45 @@ export class TabIcons {
 		this.applyAllTabIcons();
 	}
 
-	// ─── Private ────────────────────────────────────
-
 	private applyAllTabIcons() {
-		const leaves = this.plugin.app.workspace.getLeavesOfType("markdown");
+		if (!this.enabled) return;
+		this.removeAllTabIcons();
+		const leaves: LeafWithTabHeader[] = this.plugin.app.workspace.getLeavesOfType("markdown");
 		for (const leaf of leaves) {
-			const file = (leaf.view as MarkdownFileView).file;
-			if (!file) continue;
-
-			const tabHeaderEl = (leaf as LeafWithTabHeader).tabHeaderEl;
-			if (!tabHeaderEl) continue;
-
-			const iconEl = tabHeaderEl.querySelector<HTMLElement>(".workspace-tab-header-inner-icon");
-			if (!iconEl) continue;
-
-			// Clean this specific tab first (works across all windows)
-			this.cleanTabIcon(iconEl);
-
+			if (!(leaf.view instanceof MarkdownView)) continue;
+			const file = leaf.view.file;
+			const iconEl = leaf.tabHeaderEl?.querySelector<HTMLElement>(
+				".workspace-tab-header-inner-icon",
+			);
+			if (!file || !iconEl) continue;
 			const icon = this.plugin.iconMap[file.path];
-			if (!icon) continue;
-
-			this.applyTabIcon(iconEl, icon);
+			if (icon) this.applyTabIcon(iconEl, icon);
 		}
 	}
 
 	private cleanTabIcon(iconEl: HTMLElement) {
+		iconEl.classList.remove("custom-icon-has-tab-icon");
 		iconEl.querySelectorAll(`.${CSS_PREFIX}-tab-icon`).forEach((el) => el.remove());
-		iconEl.querySelectorAll("svg.custom-icon-hidden").forEach((svg) => {
-			svg.classList.remove("custom-icon-hidden");
-		});
+		iconEl
+			.querySelectorAll("svg.custom-icon-hidden")
+			.forEach((svg) => svg.classList.remove("custom-icon-hidden"));
 	}
 
 	private applyTabIcon(iconEl: HTMLElement, icon: IconData) {
-		const wrapper = iconEl.ownerDocument.createElement("span");
-		wrapper.className = `${CSS_PREFIX}-tab-icon`;
-
-		const img = iconEl.ownerDocument.createElement("img");
+		const wrapper = iconEl.createSpan({ cls: `${CSS_PREFIX}-tab-icon` });
+		const img = wrapper.createEl("img");
 		img.width = TAB_ICON_SIZE;
 		img.height = TAB_ICON_SIZE;
 		img.src = this.plugin.iconLibrary.getIconUrl(icon.value);
 		img.alt = "";
-		wrapper.appendChild(img);
-
-		// Hide all default SVG icons and prepend ours
-		iconEl.querySelectorAll("svg").forEach((svg) => {
-			svg.classList.add("custom-icon-hidden");
-		});
-
+		iconEl.querySelectorAll("svg").forEach((svg) => svg.classList.add("custom-icon-hidden"));
 		iconEl.prepend(wrapper);
+		iconEl.classList.add("custom-icon-has-tab-icon");
+		this.hosts.add(iconEl);
 	}
 
 	private removeAllTabIcons() {
-		const leaves = this.plugin.app.workspace.getLeavesOfType("markdown");
-		for (const leaf of leaves) {
-			const tabHeaderEl = (leaf as LeafWithTabHeader).tabHeaderEl;
-			if (!tabHeaderEl) continue;
-
-			const iconEl = tabHeaderEl.querySelector<HTMLElement>(".workspace-tab-header-inner-icon");
-			if (iconEl) this.cleanTabIcon(iconEl);
-		}
+		for (const host of this.hosts) this.cleanTabIcon(host);
+		this.hosts.clear();
 	}
 }

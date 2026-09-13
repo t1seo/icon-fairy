@@ -13,7 +13,7 @@ export interface ProcessedImage {
 
 /** Resize and crop image to a square icon */
 function resizeToSquare(img: HTMLImageElement, size: number): HTMLCanvasElement {
-	const canvas = document.createElement("canvas");
+	const canvas = createEl("canvas");
 	canvas.width = size;
 	canvas.height = size;
 	const ctx = canvas.getContext("2d")!;

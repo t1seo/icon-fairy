@@ -8,10 +8,8 @@ import {
 	WidgetType,
 } from "@codemirror/view";
 import {
-	Component,
 	type MarkdownPostProcessorContext,
 	MarkdownRenderChild,
-	MarkdownRenderer,
 	MarkdownView,
 	Menu,
 	editorInfoField,
@@ -24,6 +22,7 @@ import {
 	replaceInlineIconInSection,
 	setInlineIconAnnotation,
 } from "../utils/inlineIconSyntax";
+import { attachHoverPreview, hideInlineHoverPreviews } from "./inline/InlineHoverPreview";
 
 /** Resolve a captured value to an actual icon ID by checking ID first, then name */
 function resolveIconId(value: string, plugin: IconStudioPlugin): string | null {
@@ -121,102 +120,14 @@ function attachAnnotationMenu(
 	});
 }
 
-function attachHoverPreview(
-	span: HTMLElement,
-	plugin: IconStudioPlugin,
-	iconUrl: string,
-	iconName: string,
-	annotationId: string | undefined,
-	getSourcePath: () => string,
-): () => void {
-	let tooltip: HTMLElement | null = null;
-	let tooltipComponent: Component | null = null;
-	let hideTimer: number | null = null;
-
-	const removeTooltip = () => {
-		if (hideTimer !== null) {
-			window.clearTimeout(hideTimer);
-			hideTimer = null;
-		}
-		tooltipComponent?.unload();
-		tooltipComponent = null;
-		if (tooltip) {
-			tooltip.remove();
-			tooltip = null;
-		}
-		document.removeEventListener("keydown", removeTooltip);
-	};
-
-	const scheduleRemove = () => {
-		if (hideTimer !== null) window.clearTimeout(hideTimer);
-		hideTimer = window.setTimeout(removeTooltip, 120);
-	};
-
-	const showTooltip = () => {
-		if (tooltip) return;
-		tooltip = document.createElement("div");
-		tooltip.className = "custom-icon-inline-preview";
-		const annotation = annotationId ? plugin.inlineAnnotations.get(annotationId) : undefined;
-
-		const header = document.createElement("div");
-		header.className = "custom-icon-inline-preview-header";
-
-		const img = document.createElement("img");
-		img.src = iconUrl;
-		img.alt = iconName;
-		header.appendChild(img);
-
-		const label = document.createElement("div");
-		label.className = "custom-icon-inline-preview-label";
-		label.textContent = iconName;
-		header.appendChild(label);
-		tooltip.appendChild(header);
-
-		if (annotation) {
-			tooltip.classList.add("has-annotation");
-			const content = document.createElement("div");
-			content.className = "custom-icon-inline-preview-content markdown-rendered";
-			tooltip.appendChild(content);
-			const component = new Component();
-			component.load();
-			tooltipComponent = component;
-			void MarkdownRenderer.render(
-				plugin.app,
-				annotation.markdown,
-				content,
-				getSourcePath(),
-				component,
-			).catch((error) => console.error("Failed to render inline icon annotation", error));
-			tooltip.addEventListener("mouseenter", () => {
-				if (hideTimer !== null) window.clearTimeout(hideTimer);
-			});
-			tooltip.addEventListener("mouseleave", scheduleRemove);
-		}
-
-		document.body.appendChild(tooltip);
-
-		const rect = span.getBoundingClientRect();
-		tooltip.style.left = `${rect.left + rect.width / 2}px`;
-		tooltip.style.top = `${rect.top - 8}px`;
-
-		document.addEventListener("keydown", removeTooltip);
-	};
-
-	span.addEventListener("mouseenter", showTooltip);
-	span.addEventListener("mouseleave", scheduleRemove);
-	span.addEventListener("focus", showTooltip);
-	span.addEventListener("blur", scheduleRemove);
-
-	return removeTooltip;
-}
-
 function createInlineIconElement(
+	ownerDocument: Document,
 	plugin: IconStudioPlugin,
 	iconId: string,
 	annotationId: string | undefined,
 	target: InlineIconTarget,
 ): { span: HTMLElement; cleanup: () => void } {
-	const span = document.createElement("button");
+	const span = ownerDocument.adoptNode(createEl("button"));
 	span.type = "button";
 	span.className = "custom-icon-inline-icon is-img";
 	span.tabIndex = 0;
@@ -224,10 +135,9 @@ function createInlineIconElement(
 	const iconUrl = plugin.iconLibrary.getIconUrl(iconId);
 	const iconMeta = plugin.iconLibrary.getById(iconId);
 	const iconName = iconMeta?.name ?? iconId;
-	const img = document.createElement("img");
+	const img = span.createEl("img");
 	img.src = iconUrl;
 	img.alt = "";
-	span.appendChild(img);
 
 	const annotation = annotationId ? plugin.inlineAnnotations.get(annotationId) : undefined;
 	span.setAttribute("aria-label", annotation ? `${iconName}, annotated` : iconName);
@@ -262,23 +172,29 @@ class InlineCustomIconWidget extends WidgetType {
 	toDOM(view: EditorView): HTMLElement {
 		const sourcePath = view.state.field(editorInfoField).file?.path ?? "";
 		let currentShortcode = this.shortcode;
-		const { span, cleanup } = createInlineIconElement(this.plugin, this.iconId, this.annotationId, {
-			shortcode: this.shortcode,
-			annotationId: this.annotationId,
-			sourcePath,
-			replaceShortcode: (nextShortcode) => {
-				const currentTo = this.from + currentShortcode.length;
-				const current = view.state.doc.sliceString(this.from, currentTo);
-				if (current !== currentShortcode) {
-					throw new Error("The inline icon changed before the annotation was saved.");
-				}
-				view.dispatch({
-					changes: { from: this.from, to: currentTo, insert: nextShortcode },
-				});
-				currentShortcode = nextShortcode;
-				return Promise.resolve();
+		const { span, cleanup } = createInlineIconElement(
+			view.dom.doc,
+			this.plugin,
+			this.iconId,
+			this.annotationId,
+			{
+				shortcode: this.shortcode,
+				annotationId: this.annotationId,
+				sourcePath,
+				replaceShortcode: (nextShortcode) => {
+					const currentTo = this.from + currentShortcode.length;
+					const current = view.state.doc.sliceString(this.from, currentTo);
+					if (current !== currentShortcode) {
+						throw new Error("The inline icon changed before the annotation was saved.");
+					}
+					view.dispatch({
+						changes: { from: this.from, to: currentTo, insert: nextShortcode },
+					});
+					currentShortcode = nextShortcode;
+					return Promise.resolve();
+				},
 			},
-		});
+		);
 		this.removeTooltip = cleanup;
 		return span;
 	}
@@ -347,7 +263,7 @@ function createInlineIconPlugin(plugin: IconStudioPlugin) {
 
 			update(update: ViewUpdate) {
 				if (update.docChanged) {
-					document.querySelectorAll(".custom-icon-inline-preview").forEach((el) => el.remove());
+					hideInlineHoverPreviews(update.view.dom);
 				}
 				this.decorations = buildDecorations(update.view, plugin);
 			}
@@ -378,7 +294,8 @@ export class InlineIcons {
 	private processElement(el: HTMLElement, ctx: MarkdownPostProcessorContext) {
 		if (!this.plugin.settings.enableInlineIcons) return;
 
-		const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+		const ownerDocument = el.doc;
+		const walker = ownerDocument.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
 		const occurrenceCounts = new Map<string, number>();
 
 		const replacements: {
@@ -433,83 +350,89 @@ export class InlineIcons {
 			const parent = node.parentNode;
 			if (!parent) continue;
 
-			const fragment = document.createDocumentFragment();
+			const fragment = ownerDocument.adoptNode(createFragment());
 			let lastIndex = 0;
 
 			for (const m of matches) {
 				if (m.index > lastIndex) {
-					fragment.appendChild(document.createTextNode(text.slice(lastIndex, m.index)));
+					fragment.appendChild(ownerDocument.createTextNode(text.slice(lastIndex, m.index)));
 				}
 
 				let currentShortcode = m.shortcode;
 				let currentSourceIndex: number | null = null;
-				const { span, cleanup } = createInlineIconElement(this.plugin, m.iconId, m.annotationId, {
-					shortcode: m.shortcode,
-					annotationId: m.annotationId,
-					sourcePath: ctx.sourcePath,
-					replaceShortcode: async (nextShortcode) => {
-						const section = ctx.getSectionInfo(el);
-						if (!section) {
-							throw new Error("The rendered note section is no longer available.");
-						}
-						const file = this.plugin.app.vault.getFileByPath(ctx.sourcePath);
-						if (!file) throw new Error("The note file is no longer available.");
-						await this.plugin.app.vault.process(file, (source) => {
-							if (currentSourceIndex !== null) {
-								const current = source.slice(
-									currentSourceIndex,
-									currentSourceIndex + currentShortcode.length,
+				const { span, cleanup } = createInlineIconElement(
+					ownerDocument,
+					this.plugin,
+					m.iconId,
+					m.annotationId,
+					{
+						shortcode: m.shortcode,
+						annotationId: m.annotationId,
+						sourcePath: ctx.sourcePath,
+						replaceShortcode: async (nextShortcode) => {
+							const section = ctx.getSectionInfo(el);
+							if (!section) {
+								throw new Error("The rendered note section is no longer available.");
+							}
+							const file = this.plugin.app.vault.getFileByPath(ctx.sourcePath);
+							if (!file) throw new Error("The note file is no longer available.");
+							await this.plugin.app.vault.process(file, (source) => {
+								if (currentSourceIndex !== null) {
+									const current = source.slice(
+										currentSourceIndex,
+										currentSourceIndex + currentShortcode.length,
+									);
+									if (current !== currentShortcode) {
+										throw new Error("The inline icon changed before the annotation was saved.");
+									}
+									const nextSource = `${source.slice(0, currentSourceIndex)}${nextShortcode}${source.slice(
+										currentSourceIndex + currentShortcode.length,
+									)}`;
+									currentShortcode = nextShortcode;
+									return nextSource;
+								}
+								const nextSource = replaceInlineIconInSection(
+									source,
+									section.lineStart,
+									section.lineEnd,
+									m.shortcode,
+									nextShortcode,
+									m.occurrenceIndex,
 								);
-								if (current !== currentShortcode) {
+								if (nextSource === null) {
 									throw new Error("The inline icon changed before the annotation was saved.");
 								}
-								const nextSource = `${source.slice(0, currentSourceIndex)}${nextShortcode}${source.slice(
-									currentSourceIndex + currentShortcode.length,
-								)}`;
+								const linesBeforeSection = source.split("\n").slice(0, section.lineStart);
+								const sectionOffset = linesBeforeSection.reduce(
+									(length, line) => length + line.length + 1,
+									0,
+								);
+								const sectionSource = source
+									.split("\n")
+									.slice(section.lineStart, section.lineEnd + 1)
+									.join("\n");
+								let matchIndex = -1;
+								let searchFrom = 0;
+								for (let index = 0; index <= m.occurrenceIndex; index += 1) {
+									matchIndex = sectionSource.indexOf(currentShortcode, searchFrom);
+									searchFrom = matchIndex + currentShortcode.length;
+								}
+								currentSourceIndex = sectionOffset + matchIndex;
 								currentShortcode = nextShortcode;
 								return nextSource;
+							});
+							for (const leaf of this.plugin.app.workspace.getLeavesOfType("markdown")) {
+								if (
+									leaf.view instanceof MarkdownView &&
+									leaf.view.file?.path === ctx.sourcePath &&
+									leaf.view.getMode() === "preview"
+								) {
+									leaf.view.previewMode.rerender(true);
+								}
 							}
-							const nextSource = replaceInlineIconInSection(
-								source,
-								section.lineStart,
-								section.lineEnd,
-								m.shortcode,
-								nextShortcode,
-								m.occurrenceIndex,
-							);
-							if (nextSource === null) {
-								throw new Error("The inline icon changed before the annotation was saved.");
-							}
-							const linesBeforeSection = source.split("\n").slice(0, section.lineStart);
-							const sectionOffset = linesBeforeSection.reduce(
-								(length, line) => length + line.length + 1,
-								0,
-							);
-							const sectionSource = source
-								.split("\n")
-								.slice(section.lineStart, section.lineEnd + 1)
-								.join("\n");
-							let matchIndex = -1;
-							let searchFrom = 0;
-							for (let index = 0; index <= m.occurrenceIndex; index += 1) {
-								matchIndex = sectionSource.indexOf(currentShortcode, searchFrom);
-								searchFrom = matchIndex + currentShortcode.length;
-							}
-							currentSourceIndex = sectionOffset + matchIndex;
-							currentShortcode = nextShortcode;
-							return nextSource;
-						});
-						for (const leaf of this.plugin.app.workspace.getLeavesOfType("markdown")) {
-							if (
-								leaf.view instanceof MarkdownView &&
-								leaf.view.file?.path === ctx.sourcePath &&
-								leaf.view.getMode() === "preview"
-							) {
-								leaf.view.previewMode.rerender(true);
-							}
-						}
+						},
 					},
-				});
+				);
 				const child = new MarkdownRenderChild(span);
 				child.register(cleanup);
 				ctx.addChild(child);
@@ -519,7 +442,7 @@ export class InlineIcons {
 			}
 
 			if (lastIndex < text.length) {
-				fragment.appendChild(document.createTextNode(text.slice(lastIndex)));
+				fragment.appendChild(ownerDocument.createTextNode(text.slice(lastIndex)));
 			}
 
 			parent.replaceChild(fragment, node);

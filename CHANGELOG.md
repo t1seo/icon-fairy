@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.3] - 2026-09-13
+
+### Fixed
+
+- Made inline settings searchable on Obsidian 1.13+ while preserving the existing settings, icon assignments, and annotation storage on all supported versions
+- Scoped explorer, tab, title, picker, and annotation elements to their owning windows, including timer and hover-preview cleanup
+- Replaced CSS `!important` overrides and `:has()` with scoped selectors and explicit tab state
+- Corrected browser TypeScript library declarations and replaced the obsolete build-time `builtin-modules` dependency with Node's built-in module list
+
+### Maintenance
+
+- Updated official Obsidian lint rules and development dependencies; CI now rejects any lint warning
+- Added behavior regressions for settings persistence, popout rendering, search cancellation, paste handling, and tooltip teardown
+- Published all six original folder-fairy logo candidates in an HTML comparison gallery; A1 remains the current artwork
+
 ## [2.0.2] - 2026-09-13
 
 ### Fixed

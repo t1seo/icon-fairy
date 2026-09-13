@@ -13,6 +13,7 @@ import type { IconData, IconMapping, IconStudioData, IconStudioSettings } from "
 import { IconPickerModal } from "./ui/IconPickerModal";
 
 export default class IconStudioPlugin extends Plugin {
+	private readonly inlineSizeDocuments = new Set<Document>();
 	settings!: IconStudioSettings;
 	iconMap!: IconMapping;
 	explorerIcons!: ExplorerIcons;
@@ -24,6 +25,19 @@ export default class IconStudioPlugin extends Plugin {
 	async onload() {
 		await this.loadSettings();
 		this.updateInlineSizeCSSVar();
+		this.registerEvent(this.app.workspace.on("layout-change", () => this.updateInlineSizeCSSVar()));
+		this.registerEvent(
+			this.app.workspace.on("window-open", (_container, win) => {
+				this.inlineSizeDocuments.add(win.document);
+				this.updateInlineSizeCSSVar();
+			}),
+		);
+		this.registerEvent(
+			this.app.workspace.on("window-close", (_container, win) => {
+				win.document.body.style.removeProperty("--custom-icon-inline-size");
+				this.inlineSizeDocuments.delete(win.document);
+			}),
+		);
 		this.addSettingTab(new IconStudioSettingTab(this.app, this));
 
 		// Initialize icon library
@@ -78,6 +92,10 @@ export default class IconStudioPlugin extends Plugin {
 		this.explorerIcons?.disable();
 		this.tabIcons?.disable();
 		this.titleIcons?.disable();
+		for (const doc of this.inlineSizeDocuments) {
+			doc.body.style.removeProperty("--custom-icon-inline-size");
+		}
+		this.inlineSizeDocuments.clear();
 	}
 
 	async loadSettings() {
@@ -136,10 +154,13 @@ export default class IconStudioPlugin extends Plugin {
 
 	/** Sync inline icon size CSS variable with current setting */
 	updateInlineSizeCSSVar() {
-		document.body.style.setProperty(
-			"--custom-icon-inline-size",
-			`${this.settings.inlineIconSize}px`,
-		);
+		this.inlineSizeDocuments.add(this.app.workspace.containerEl.doc);
+		this.app.workspace.iterateAllLeaves((leaf) => {
+			this.inlineSizeDocuments.add(leaf.view.containerEl.doc);
+		});
+		for (const doc of this.inlineSizeDocuments) {
+			doc.body.style.setProperty("--custom-icon-inline-size", `${this.settings.inlineIconSize}px`);
+		}
 	}
 
 	/** Update icon mapping for a file/folder path */
