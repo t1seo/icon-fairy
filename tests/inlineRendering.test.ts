@@ -38,8 +38,8 @@ function installElementHelpers(element: HTMLElement): void {
 	const ownerWindow = element.ownerDocument.defaultView;
 	if (!ownerWindow) throw new Error("The test document requires a window.");
 	Object.defineProperties(element, {
-		doc: { value: element.ownerDocument, configurable: true },
-		win: { value: ownerWindow, configurable: true },
+		doc: { get: () => element.ownerDocument, configurable: true },
+		win: { get: () => element.ownerDocument.defaultView, configurable: true },
 	});
 	element.createEl = (tag, options) => {
 		const child = element.ownerDocument.createElement(tag);
@@ -83,6 +83,7 @@ function makePopout() {
 	const ownerDocument = iframe.contentDocument;
 	const ownerWindow = iframe.contentWindow;
 	if (!ownerDocument || !ownerWindow) throw new Error("The test iframe did not open.");
+	installElementHelpers(ownerDocument.body);
 	return { ownerDocument, ownerWindow };
 }
 
@@ -199,5 +200,48 @@ describe("inline icon hover previews", () => {
 		tooltip?.dispatchEvent(new Event("mouseleave"));
 		// Then
 		expect(schedule).not.toHaveBeenCalled();
+	});
+
+	it("renders the same adopted icon in its new document and handles that document's Escape", () => {
+		// Given
+		const { button } = makePreview();
+		const { ownerDocument } = makePopout();
+		ownerDocument.body.appendChild(ownerDocument.adoptNode(button));
+		expect(button.doc).toBe(ownerDocument);
+		// When
+		button.dispatchEvent(new Event("mouseenter"));
+		// Then
+		expect(document.querySelectorAll(".custom-icon-inline-preview")).toHaveLength(0);
+		expect(ownerDocument.querySelectorAll(".custom-icon-inline-preview")).toHaveLength(1);
+		ownerDocument.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+		expect(ownerDocument.querySelectorAll(".custom-icon-inline-preview")).toHaveLength(0);
+		expect(rendered.components.every((component) => !component.loaded)).toBe(true);
+	});
+
+	it("replaces an open preview after adoption and cancels its timer in the previous window", () => {
+		// Given
+		const mainWindow: Window = window;
+		vi.spyOn(mainWindow, "setTimeout").mockReturnValue(47);
+		const cancelMain = vi.spyOn(mainWindow, "clearTimeout");
+		const { button, cleanup } = makePreview();
+		button.dispatchEvent(new Event("mouseenter"));
+		button.dispatchEvent(new Event("mouseleave"));
+		const { ownerDocument, ownerWindow } = makePopout();
+		vi.spyOn(ownerWindow, "setTimeout").mockReturnValue(53);
+		const cancelPopout = vi.spyOn(ownerWindow, "clearTimeout");
+		ownerDocument.body.appendChild(ownerDocument.adoptNode(button));
+		// When
+		button.dispatchEvent(new Event("mouseenter"));
+		// Then
+		expect(cancelMain).toHaveBeenCalledWith(47);
+		expect(document.querySelectorAll(".custom-icon-inline-preview")).toHaveLength(0);
+		expect(ownerDocument.querySelectorAll(".custom-icon-inline-preview")).toHaveLength(1);
+		expect(rendered.components.filter((component) => component.loaded)).toHaveLength(1);
+		button.dispatchEvent(new Event("mouseleave"));
+		document.body.appendChild(document.adoptNode(button));
+		cleanup();
+		expect(cancelPopout).toHaveBeenCalledWith(53);
+		expect(ownerDocument.querySelectorAll(".custom-icon-inline-preview")).toHaveLength(0);
+		expect(rendered.components.every((component) => !component.loaded)).toBe(true);
 	});
 });

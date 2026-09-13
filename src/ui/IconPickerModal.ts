@@ -189,10 +189,8 @@ export class IconPickerModal extends Modal {
 	}
 
 	private navigateGrid(e: KeyboardEvent, direction: "up" | "down" | "left" | "right") {
-		if (
-			document.activeElement === this.searchEl ||
-			(document.activeElement as HTMLElement | null)?.matches(`.${CSS_PREFIX}-tab-btn`)
-		) {
+		const activeElement = this.contentEl.doc.activeElement;
+		if (activeElement === this.searchEl || activeElement?.matches(`.${CSS_PREFIX}-tab-btn`)) {
 			return;
 		}
 
@@ -202,8 +200,7 @@ export class IconPickerModal extends Modal {
 
 		e.preventDefault();
 
-		const focused = document.activeElement as HTMLElement;
-		const currentIndex = items.indexOf(focused);
+		const currentIndex = items.findIndex((item) => item === activeElement);
 
 		if (currentIndex === -1) {
 			items[0].focus();
@@ -237,13 +234,14 @@ export class IconPickerModal extends Modal {
 	}
 
 	private activateFocused(e: KeyboardEvent) {
-		if (document.activeElement === this.searchEl) return;
+		const activeElement = this.contentEl.doc.activeElement;
+		if (activeElement === this.searchEl) return;
 
 		const gridSelector = `.${CSS_PREFIX}-custom-item-btn`;
 		const items = Array.from(this.tabContentEl.querySelectorAll<HTMLElement>(gridSelector));
-		const focused = document.activeElement as HTMLElement;
+		const focused = items.find((item) => item === activeElement);
 
-		if (items.includes(focused)) {
+		if (focused) {
 			e.preventDefault();
 			focused.click();
 		}

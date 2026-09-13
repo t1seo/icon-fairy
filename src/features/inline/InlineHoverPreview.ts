@@ -17,8 +17,8 @@ export function attachHoverPreview(
 	annotationId: string | undefined,
 	getSourcePath: () => string,
 ): () => void {
-	const ownerDocument = span.doc;
-	const ownerWindow = span.win;
+	let ownerDocument = span.doc;
+	let ownerWindow = span.win;
 	let tooltip: HTMLElement | null = null;
 	let tooltipComponent: Component | null = null;
 	let hideTimer: number | null = null;
@@ -49,7 +49,11 @@ export function attachHoverPreview(
 	};
 
 	const showTooltip = () => {
+		if (tooltip && ownerDocument !== span.doc) removeTooltip();
+		cancelScheduledRemoval();
 		if (tooltip) return;
+		ownerDocument = span.doc;
+		ownerWindow = span.win;
 		tooltip = ownerDocument.body.createDiv({ cls: "custom-icon-inline-preview" });
 		const annotation = annotationId ? plugin.inlineAnnotations.get(annotationId) : undefined;
 
