@@ -117,7 +117,7 @@ Programming Languages/       </> 폴더 아이콘
 
 ### Obsidian 커뮤니티 플러그인
 
-Icon Fairy(아이콘 요정) 3.0.0은 플러그인 ID `icon-fairy`와 저장소 `t1seo/icon-fairy`를 사용하며 **Obsidian 1.5.7 이상**이 필요합니다. [커뮤니티 페이지](https://community.obsidian.md/plugins/icon-fairy)는 공개되었고 자동 리뷰도 오류·경고 없이 통과했습니다. 2026년 9월 13일 19:39 한국 시간 기준 앱 내 목록은 아직 동기화 중입니다. **Icon Fairy**가 검색될 때까지 아래 수동 설치를 이용하실 수 있습니다.
+Icon Fairy(아이콘 요정)는 **Obsidian 1.5.7 이상**에서 [커뮤니티 플러그인](https://community.obsidian.md/plugins/icon-fairy)으로 설치하실 수 있습니다. 3.0.0은 자동 리뷰를 오류·경고 없이 통과했으며, Obsidian 앱 내 검색·설치·활성화까지 확인했습니다. 플러그인 ID는 `icon-fairy`, 저장소는 `t1seo/icon-fairy`입니다.
 
 1. **설정 → 커뮤니티 플러그인 → 탐색**을 엽니다.
 2. **Icon Fairy**를 검색합니다.

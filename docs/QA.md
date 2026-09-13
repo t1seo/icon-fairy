@@ -124,4 +124,17 @@ The [3.0.0 release](https://github.com/t1seo/icon-fairy/releases/tag/3.0.0), sou
 
 At 10:37 UTC, the exact 3.0.0 hosted review was Completed with zero errors and warnings, including byte-for-byte build reproduction. The new public listing shows Review Passed, Health Excellent, and `obsidian://show-plugin?id=icon-fairy`.
 
-Actual Community installation remains pending catalog synchronization as of 10:39 UTC. The disposable fresh vault was backed up and the local candidate uninstalled; its plugin directory is confirmed absent. Community installation did not create it, and an actual in-app search still returned only the previous Folder Fairy entry. The earlier fresh-install result used the verified local candidate. No manual copy is counted as successful catalog installation.
+At 10:39 UTC, Community installation was still awaiting catalog synchronization. The disposable fresh vault was backed up and the local candidate uninstalled; its plugin directory was confirmed absent. The initial Community attempt did not create it, and in-app search returned only the previous Folder Fairy entry. The earlier fresh-install result used the verified local candidate.
+
+### Verified Community installation and final review
+
+The primary catalog contained Icon Fairy by 10:58 UTC, and its official GitHub mirror contained the same `icon-fairy` / `t1seo/icon-fairy` entry by 11:26 UTC. In Obsidian 1.13.7, the public installation URI opened the correct new entry. Native Community search then found **Icon Fairy**; selecting **Install → Enable** installed version 3.0.0 into the still-absent target directory. No release files were copied manually for this check.
+
+The installed manifest and stylesheet exactly match the verified release. JavaScript contains the complete release followed only by Obsidian's 18-byte `\n/* nosourcemap */` comment. Only `icon-fairy` is enabled. Its picker opens an empty library, settings show inline icons off / 20 px / `ci`, and Hotkeys lists all three Icon Fairy commands. The remove-icon command is correctly absent from the command palette while the current note has no assigned icon.
+
+- [Actual Community installation, enabled 3.0.0, canonical repository, and A2](../assets/qa-3.0.0/community-installed.png)
+- [Public review: seven passed checks and complete contribution documentation](../assets/qa-3.0.0/review-passed.png)
+
+The public scorecard remains **Review Passed / Health Excellent**. The exact release's hosted review has zero errors and warnings. Its three informational disclosures concern image base64 handling and unavailable malware/obfuscation scanners; they are not warning findings. Adding `CONTRIBUTING.md` also resolved the public hygiene note about a missing contribution guide. Automated review does not claim manual Obsidian staff approval.
+
+At 11:29 UTC, after successful installation, the previous Folder Fairy listing was archived through the supported owner interface. Both previous repositories and release refs remain unchanged, and the previously archived `custom-icon` entry was left unchanged. All four QA vault windows are closed; only the user's original Obsidian window remains. The temporarily enabled CLI is restored to its original disabled state.

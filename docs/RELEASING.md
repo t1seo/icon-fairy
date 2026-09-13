@@ -22,13 +22,11 @@ Starting with 3.0.0, the product name is **Icon Fairy**, the plugin ID is `icon-
 
 Users of either previous identity need the [migration guide](MIGRATING.md). The new `versions.json` begins with 3.0.0 and only lists versions released from `t1seo/icon-fairy`. Historical changelog entries and git history remain available; do not publish previous release tags to the new repository.
 
-In the transition checkout, `origin` points to `t1seo/obsidian-icon-studio`, `relaunch` points to `t1seo/icon-studio`, and **`fairy` must point to `t1seo/icon-fairy`**. Every push from this checkout must explicitly use `fairy`. Do not push to either previous remote or use `--tags`.
-
-After the new release and Community installation are verified, the local remote names can be aligned for ordinary development: preserve the previous remotes as `legacy-custom-icon` and `legacy-folder-fairy`, and rename `fairy` to `origin`. This changes local aliases only; it does not rename or modify either previous GitHub repository or its refs. Verify the resulting URLs and use the canonical `origin` for subsequent releases once that transition is complete.
+The release checkout now uses `origin` for `https://github.com/t1seo/icon-fairy.git`. Its previous remote aliases are preserved as `legacy-custom-icon` (`t1seo/obsidian-icon-studio`) and `legacy-folder-fairy` (`t1seo/icon-studio`). Only local aliases changed; neither previous repository nor its refs were modified. Confirm `git remote -v` before pushing, use the canonical `origin`, and do not push to a legacy remote or use `--tags`.
 
 ## Published 3.0.0 release
 
-[Icon Fairy 3.0.0](https://github.com/t1seo/icon-fairy/releases/tag/3.0.0) was published from commit `2521d51704c26801321d9bb0c0d518dd47837f19` on September 13, 2026. CI and the attesting release workflow passed, and anonymous downloads match the app-tested candidate. The actual Community submission uses **Icon Fairy / icon-fairy / t1seo/icon-fairy**; the exact 3.0.0 automated review completed with zero errors and warnings. See the [release audit](research/obsidian-community-release.md) for the separate catalog synchronization and installation status.
+[Icon Fairy 3.0.0](https://github.com/t1seo/icon-fairy/releases/tag/3.0.0) was published from commit `2521d51704c26801321d9bb0c0d518dd47837f19` on September 13, 2026. CI and the attesting release workflow passed, and anonymous downloads match the app-tested candidate. The actual Community submission uses **Icon Fairy / icon-fairy / t1seo/icon-fairy**; the exact 3.0.0 automated review completed with zero errors and warnings. Native Community search, installation, and activation succeeded after catalog synchronization. The superseded Folder Fairy listing was then archived. See the [release audit](research/obsidian-community-release.md) for the evidence and timeline.
 
 The tag exactly matches `manifest.json`, without a `v` prefix. The release contains:
 
@@ -48,10 +46,10 @@ cp manifest.json examples/programming-languages-vault/.obsidian/plugins/icon-fai
 git add package.json package-lock.json manifest.json versions.json CHANGELOG.md examples/programming-languages-vault/.obsidian/plugins/icon-fairy/manifest.json
 npm run verify
 git commit -m "🔖 chore: prepare release"
-git push fairy HEAD:main
+git push origin HEAD:main
 ```
 
-Wait for CI to pass on the pushed commit, then tag the new manifest version and push only that tag to `fairy`. Keep existing compatibility entries intact. The repository `.npmrc` keeps npm's tag prefix empty. A fresh clone of `t1seo/icon-fairy` can use its own `origin`, but confirm the remote URL first; that is a different remote arrangement from this transition checkout.
+Wait for CI to pass on the pushed commit, then tag the new manifest version and push only that tag to `origin`. Keep existing compatibility entries intact. The repository `.npmrc` keeps npm's tag prefix empty. Confirm that `origin` points to `t1seo/icon-fairy` in every checkout.
 
 ## Verify the release
 
@@ -74,4 +72,4 @@ Describe Icon Fairy as the same maintainer's successor to both Folder Fairy (`ic
 
 Later versions are discovered from GitHub releases. Record separately whether the GitHub release exists, the new entry was accepted, the exact release's automated review passed with zero errors and warnings, and catalog installation works. Automated review does not mean manual approval by Obsidian staff. Keep pending status explicit until each check is complete.
 
-Only after the Icon Fairy entry is publicly discoverable, installs and enables successfully, and passes review, archive the superseded Folder Fairy entry through **More actions → Archive → Yes, archive**. Preserve both previous GitHub repositories and releases, and leave the already archived `custom-icon` entry unchanged. Archiving does not free an old display name; do not repeat the previous archive-and-retry experiment.
+The superseded Folder Fairy entry was archived through **More actions → Archive → Yes, archive** only after Icon Fairy was publicly discoverable, passed review, and installed and enabled successfully. Both previous GitHub repositories and releases are preserved; the previously archived `custom-icon` entry remains unchanged. Archiving does not free an old display name; do not repeat the previous archive-and-retry experiment.
