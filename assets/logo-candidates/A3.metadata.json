@@ -1,0 +1,30 @@
+{
+  "label": "A3",
+  "direction": "Folder fairy",
+  "rationale": "A friendly folder character connects directly to personalizing the vault's files and folders.",
+  "provider": "Built-in image_gen",
+  "model": null,
+  "modelNote": "The tool neither exposes model selection nor returned actual model identity.",
+  "constraintDeliveryMode": "main-prompt constraints",
+  "constraintText": "Use no text or watermark. Add no borders, frames, cards, or presentation masks. Include one character only, with no extra subjects or scenery. Use no fragile lines, sharp tips, unnecessary outlines, tiny details, or decorative marks. Add no photorealistic material, dramatic bevel, glossy hotspot, deep occlusion, extrusion, strong three-dimensional rendering, or external cast shadow. Keep the background solid and uniform, with no texture, vignette, or lighting variation.",
+  "colors": {
+    "dominantIP": "#4ABB9B",
+    "secondaryIP": "#175B68",
+    "background": "#C7BBD8"
+  },
+  "corner": "lower-left",
+  "requestedDimensions": {
+    "width": 1536,
+    "height": 1536
+  },
+  "dimensions": {
+    "width": 1254,
+    "height": 1254
+  },
+  "savedPath": "assets/logo-candidates/A3.png",
+  "promptPath": "assets/logo-candidates/A3.prompt.txt",
+  "generationCount": 1,
+  "references": [],
+  "postProcessing": "None. Source copied byte-for-byte.",
+  "assetPath": "A3.png"
+}

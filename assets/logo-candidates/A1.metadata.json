@@ -1,0 +1,38 @@
+{
+  "label": "A1",
+  "direction": "folder fairy",
+  "rationale": "Personified folder connects with arranging notes and customizing their visual identity.",
+  "provider": "built-in image_gen",
+  "modelAvailability": "model not exposed by tool response",
+  "constraintDelivery": "main-prompt constraints",
+  "constraintText": "Use no text or watermark. Add no borders, frames, cards, or presentation masks. Include one character only, with no extra subjects or scenery. Use no fragile lines, sharp tips, unnecessary outlines, tiny details, or decorative marks. Add no photorealistic material, dramatic bevel, glossy hotspot, deep occlusion, extrusion, strong three-dimensional rendering, or external cast shadow. Keep the background solid and uniform, with no texture, vignette, or lighting variation.",
+  "corner": "lower-left",
+  "colors": {
+    "dominant": {
+      "name": "vivid lavender",
+      "hex": "#9166D9",
+      "region": "folder body"
+    },
+    "secondary": {
+      "name": "deep plum",
+      "hex": "#352047",
+      "region": "one broad front-pocket region and eyes"
+    },
+    "background": {
+      "name": "muted peach",
+      "hex": "#EFC9B9"
+    }
+  },
+  "requestedDimensions": {
+    "width": 1536,
+    "height": 1536
+  },
+  "dimensions": {
+    "width": 1254,
+    "height": 1254
+  },
+  "processing": "byte-for-byte copy; native dimensions preserved",
+  "generationCount": 1,
+  "references": [],
+  "assetPath": "A1.png"
+}

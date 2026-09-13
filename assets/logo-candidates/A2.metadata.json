@@ -1,0 +1,26 @@
+{
+  "label": "A2",
+  "direction": "folder fairy",
+  "rationale": "A living folder expresses personal organization and playful file customization.",
+  "provider": "built-in image_gen",
+  "model_exposure": "not exposed by runtime response",
+  "constraint_delivery_mode": "main-prompt constraints",
+  "constraint_text": "Use no text or watermark. Add no borders, frames, cards, or presentation masks. Include one character only, with no extra subjects or scenery. Use no fragile lines, sharp tips, unnecessary outlines, tiny details, or decorative marks. Add no photorealistic material, dramatic bevel, glossy hotspot, deep occlusion, extrusion, strong three-dimensional rendering, or external cast shadow. Keep the background solid and uniform, with no texture, vignette, or lighting variation.",
+  "corner": "lower-right",
+  "colors": {
+    "body": "#ED8D79",
+    "front_pocket_and_eyes": "#7C355E",
+    "background": "#CFC3E6"
+  },
+  "requested_dimensions": {
+    "width": 1536,
+    "height": 1536
+  },
+  "dimensions": {
+    "width": 1254,
+    "height": 1254
+  },
+  "post_processing": "none; byte-for-byte copy",
+  "generation_count": 1,
+  "assetPath": "A2.png"
+}

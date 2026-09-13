@@ -1,0 +1,43 @@
+{
+  "label": "A4",
+  "direction": "Folder fairy: broad blunt folder tab and one continuous pocket",
+  "rationale": "The living folder connects directly to customizing folders and files; two eyes provide its gentle fairy personality.",
+  "assigned_corner": "lower-right",
+  "provider": "built-in image_gen",
+  "model": null,
+  "model_note": "The runtime tool schema and result did not expose a specific model identifier.",
+  "constraint_delivery_mode": "main-prompt constraints",
+  "exact_constraint_payload": "Constraints: Use no text or watermark. Add no borders, frames, cards, or presentation masks. Include one character only, with no extra subjects or scenery. Use no fragile lines, sharp tips, unnecessary outlines, tiny details, or decorative marks. Add no photorealistic material, dramatic bevel, glossy hotspot, deep occlusion, extrusion, strong three-dimensional rendering, or external cast shadow. Keep the background solid and uniform, with no texture, vignette, or lighting variation.",
+  "colors": {
+    "character_dominant": {
+      "name": "sunny golden yellow",
+      "hex": "#F2BD52",
+      "role": "continuous folder body"
+    },
+    "character_secondary": {
+      "name": "deep indigo",
+      "hex": "#514B9A",
+      "role": "one broad pocket region and two eye marks"
+    },
+    "background": {
+      "name": "gently muted periwinkle",
+      "hex": "#B8C2E3"
+    }
+  },
+  "requested_dimensions": {
+    "width": 1536,
+    "height": 1536
+  },
+  "native_dimensions": {
+    "width": 1254,
+    "height": 1254
+  },
+  "saved_path": "assets/logo-candidates/A4.png",
+  "prompt_path": "assets/logo-candidates/A4.prompt.txt",
+  "sha256": "10d391db3e72c508ebb0136c284d196cbd6329b6a4ffa2a02b88a1f05d6df37b",
+  "generation_count": 1,
+  "references": [],
+  "preservation": "Copied byte-for-byte at native dimensions; source and destination SHA-256 match. No resizing, post-processing, retries, filtering, or ranking.",
+  "prompt": "Create one complete full-bleed 1:1 square image, approximately 1536 × 1536 pixels.\nBackground: fill the entire square with solid gently muted periwinkle #B8C2E3. Keep this periwinkle visible in every open area and in the corners not occupied by the character; the assigned emergence corner must be occupied by the character.\nSubject: place one extremely simplified, cute, endearing personified folder sprite on the background, reduced to one soft rounded continuous chunky folder silhouette and one defining feature: a single broad, blunt rounded folder tab. The fairy personality comes entirely from a gentle living folder face with two eyes. Give it no wings, hands, limbs, or accessories.\nComplexity: use only 4–7 large basic shapes and at most two broad internal color regions. Use two widely spaced simple eyes only, with no mouth. Remove every nonessential line, outline, anatomical detail, texture, and decoration. Keep the character readable at 32 × 32.\nColor behavior: use exactly three semantic colors in the complete image: exactly two character base colors plus the background color. Use sunny golden yellow #F2BD52 for the dominant continuous folder body and deep indigo #514B9A for one broad continuous pocket region and the two eye marks. Organize both character colors into broad purposeful masses. Use the background color only for the background. The gently muted periwinkle background should remain clearly chromatic, clean, and intentional rather than gray or muddy. Keep the character, facial marks, and background clearly separated.\nComposition: keep the character upright and emerging from the assigned lower-right corner, filling about 85–95% of the square so it remains visually dominant. Cropping at the bottom or assigned side is welcome when it strengthens the corner emergence. Preserve both eyes within the visible composition. Never center or bottom-center the character.\nStyle: make simplification, cuteness, and lovable baby-like appeal the strongest qualities. Use large soft forms, compact proportions, thick rounded contours, and an ultra-clean graphic treatment. Prefer one clear shape over several explanatory details. Add an extremely, extremely subtle, almost imperceptible sense of depth through a barely-there neo-skeuomorphic treatment.\nFinish: show only the character on the full-canvas background, with clean surfaces and normal square outer corners.\nConstraints: Use no text or watermark. Add no borders, frames, cards, or presentation masks. Include one character only, with no extra subjects or scenery. Use no fragile lines, sharp tips, unnecessary outlines, tiny details, or decorative marks. Add no photorealistic material, dramatic bevel, glossy hotspot, deep occlusion, extrusion, strong three-dimensional rendering, or external cast shadow. Keep the background solid and uniform, with no texture, vignette, or lighting variation.",
+  "assetPath": "A4.png"
+}
