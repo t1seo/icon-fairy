@@ -17,23 +17,17 @@ Starting with 2.0.0, the plugin ID is `icon-studio` and releases are published f
 
 `versions.json` only lists versions published from the new repository. Historical changelog entries describe releases in the old repository; do not push their tags to the new one.
 
-## Publish the prepared 2.0.3 release
+## Published 2.0.3 release
 
-The release is aligned across `package.json`, `manifest.json`, `versions.json`, and `CHANGELOG.md`. In the transition checkout, `origin` still points to the previous repository and `relaunch` points to the new repository. Push explicitly to the new remote:
+Version 2.0.3 was published from commit `3c8c5cb22ffafe4c902ebcb3caff41c6ba67ad18`. Its CI and release workflow passed. In the transition checkout, `origin` still points to the previous repository and `relaunch` points to the new repository. Future pushes from this checkout must explicitly use `relaunch`.
 
-```sh
-git push relaunch HEAD:main
-git tag 2.0.3
-git push relaunch 2.0.3
-```
-
-Verify that the new repository's default branch is `main` and its CI passed before pushing the tag. The tag must exactly match `manifest.json`, without a `v` prefix. Pushing it starts the release workflow, verifies the plugin, attests the artifacts, and publishes a GitHub release containing:
+For future releases, verify that the new repository's default branch is `main` and its CI passed before pushing a new tag. The tag must exactly match `manifest.json`, without a `v` prefix. Pushing it starts the release workflow, verifies the plugin, attests the artifacts, and publishes a GitHub release containing:
 
 - `main.js`
 - `manifest.json`
 - `styles.css`
 
-Versions 2.0.0 through 2.0.2 are already published and must not be retagged. Version 2.0.1 changed the display name to Folder Fairy after the directory rejected the occupied Icon Studio name. Version 2.0.2 corrected `minAppVersion` to 1.5.7. Version 2.0.3 resolves review warnings and fixes window ownership and cleanup, while retaining that minimum version and the existing data format. Keep historical compatibility entries intact when adding a new version.
+Versions 2.0.0 through 2.0.3 are already published and must not be retagged. Version 2.0.1 changed the display name to Folder Fairy after the directory rejected the occupied Icon Studio name. Version 2.0.2 corrected `minAppVersion` to 1.5.7. Version 2.0.3 resolves review warnings and fixes window ownership and cleanup, while retaining that minimum version and the existing data format. Keep historical compatibility entries intact when adding a new version.
 
 ## Prepare a future version
 
@@ -54,7 +48,7 @@ The repository `.npmrc` keeps npm's tag prefix empty. In the transition checkout
 
 ## Verify the release
 
-Confirm that the release tag matches `manifest.json` and that all three assets can be downloaded. Install the repository with BRAT and exercise the changed behavior in both Live Preview and Reading view before announcing the release.
+Confirm that the release tag matches `manifest.json`, download all three assets anonymously, compare them to the verified build, and verify their GitHub attestations. Install through Obsidian Community Plugins in a backed-up disposable vault and exercise the changed behavior in both Live Preview and Reading view before announcing the release. Record Community installation separately from BRAT or manual copying. Obsidian may append a `/* nosourcemap */` comment to installed `main.js`; account for that exact suffix when comparing installed files to release assets.
 
 ## Community directory
 

@@ -1,6 +1,8 @@
-# Obsidian Community release research
+# Obsidian Community release audit
 
-Research date: 2026-08-19
+Dated history from 2026-08-19 onward. Later sections supersede earlier submission and synchronization results.
+
+**Latest verified status — 2026-09-13 08:17 UTC:** Folder Fairy 2.0.3 is published, its automated review completed with zero errors and zero warnings, and actual Community installation succeeded. The public listing shows **Review: Passed**, **Health: Excellent**, and an enabled installation link. This is automated review; the directory feed still states that Obsidian staff have not manually reviewed the plugin.
 
 ## Decision
 
@@ -71,3 +73,17 @@ At 06:30–06:33 UTC, the public page showed version 2.0.2 and an enabled `obsid
 The [GitHub catalog mirror](https://github.com/obsidianmd/obsidian-releases/blob/master/community-plugins.json) had not yet included the entry. The primary endpoint advertised a one-hour server cache, and the [official mirror workflow](https://github.com/obsidianmd/obsidian-releases/blob/master/.github/workflows/mirror-community-json.yml) is scheduled hourly at minute 17, subject to GitHub scheduling delay. This supports catalog propagation as the remaining dependency; no delivery time is guaranteed.
 
 Actual Obsidian 1.13.7 Community search in the disposable fresh vault returned no Folder Fairy results, and its `plugin:install id=icon-studio` command returned `Plugin "icon-studio" not found in community plugins.` Therefore **installation from the in-app catalog is not yet verified**. The fresh vault was backed up before that attempt, then restored with the anonymously downloaded 2.0.2 files. Manual installation loaded the correct identity, three commands, the saved library, and rendered inline images. BRAT/manual distribution is available now. The old directory entry remains archived, and the old repository's main and 1.3.1 tag are unchanged.
+
+## Warning fixes and successful Community installation — 2026-09-13
+
+The [2.0.3 release](https://github.com/t1seo/icon-studio/releases/tag/2.0.3) was published at `3c8c5cb22ffafe4c902ebcb3caff41c6ba67ad18`. [CI run 34747001583](https://github.com/t1seo/icon-studio/actions/runs/34747001583) and [release run 34747055652](https://github.com/t1seo/icon-studio/actions/runs/34747055652) passed. Anonymous downloads of all three assets matched the verified local build and each GitHub attestation verified.
+
+Current official source lint reports zero warnings. The changes address all 14 warning groups in the completed 2.0.2 review, including browser library declarations, Obsidian DOM/window helpers, searchable settings, the obsolete build dependency, and CSS selectors. Actual app checks also identified and corrected native tab specificity, moved hover-preview ownership, popout keyboard focus, and Escape rename cancellation. All 150 automated tests and 37 actual-app scenarios passed; see [the QA report](../QA.md).
+
+The catalog propagation issue is resolved. At 08:12 UTC, the official Community install command downloaded and enabled Folder Fairy 2.0.3 in the disposable fresh vault after an uninstall and verified removal of its plugin directory. It loaded an empty library and exactly three commands. This test used the Community catalog, without manually copying release assets. Its installed manifest and CSS exactly match the downloaded release; JavaScript matches the entire release followed only by Obsidian's `\n/* nosourcemap */` comment. Restoring the backed-up QA data then recovered the original library, assignments, settings, annotation, and rendered images.
+
+The six original logo candidates are published in the [HTML comparison gallery](../../assets/logo-candidates/index.html). A1 remains applied. The old `custom-icon` repository's main and 1.3.1 tag are unchanged. Test vault windows were closed and temporary CLI enablement was restored to its original disabled state.
+
+At 08:17 UTC, the new hosted review explicitly identified **2.0.3 / 3c8c5cb** and reached **Completed** with **zero error groups and zero warning groups**. Release attestations, network analysis, dependencies, and byte-for-byte build reproduction passed; the previous source/CSS findings no longer appear in this review. The old 2.0.1 **Failed** and 2.0.2 warning results remain visible as historical rows.
+
+The [public listing](https://community.obsidian.md/plugins/icon-studio) now shows current version **2.0.3**, **Review: Passed**, **Health: Excellent**, and an enabled `obsidian://show-plugin?id=icon-studio` link. Both the primary directory feed and GitHub mirror contain the entry. Their manual-review disclaimer remains, so this audit does not claim staff approval.
