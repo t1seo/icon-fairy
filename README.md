@@ -117,7 +117,7 @@ The explorer icons, inline icons, annotations, commands, and picker adapt to Obs
 
 ### Obsidian Community Plugins
 
-Icon Fairy 3.0.0 uses plugin ID `icon-fairy` and repository `t1seo/icon-fairy`, and requires **Obsidian 1.5.7+**. The new release and [Community listing](https://community.obsidian.md/plugins/icon-fairy) are being prepared. Once catalog installation is available:
+Icon Fairy 3.0.0 uses plugin ID `icon-fairy` and repository `t1seo/icon-fairy`, and requires **Obsidian 1.5.7+**. The [Community listing](https://community.obsidian.md/plugins/icon-fairy) is public and its automated review passed with zero errors and warnings. As of September 13, 2026, 10:39 UTC, the in-app catalog is still synchronizing; use manual installation below until **Icon Fairy** appears:
 
 1. Open **Settings → Community plugins → Browse**.
 2. Search for **Icon Fairy**.
@@ -125,16 +125,12 @@ Icon Fairy 3.0.0 uses plugin ID `icon-fairy` and repository `t1seo/icon-fairy`, 
 
 ### BRAT
 
-After the first release is published:
-
 1. Install and enable [BRAT](https://obsidian.md/plugins?id=obsidian42-brat).
 2. Run **BRAT: Add a beta plugin for testing**.
 3. Enter `https://github.com/t1seo/icon-fairy`.
 4. Enable **Icon Fairy** in **Settings → Community plugins**.
 
 ### Manual installation
-
-After the first release is published:
 
 1. Download `main.js`, `manifest.json`, and `styles.css` from the [latest release](https://github.com/t1seo/icon-fairy/releases/latest).
 2. Put them in `<vault>/.obsidian/plugins/icon-fairy/`.

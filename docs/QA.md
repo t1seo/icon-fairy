@@ -1,4 +1,4 @@
-# Folder Fairy QA history
+# Icon Fairy QA history
 
 ## Icon Studio 2.0.0 — 2026-09-13
 
@@ -120,4 +120,8 @@ Actual Obsidian 1.13.7 checks passed in four isolated vaults:
 
 All five review scopes passed. The user's working vault was not used for plugin testing. The mobile capture is desktop emulation, not a physical-device test. These checks cover the identity/A2 change; they do not claim to repeat the previous version's 37 broader scenarios. The A2 mark, nine screenshots, and current documentation links were also independently inspected.
 
-Public release, hosted review, and actual Community catalog installation remain separate pending gates; the fresh installation above used the verified local candidate.
+The [3.0.0 release](https://github.com/t1seo/icon-fairy/releases/tag/3.0.0), source CI, and release workflow passed at `2521d51704c26801321d9bb0c0d518dd47837f19`. All three anonymous downloads match the app-tested candidate and their attestations verify against `t1seo/icon-fairy`. The released JavaScript SHA256 is `d3af12bbdcbbb53eac01a9c01f5c9786c662097b55e9088edf178b6fe276a4a7`.
+
+At 10:37 UTC, the exact 3.0.0 hosted review was Completed with zero errors and warnings, including byte-for-byte build reproduction. The new public listing shows Review Passed, Health Excellent, and `obsidian://show-plugin?id=icon-fairy`.
+
+Actual Community installation remains pending catalog synchronization as of 10:39 UTC. The disposable fresh vault was backed up and the local candidate uninstalled; its plugin directory is confirmed absent. Community installation did not create it, and an actual in-app search still returned only the previous Folder Fairy entry. The earlier fresh-install result used the verified local candidate. No manual copy is counted as successful catalog installation.

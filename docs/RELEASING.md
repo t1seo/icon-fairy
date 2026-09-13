@@ -26,32 +26,17 @@ In the transition checkout, `origin` points to `t1seo/obsidian-icon-studio`, `re
 
 After the new release and Community installation are verified, the local remote names can be aligned for ordinary development: preserve the previous remotes as `legacy-custom-icon` and `legacy-folder-fairy`, and rename `fairy` to `origin`. This changes local aliases only; it does not rename or modify either previous GitHub repository or its refs. Verify the resulting URLs and use the canonical `origin` for subsequent releases once that transition is complete.
 
-## Prepare the first 3.0.0 release
+## Published 3.0.0 release
 
-The 3.0.0 release and new Community entry are being prepared. Before publishing, confirm that the version in `package.json`, `package-lock.json`, `manifest.json`, `versions.json`, and the committed sample manifest is 3.0.0. Verify that the A2 mark, sample logo, README screenshots, and current product name agree.
+[Icon Fairy 3.0.0](https://github.com/t1seo/icon-fairy/releases/tag/3.0.0) was published from commit `2521d51704c26801321d9bb0c0d518dd47837f19` on September 13, 2026. CI and the attesting release workflow passed, and anonymous downloads match the app-tested candidate. The actual Community submission uses **Icon Fairy / icon-fairy / t1seo/icon-fairy**; the exact 3.0.0 automated review completed with zero errors and warnings. See the [release audit](research/obsidian-community-release.md) for the separate catalog synchronization and installation status.
 
-After the public `t1seo/icon-fairy` repository exists and the `fairy` remote is configured, commit the verified product files and push the default branch:
-
-```sh
-git remote get-url fairy
-npm run verify
-git push fairy HEAD:main
-```
-
-Confirm that `main` is the default branch and its CI passed. Check that 3.0.0 has not already been tagged or released, then publish exactly that new tag:
-
-```sh
-git tag 3.0.0
-git push fairy 3.0.0
-```
-
-The tag must exactly match `manifest.json`, without a `v` prefix. Pushing it starts the release workflow, verifies the plugin, attests the artifacts, and publishes a GitHub release containing:
+The tag exactly matches `manifest.json`, without a `v` prefix. The release contains:
 
 - `main.js`
 - `manifest.json`
 - `styles.css`
 
-After a version has been published, never move or replace its tag. Fix any subsequent problem in an incremented release.
+Never move or replace the published 3.0.0 tag. Fix any subsequent problem in an incremented release. Later tag pushes start the same workflow, verify the plugin, attest the three artifacts, and create the matching GitHub release.
 
 ## Prepare later versions
 

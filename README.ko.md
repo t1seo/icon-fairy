@@ -117,7 +117,7 @@ Programming Languages/       </> 폴더 아이콘
 
 ### Obsidian 커뮤니티 플러그인
 
-Icon Fairy(아이콘 요정) 3.0.0은 플러그인 ID `icon-fairy`와 저장소 `t1seo/icon-fairy`를 사용하며 **Obsidian 1.5.7 이상**이 필요합니다. 현재 새 릴리스와 [커뮤니티 등록](https://community.obsidian.md/plugins/icon-fairy)을 준비하고 있습니다. 앱 내 설치가 제공되면 다음 순서로 설치해 주세요.
+Icon Fairy(아이콘 요정) 3.0.0은 플러그인 ID `icon-fairy`와 저장소 `t1seo/icon-fairy`를 사용하며 **Obsidian 1.5.7 이상**이 필요합니다. [커뮤니티 페이지](https://community.obsidian.md/plugins/icon-fairy)는 공개되었고 자동 리뷰도 오류·경고 없이 통과했습니다. 2026년 9월 13일 19:39 한국 시간 기준 앱 내 목록은 아직 동기화 중입니다. **Icon Fairy**가 검색될 때까지 아래 수동 설치를 이용하실 수 있습니다.
 
 1. **설정 → 커뮤니티 플러그인 → 탐색**을 엽니다.
 2. **Icon Fairy**를 검색합니다.
@@ -125,16 +125,12 @@ Icon Fairy(아이콘 요정) 3.0.0은 플러그인 ID `icon-fairy`와 저장소 
 
 ### BRAT
 
-첫 릴리스가 게시된 후 사용할 수 있습니다.
-
 1. [BRAT](https://obsidian.md/plugins?id=obsidian42-brat)을 설치하고 활성화합니다.
 2. **BRAT: Add a beta plugin for testing**을 실행합니다.
 3. `https://github.com/t1seo/icon-fairy`를 입력합니다.
 4. **설정 → 커뮤니티 플러그인**에서 **Icon Fairy**를 활성화합니다.
 
 ### 수동 설치
-
-첫 릴리스가 게시된 후 사용할 수 있습니다.
 
 1. [최신 릴리스](https://github.com/t1seo/icon-fairy/releases/latest)에서 `main.js`, `manifest.json`, `styles.css`를 받습니다.
 2. 세 파일을 `<볼트>/.obsidian/plugins/icon-fairy/`에 넣습니다.
