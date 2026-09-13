@@ -1,7 +1,7 @@
 # Icon Fairy
 
 <p align="center">
-  <img src="assets/icon-fairy-mark.png" width="112" alt="Icon Fairy 로고" />
+  <img src="assets/icon-fairy-mark.png" width="112" alt="Icon Fairy 폴더 하트 로고" />
 </p>
 
 <p align="center"><strong>내 이미지로, 내 아이콘으로, 내 볼트를.</strong></p>
@@ -14,6 +14,8 @@
 </p>
 
 PNG, JPG, WebP, SVG 이미지를 업로드해 Obsidian의 폴더, 노트, 탭, 노트 제목, 본문 아이콘으로 사용하세요. 모든 데이터는 볼트 안에 저장됩니다.
+
+스크린샷은 함께 제공되는 샘플 볼트를 Obsidian 라이트 모드로 실행해 직접 캡처했습니다.
 
 ![Programming Languages 폴더와 커스텀 아이콘을 적용한 샘플 Obsidian 볼트](assets/icon-fairy-overview.png)
 
@@ -109,7 +111,7 @@ Programming Languages/       </> 폴더 아이콘
 
 ## 데스크톱과 모바일
 
-탐색기 아이콘, 인라인 아이콘, 주석, 명령, 아이콘 피커는 Obsidian의 데스크톱과 모바일 레이아웃에 맞게 동작합니다. 아래 화면은 샘플 볼트를 Obsidian 공식 데스크톱 모바일 에뮬레이션으로 실행해 직접 캡처했습니다.
+탐색기 아이콘, 인라인 아이콘, 주석, 명령, 아이콘 피커는 Obsidian의 데스크톱과 모바일 레이아웃에 맞게 동작합니다. 아래 화면은 샘플 볼트를 라이트 모드에서 Obsidian 공식 데스크톱 모바일 에뮬레이션으로 실행해 직접 캡처했습니다.
 
 ![Obsidian 모바일 레이아웃에서 실행한 Icon Fairy 아이콘 피커와 프로그래밍 언어 아이콘](assets/icon-fairy-mobile.png)
 

@@ -2,7 +2,7 @@
 
 Dated history from 2026-08-19 onward. Later sections supersede earlier submission and synchronization results.
 
-**Latest verified status — 2026-09-13 11:30 UTC:** [Icon Fairy 3.0.0](https://community.obsidian.md/plugins/icon-fairy) is published from `t1seo/icon-fairy`, and its automated review completed with zero errors and warnings. The public listing shows **Review: Passed**, **Health: Excellent**, and the correct `icon-fairy` installation link. Both catalog feeds contain the new entry, and actual Obsidian Community search, installation, and activation succeeded. The previous Folder Fairy listing was then archived; both old repositories and releases remain intact. Automated review is not a claim of manual staff approval.
+**Latest verified status — 2026-09-13 14:50 UTC:** [Icon Fairy 3.0.0](https://community.obsidian.md/plugins/icon-fairy) is published from `t1seo/icon-fairy`, and its automated review completed with zero errors and warnings. The public listing shows **Review: Passed**, **Health: Excellent**, and the correct `icon-fairy` installation link. Its overview attachment now shows the selected folder-heart logo in an actual light-mode sample. Both catalog feeds contain the new entry, and actual Obsidian Community search, installation, and activation succeeded as recorded below. The previous Folder Fairy listing was then archived; both old repositories and releases remain intact. Automated review is not a claim of manual staff approval.
 
 ## Decision
 
@@ -117,3 +117,11 @@ The exact 3.0.0 review remains Completed with zero errors and warnings. Its publ
 At 11:29 UTC, only after the replacement installed and enabled successfully, the Folder Fairy owner page (`icon-studio`) was archived using **More actions → Archive → Yes, archive**. The page now offers **Unarchive**, independently confirming the action. Cached old catalog entries may take another synchronization cycle to disappear. The new Icon Fairy owner page still shows its correct repository and Completed 3.0.0 review. The previously archived `custom-icon` entry was not changed.
 
 Both old repositories' main and release refs remain unchanged. The local branch is `release/icon-fairy`; its `origin` is now `https://github.com/t1seo/icon-fairy.git`, while old remote aliases are preserved as `legacy-custom-icon` and `legacy-folder-fairy`. The 3.0.0 tag remains on its original reviewed commit; subsequent documentation commits do not replace the release. QA windows are closed and the global CLI setting is restored to its original disabled state.
+
+## Folder-heart presentation update — 2026-09-13
+
+The maintainer chose the existing Community folder-heart tile as the common logo and requested light-mode sample screenshots. The repository now uses matching SVG/PNG artwork, retains the Lucide attribution, and preserves the original six character candidates as history. All nine current README screenshots were recaptured from actual Obsidian in Light mode; the sample also stores that appearance. See the [artwork and app QA](../QA.md) and [brand source record](../BRAND.md).
+
+At 14:50 UTC, the supported **Edit listing** form had uploaded the new light overview, removed the previous dark A2 attachment, and saved the entry. The public page served the new image as attachment `11436`, displaying the same folder-heart logo as the existing listing tile. The owner page still identified `t1seo/icon-fairy`, version 3.0.0, and its Completed review at `2521d51`; the public page retained Review Passed, Health Excellent, and the enabled installation URI. Name, ID, repository, glyph, color, descriptions, categories, and payment type were unchanged.
+
+This is an artwork, sample, and documentation update. All three runtime files remain byte-identical to the reviewed 3.0.0 release. No new version, retagging, review request, or change to either archived predecessor was needed or performed. The initial A2 release and installation evidence above remains a dated historical record.

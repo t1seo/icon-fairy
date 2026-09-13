@@ -1,7 +1,7 @@
 # Icon Fairy
 
 <p align="center">
-  <img src="assets/icon-fairy-mark.png" width="112" alt="Icon Fairy mark" />
+  <img src="assets/icon-fairy-mark.png" width="112" alt="Icon Fairy folder-heart mark" />
 </p>
 
 <p align="center"><strong>Your images. Your icons. Your vault.</strong></p>
@@ -14,6 +14,8 @@
 </p>
 
 Upload your own PNG, JPG, WebP, or SVG images and use them as Obsidian icons for folders, notes, tabs, note titles, and inline text. Everything stays inside your vault.
+
+Screenshots show the included sample vault in Obsidian’s light appearance.
 
 ![A sample Obsidian vault with a Programming Languages folder and custom icons](assets/icon-fairy-overview.png)
 
@@ -109,7 +111,7 @@ Open the command palette with `Cmd/Ctrl+P` and search for **Icon Fairy**:
 
 ## Desktop and mobile
 
-The explorer icons, inline icons, annotations, commands, and picker adapt to Obsidian's desktop and mobile layouts. The mobile view below was captured from the sample vault with Obsidian's official desktop mobile emulation enabled.
+The explorer icons, inline icons, annotations, commands, and picker adapt to Obsidian's desktop and mobile layouts. The mobile view below was captured from the sample vault in light mode with Obsidian's official desktop mobile emulation enabled.
 
 ![Icon Fairy icon picker and programming-language icons in Obsidian's mobile layout](assets/icon-fairy-mobile.png)
 

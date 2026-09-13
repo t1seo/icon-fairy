@@ -68,7 +68,7 @@ Initial submission happens through [community.obsidian.md](https://community.obs
 5. Review and accept the Developer policies, then confirm continued support or removal/transfer if support can no longer be provided.
 6. Submit the entry, run the preview scan or request review, and resolve scanner errors and warnings with a new incremented release.
 
-Describe Icon Fairy as the same maintainer's successor to both Folder Fairy (`icon-studio`) and Custom Icon / Icon Studio (`custom-icon`). A new ID does not replace review or guarantee approval. The listing icon selector supports built-in glyphs; choose one that suits the A2 folder character, and use the original A2 PNG and actual Icon Fairy screenshots in the overview.
+Describe Icon Fairy as the same maintainer's successor to both Folder Fairy (`icon-studio`) and Custom Icon / Icon Studio (`custom-icon`). A new ID does not replace review or guarantee approval. Keep the listing’s white `folder-heart` glyph and orange-to-purple tile consistent with the [current SVG/PNG mark](BRAND.md). Use actual light-mode Icon Fairy screenshots in the overview. Branding and documentation updates do not replace the published 3.0.0 tag or its release assets.
 
 Later versions are discovered from GitHub releases. Record separately whether the GitHub release exists, the new entry was accepted, the exact release's automated review passed with zero errors and warnings, and catalog installation works. Automated review does not mean manual approval by Obsidian staff. Keep pending status explicit until each check is complete.
 
