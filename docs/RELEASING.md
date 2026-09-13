@@ -17,14 +17,14 @@ Starting with 2.0.0, the plugin ID is `icon-studio` and releases are published f
 
 `versions.json` only lists versions published from the new repository. Historical changelog entries describe releases in the old repository; do not push their tags to the new one.
 
-## Publish the prepared 2.0.1 release
+## Publish the prepared 2.0.2 release
 
 The release is aligned across `package.json`, `manifest.json`, `versions.json`, and `CHANGELOG.md`. In the transition checkout, `origin` still points to the previous repository and `relaunch` points to the new repository. Push explicitly to the new remote:
 
 ```sh
 git push relaunch HEAD:main
-git tag 2.0.1
-git push relaunch 2.0.1
+git tag 2.0.2
+git push relaunch 2.0.2
 ```
 
 Verify that the new repository's default branch is `main` and its CI passed before pushing the tag. The tag must exactly match `manifest.json`, without a `v` prefix. Pushing it starts the release workflow, verifies the plugin, attests the artifacts, and publishes a GitHub release containing:
@@ -33,7 +33,7 @@ Verify that the new repository's default branch is `main` and its CI passed befo
 - `manifest.json`
 - `styles.css`
 
-Version 2.0.0 is already published and must not be retagged. Version 2.0.1 changes the display name to Folder Fairy after the directory rejected the occupied Icon Studio name.
+Versions 2.0.0 and 2.0.1 are already published and must not be retagged. Version 2.0.1 changed the display name to Folder Fairy after the directory rejected the occupied Icon Studio name. Version 2.0.2 corrects `minAppVersion` to 1.5.7 for the existing `Vault.getFileByPath` call; it does not change the runtime bundle. Keep historical compatibility entries intact when adding a new version.
 
 ## Prepare a future version
 
@@ -67,7 +67,7 @@ Initial submission happens through [community.obsidian.md](https://community.obs
 5. Review and accept the Developer policies, then confirm continued support or removal/transfer if support can no longer be provided.
 6. Submit the entry, run the preview scan or request review, and resolve any blocking scanner errors with a new incremented release.
 
-Describe this as the same maintainer's successor to `custom-icon`, including the old incomplete automated review and manual rename request. A new ID does not replace review or guarantee approval. Use the folder-fairy PNG as the listing icon.
+Describe this as the same maintainer's successor to `custom-icon`, including the old incomplete automated review and manual rename request. A new ID does not replace review or guarantee approval. The listing icon selector only supports built-in glyphs, so use the purple `folder-heart` glyph; use the folder-fairy PNG in the overview and screenshots.
 
 The first listing requires an Obsidian account connected to the repository owner's GitHub account. Later versions are discovered from GitHub releases. Record separately whether the GitHub release exists, the new entry was accepted, review passed, and installation is enabled. While review is pending, keep BRAT/manual installation instructions available.
 

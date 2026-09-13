@@ -119,7 +119,7 @@ The explorer icons, inline icons, annotations, commands, and picker adapt to Obs
 
 ### Obsidian Community Plugins
 
-Folder Fairy 2.0.1 launches with the new plugin ID `icon-studio` and repository `t1seo/icon-studio`. Community directory submission is being prepared; it is not yet available through the in-app browser. Use BRAT or manual installation until the new entry is approved. After approval:
+Folder Fairy uses the new plugin ID `icon-studio` and repository `t1seo/icon-studio`. The [Community listing](https://community.obsidian.md/plugins/icon-studio) is published, but installation is awaiting review approval. Version 2.0.2 corrects the minimum supported Obsidian version to **1.5.7**. Use BRAT or manual installation until approval. After approval:
 
 1. Open **Settings → Community plugins → Browse**.
 2. Search for **Folder Fairy**.

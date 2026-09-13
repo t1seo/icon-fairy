@@ -51,3 +51,13 @@ The public successor repository [t1seo/icon-studio](https://github.com/t1seo/ico
 The new submission was rejected with `An entry with this name already exists.` The old `custom-icon` entry was archived through the supported UI and the submission was retried once; the same validation error remained. The old entry was then unarchived, restoring its prior state. Archiving does not free this display name for a new entry. The original repository and 1.3.1 release were unchanged.
 
 The successor display name was changed to **Folder Fairy** in 2.0.1, matching the folder-fairy artwork. The new ID `icon-studio` and repository `t1seo/icon-studio` remain unchanged. The 2.0.0 release is preserved rather than retagged. This is still the same maintainer's successor and requires normal review.
+
+## New entry published and compatibility finding — 2026-09-13
+
+The [2.0.1 release](https://github.com/t1seo/icon-studio/releases/tag/2.0.1) was published at `0306cadb8814d297387f35d48bb0d446a82a1170`. CI and release automation passed. All three anonymously downloaded assets matched the local files, and GitHub artifact attestation verification passed.
+
+The [Folder Fairy listing](https://community.obsidian.md/plugins/icon-studio) was created and published with a successor/migration disclosure, Icons/Appearance/Images categories, Free payment type, and an actual desktop screenshot. The directory only supports built-in glyphs for the small icon, so it uses purple `folder-heart`; the overview and screenshot show the original folder-fairy PNG. The old `custom-icon` entry was archived again after the successor was accepted. The original repository and releases remain unchanged.
+
+The new automated review completed instead of reporting the old entry's incomplete-review condition. Release attestations, network analysis, production dependencies, and byte-for-byte build reproduction passed. Its one blocking error was `obsidianmd/no-unsupported-api` at `src/features/InlineIcons.ts:455`: `Vault.getFileByPath` was used with `minAppVersion: 1.4.0`, although the [official API declares it available since 1.5.7](https://github.com/obsidianmd/obsidian-api/blob/cc1744324150c632416857c98964f87b1574a5fc/obsidian.d.ts). Source/style warnings were nonblocking. The public page remained visible with **Add to Obsidian** disabled.
+
+Version 2.0.2 corrects the root/sample minimum version to 1.5.7 and adds its compatibility entry, preserving historical versions. Runtime source, bundle, CSS, and data formats are unchanged. Approval and public installation will be recorded after the new scan.

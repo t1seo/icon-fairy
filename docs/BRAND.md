@@ -28,7 +28,7 @@ Use plain, concrete language. Lead with the user's action and the visible result
 
 The mark is a friendly folder fairy: a rounded folder body, broad front pocket, and small eyes, emerging from the lower-left. It represents a personal, approachable vault. `assets/icon-studio-mark.png` is the unmodified 1254 × 1254 original from candidate A1, generated with the built-in image_gen tool using the `ip-as-logo` workflow. The provider did not expose a model identifier. The requested colors describe semantic color families; the original includes the generator's tonal variation.
 
-Use the PNG in documentation and directory listings. Keep the generated original unchanged; the previous SVG image-tile mark is retained only as historical artwork. Exact generation instructions are recorded in [folder-fairy-prompt.txt](folder-fairy-prompt.txt).
+Use the PNG in documentation, the sample vault, and screenshots. The Community directory only offers built-in Lucide glyphs for its small listing icon; the published entry uses the purple `folder-heart` glyph, while its overview and screenshot show the original folder fairy. Keep the generated original unchanged; the previous SVG image-tile mark is retained only as historical artwork. Exact generation instructions are recorded in [folder-fairy-prompt.txt](folder-fairy-prompt.txt).
 
 ## Rename history
 

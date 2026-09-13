@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.2] - 2026-09-13
+
+### Fixed
+
+- Corrected the minimum Obsidian version to 1.5.7, when `Vault.getFileByPath` became available; this resolves the Community scanner's unsupported-API error
+- Kept the runtime bundle and stored data unchanged
+
 ## [2.0.1] - 2026-09-13
 
 ### Changed

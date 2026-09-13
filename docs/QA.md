@@ -50,3 +50,9 @@ GitHub publication and Community approval are separate from local QA. Their veri
 The directory rejected the occupied **Icon Studio** name even after the old listing was archived, so the display name changed to **Folder Fairy**. ID `icon-studio`, runtime bundle, data formats, and artwork remain unchanged. The published 2.0.0 tag is preserved.
 
 `npm run verify` passed again with 76 tests. Root and sample metadata match Folder Fairy 2.0.1. Reloading the real fresh QA installation showed the new name/version, exactly three commands prefixed **Folder Fairy**, and the existing library/settings unchanged. The 2.0.0 downloaded files were also installed and smoke-tested; all three anonymous downloads matched the locally verified files.
+
+## Folder Fairy 2.0.2 compatibility metadata — 2026-09-13
+
+The Community scanner identified the existing `Vault.getFileByPath` call as newer than the declared minimum. The official API marks it available since 1.5.7, so the root/sample minimum was corrected to 1.5.7 in a new 2.0.2 release. Historical compatibility entries remain unchanged. This is a declaration correction; Obsidian 1.5.7 itself was not run in this session.
+
+`npm run verify` passed all 76 tests again. Runtime bundle and CSS were byte-identical to the published 2.0.1 downloads. Independent queries of both real Obsidian 1.13.7 QA vaults after reload confirmed Folder Fairy 2.0.2 / minimum 1.5.7, only the new plugin loaded, three commands, and preserved fresh/migrated library, mappings, settings, and annotations. All five bounded review scopes passed. Public installation remains a separate gate in the release audit.
