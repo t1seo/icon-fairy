@@ -20,6 +20,7 @@ export class CustomTab implements TabRenderer {
 	private visibleIcons: CustomIcon[] = [];
 	private searchTimeout: number | null = null;
 	private searchWindow: Window | null = null;
+	private cancelRename: (() => void) | null = null;
 
 	constructor(
 		private plugin: CustomTabPlugin,
@@ -52,14 +53,22 @@ export class CustomTab implements TabRenderer {
 	}
 
 	destroy(): void {
+		this.cancelEditing();
 		if (this.searchTimeout !== null) this.searchWindow?.clearTimeout(this.searchTimeout);
 		this.searchTimeout = null;
 		this.searchWindow = null;
 	}
 
+	cancelEditing(): void {
+		const cancel = this.cancelRename;
+		this.cancelRename = null;
+		cancel?.();
+	}
+
 	// ─── Private ────────────────────────────────────
 
 	private startRename(label: HTMLElement, icon: CustomIcon) {
+		this.cancelEditing();
 		label.textContent = "";
 		label.removeAttribute("title");
 		const input = label.createEl("input");
@@ -68,6 +77,7 @@ export class CustomTab implements TabRenderer {
 		input.className = `${CSS_PREFIX}-rename-input`;
 
 		const commit = () => {
+			this.cancelRename = null;
 			const newName = input.value.trim();
 			if (newName && newName !== icon.name) {
 				void (async () => {
@@ -81,14 +91,20 @@ export class CustomTab implements TabRenderer {
 			}
 		};
 
-		input.addEventListener("blur", commit);
+		this.cancelRename = () => {
+			input.removeEventListener("blur", commit);
+			input.value = icon.name;
+			label.textContent = icon.name;
+			label.setAttribute("title", "Double-click to rename");
+		};
+		input.addEventListener("blur", commit, { once: true });
 		input.addEventListener("keydown", (e) => {
 			if (e.key === "Enter") {
 				e.preventDefault();
 				input.blur();
 			} else if (e.key === "Escape") {
-				input.value = icon.name;
-				input.blur();
+				e.preventDefault();
+				this.cancelEditing();
 			}
 		});
 

@@ -75,6 +75,11 @@ export class IconPickerModal extends Modal {
 		this.scope.register([], "Enter", (e) => this.activateFocused(e));
 	}
 
+	close(): void {
+		for (const renderer of this.tabRenderers.values()) renderer.cancelEditing?.();
+		super.close();
+	}
+
 	onClose() {
 		if (IconPickerModal.activeModal === this) IconPickerModal.activeModal = null;
 		for (const renderer of this.tabRenderers.values()) {
@@ -300,5 +305,6 @@ export interface TabRenderer {
 	render(container: HTMLElement): void;
 	onSearch?(query: string): void;
 	onRandom?(): void;
+	cancelEditing?(): void;
 	destroy?(): void;
 }

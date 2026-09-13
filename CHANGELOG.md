@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Made inline settings searchable on Obsidian 1.13+ while preserving the existing settings, icon assignments, and annotation storage on all supported versions
 - Scoped explorer, tab, title, picker, and annotation elements to their owning windows, including timer and hover-preview cleanup
+- Cancelled unfinished icon renames before the picker closes, so Escape no longer saves the edited name
 - Replaced CSS `!important` overrides and `:has()` with scoped selectors and explicit tab state
 - Corrected browser TypeScript library declarations and replaced the obsolete build-time `builtin-modules` dependency with Node's built-in module list
 
