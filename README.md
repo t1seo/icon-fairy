@@ -1,23 +1,21 @@
-# Folder Fairy
+# Icon Fairy
 
 <p align="center">
-  <img src="assets/icon-studio-mark.png" width="112" alt="Folder Fairy mark" />
+  <img src="assets/icon-fairy-mark.png" width="112" alt="Icon Fairy mark" />
 </p>
 
 <p align="center"><strong>Your images. Your icons. Your vault.</strong></p>
 
 <p align="center">
-  <a href="https://github.com/t1seo/icon-studio/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/t1seo/icon-studio/ci.yml?branch=main&style=flat-square&label=CI" alt="CI" /></a>
-  <a href="https://github.com/t1seo/icon-studio/releases/latest"><img src="https://img.shields.io/github/v/release/t1seo/icon-studio?style=flat-square" alt="Latest release" /></a>
+  <a href="https://github.com/t1seo/icon-fairy/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/t1seo/icon-fairy/ci.yml?branch=main&style=flat-square&label=CI" alt="CI" /></a>
+  <a href="https://github.com/t1seo/icon-fairy/releases/latest"><img src="https://img.shields.io/github/v/release/t1seo/icon-fairy?style=flat-square" alt="Latest release" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-7257E8?style=flat-square" alt="MIT license" /></a>
   <a href="README.ko.md"><img src="https://img.shields.io/badge/lang-한국어-F08A68?style=flat-square" alt="한국어" /></a>
 </p>
 
 Upload your own PNG, JPG, WebP, or SVG images and use them as Obsidian icons for folders, notes, tabs, note titles, and inline text. Everything stays inside your vault.
 
-![A sample Obsidian vault with a Programming Languages folder and custom icons](assets/icon-studio-overview.png)
-
-Screenshots below show the earlier Icon Studio name; Folder Fairy retains the same interface and features.
+![A sample Obsidian vault with a Programming Languages folder and custom icons](assets/icon-fairy-overview.png)
 
 ## A two-minute tour
 
@@ -34,11 +32,11 @@ Screenshots below show the earlier Icon Studio name; Folder Fairy retains the sa
 | Annotate one inline icon | Accent dot and Markdown hover card |
 
 <p align="center">
-  <img src="assets/icon-studio-context-menu.png" width="48%" alt="Change and remove custom icon actions in the file menu" />
-  <img src="assets/icon-studio-library.png" width="48%" alt="Folder Fairy icon library" />
+  <img src="assets/icon-fairy-context-menu.png" width="48%" alt="Change and remove custom icon actions in the file menu" />
+  <img src="assets/icon-fairy-library.png" width="48%" alt="Icon Fairy icon library" />
 </p>
 
-The picker names the current task and target, so it is always clear where the next icon will go. Search by name, choose **Random** for a quick pick, or use the keyboard: `Left`/`Right` changes the source tab, and arrow keys plus `Enter` select a focused icon. Folder Fairy keeps only one picker open at a time.
+The picker names the current task and target, so it is always clear where the next icon will go. Search by name, choose **Random** for a quick pick, or use the keyboard: `Left`/`Right` changes the source tab, and arrow keys plus `Enter` select a focused icon. Icon Fairy keeps only one picker open at a time.
 
 ## Example: a programming language library
 
@@ -67,11 +65,11 @@ This makes a large vault easier to scan without changing file names or frontmatt
 
 Open the picker from a file menu or command, then choose **Upload**. Drop files into the upload area, choose **Browse files**, or paste an image from the clipboard. The drop zone is also available by keyboard with `Tab`, then `Enter` or `Space`.
 
-![Upload PNG, JPG, WebP, or SVG files](assets/icon-studio-upload.png)
+![Upload PNG, JPG, WebP, or SVG files](assets/icon-fairy-upload.png)
 
 Select multiple files to review, rename, or remove individual items before one batch import. SVG files remain vector files instead of being rasterized.
 
-![Review and rename two SVG files before importing](assets/icon-studio-batch-import.png)
+![Review one PNG and two SVG files before importing](assets/icon-fairy-batch-import.png)
 
 In the **Icons** tab, double-click a label to rename an icon. Use the remove button to delete it; assignments using that library item are cleared as well.
 
@@ -85,23 +83,23 @@ Enable inline icons in the plugin settings, then type `:ci-` to open autocomplet
 
 Right-click a rendered inline icon and choose **Add icon annotation** or **Edit icon annotation**. The focused editor supports Markdown, `[[wiki links]]`, and `![[embeds]]`, with a live preview and `Cmd/Ctrl+Enter` to save. Annotated icons show a small accent dot.
 
-![Markdown annotation editor with a wiki-link preview](assets/icon-studio-annotation.png)
+![Markdown annotation editor with a wiki-link preview](assets/icon-fairy-annotation.png)
 
-Annotations are per occurrence. Folder Fairy adds an instance suffix such as `:ci-typescript~note-a1b2c3d4:` so two uses of the same icon can carry different notes.
+Annotations are per occurrence. Icon Fairy adds an instance suffix such as `:ci-typescript~note-a1b2c3d4:` so two uses of the same icon can carry different notes.
 
 ## Commands
 
-Open the command palette with `Cmd/Ctrl+P` and search for **Folder Fairy**:
+Open the command palette with `Cmd/Ctrl+P` and search for **Icon Fairy**:
 
 - **Insert inline icon**
 - **Change icon for current file**
 - **Remove icon from current file**
 
-![All three Folder Fairy commands in Obsidian](assets/icon-studio-commands.png)
+![All three Icon Fairy commands in Obsidian](assets/icon-fairy-commands.png)
 
 ## Settings
 
-![Folder Fairy settings](assets/icon-studio-settings.png)
+![Icon Fairy settings](assets/icon-fairy-settings.png)
 
 | Setting | Purpose | Default |
 | --- | --- | --- |
@@ -113,40 +111,44 @@ Open the command palette with `Cmd/Ctrl+P` and search for **Folder Fairy**:
 
 The explorer icons, inline icons, annotations, commands, and picker adapt to Obsidian's desktop and mobile layouts. The mobile view below was captured from the sample vault with Obsidian's official desktop mobile emulation enabled.
 
-![Folder Fairy icon picker and programming-language icons in Obsidian's mobile layout](assets/icon-studio-mobile.png)
+![Icon Fairy icon picker and programming-language icons in Obsidian's mobile layout](assets/icon-fairy-mobile.png)
 
 ## Installation
 
 ### Obsidian Community Plugins
 
-Folder Fairy uses the new plugin ID `icon-studio` and repository `t1seo/icon-studio`, and requires **Obsidian 1.5.7+**. It is listed in [Obsidian Community Plugins](https://community.obsidian.md/plugins/icon-studio) and appears in the in-app catalog. To install:
+Icon Fairy 3.0.0 uses plugin ID `icon-fairy` and repository `t1seo/icon-fairy`, and requires **Obsidian 1.5.7+**. The new release and [Community listing](https://community.obsidian.md/plugins/icon-fairy) are being prepared. Once catalog installation is available:
 
 1. Open **Settings → Community plugins → Browse**.
-2. Search for **Folder Fairy**.
+2. Search for **Icon Fairy**.
 3. Select **Install**, then **Enable**.
 
 ### BRAT
 
+After the first release is published:
+
 1. Install and enable [BRAT](https://obsidian.md/plugins?id=obsidian42-brat).
 2. Run **BRAT: Add a beta plugin for testing**.
-3. Enter `https://github.com/t1seo/icon-studio`.
-4. Enable **Folder Fairy** in **Settings → Community plugins**.
+3. Enter `https://github.com/t1seo/icon-fairy`.
+4. Enable **Icon Fairy** in **Settings → Community plugins**.
 
 ### Manual installation
 
-1. Download `main.js`, `manifest.json`, and `styles.css` from the [latest release](https://github.com/t1seo/icon-studio/releases/latest).
-2. Put them in `<vault>/.obsidian/plugins/icon-studio/`.
-3. Reload Obsidian and enable **Folder Fairy**.
+After the first release is published:
 
-Version 2.0.0 is a separate installation from the former `custom-icon` plugin. This is the same maintainer’s successor to [Custom Icon / Icon Studio 1.x](https://github.com/t1seo/obsidian-icon-studio), whose repository and releases remain available. Existing BRAT subscriptions and hotkeys do not transfer automatically. To keep your icons, assignments, settings, and annotations, follow the [migration guide](docs/MIGRATING.md). The `:ci-...:` note syntax stays the same.
+1. Download `main.js`, `manifest.json`, and `styles.css` from the [latest release](https://github.com/t1seo/icon-fairy/releases/latest).
+2. Put them in `<vault>/.obsidian/plugins/icon-fairy/`.
+3. Reload Obsidian and enable **Icon Fairy**.
+
+Version 3.0.0 is a separate installation from both [Folder Fairy 2.x](https://github.com/t1seo/icon-studio) (`icon-studio`) and [Custom Icon / Icon Studio 1.x](https://github.com/t1seo/obsidian-icon-studio) (`custom-icon`). Icon Fairy is the same maintainer’s successor; both previous repositories and their releases remain available. Existing data, BRAT subscriptions, and hotkeys do not transfer automatically. To keep your icons, assignments, settings, and annotations, follow the [migration guide](docs/MIGRATING.md) using exactly one previous installation as the source. The `:ci-...:` note syntax stays the same.
 
 ## Sample vault
 
-The repository includes [examples/programming-languages-vault](examples/programming-languages-vault), the exact structure used for the screenshots. Copy the three release files into its `.obsidian/plugins/icon-studio/` directory, then open that folder as an Obsidian vault. See [the sample guide](docs/SAMPLE-VAULT.md) for details.
+The repository includes [examples/programming-languages-vault](examples/programming-languages-vault), the exact structure used for the screenshots. Copy the three release files into its `.obsidian/plugins/icon-fairy/` directory, then open that folder as an Obsidian vault. See [the sample guide](docs/SAMPLE-VAULT.md) for details.
 
 ## Privacy and storage
 
-Folder Fairy makes no network requests and has no runtime dependencies. Imported icons, assignments, settings, and annotations are stored locally under your vault's `.obsidian/plugins/icon-studio/` directory.
+Icon Fairy makes no network requests and has no runtime dependencies. Imported icons, assignments, settings, and annotations are stored locally under your vault's `.obsidian/plugins/icon-fairy/` directory.
 
 ## Development and release
 
@@ -159,7 +161,7 @@ See [QA evidence](docs/QA.md), [UX/UI research and design decisions](docs/resear
 
 ## Support
 
-Please [open an issue](https://github.com/t1seo/icon-studio/issues) for bugs or feature requests.
+Please [open an issue](https://github.com/t1seo/icon-fairy/issues) for bugs or feature requests.
 
 [![Buy me a coffee](https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=&slug=taewonseo&button_colour=e3e7ef&font_colour=262626&font_family=Inter&outline_colour=262626&coffee_colour=a0522d)](https://www.buymeacoffee.com/taewonseo)
 

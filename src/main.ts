@@ -8,13 +8,13 @@ import { TabIcons } from "./features/TabIcons";
 import { TitleIcons } from "./features/TitleIcons";
 import { IconLibraryService } from "./services/IconLibraryService";
 import { InlineAnnotationStore } from "./services/InlineAnnotationStore";
-import { IconStudioSettingTab } from "./settings";
-import type { IconData, IconMapping, IconStudioData, IconStudioSettings } from "./types";
+import { IconFairySettingTab } from "./settings";
+import type { IconData, IconFairyData, IconFairySettings, IconMapping } from "./types";
 import { IconPickerModal } from "./ui/IconPickerModal";
 
-export default class IconStudioPlugin extends Plugin {
+export default class IconFairyPlugin extends Plugin {
 	private readonly inlineSizeDocuments = new Set<Document>();
-	settings!: IconStudioSettings;
+	settings!: IconFairySettings;
 	iconMap!: IconMapping;
 	explorerIcons!: ExplorerIcons;
 	tabIcons!: TabIcons;
@@ -38,7 +38,7 @@ export default class IconStudioPlugin extends Plugin {
 				this.inlineSizeDocuments.delete(win.document);
 			}),
 		);
-		this.addSettingTab(new IconStudioSettingTab(this.app, this));
+		this.addSettingTab(new IconFairySettingTab(this.app, this));
 
 		// Initialize icon library
 		this.iconLibrary = new IconLibraryService(this.app.vault.adapter, this.manifest.dir!);
@@ -99,14 +99,14 @@ export default class IconStudioPlugin extends Plugin {
 	}
 
 	async loadSettings() {
-		const data = ((await this.loadData()) ?? {}) as Partial<IconStudioData>;
+		const data = ((await this.loadData()) ?? {}) as Partial<IconFairyData>;
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, data.settings);
 		this.iconMap = data.iconMap ?? {};
 		this.inlineAnnotations = new InlineAnnotationStore(data.inlineIconAnnotations ?? {});
 	}
 
 	async saveSettings() {
-		const data: IconStudioData = {
+		const data: IconFairyData = {
 			settings: this.settings,
 			iconMap: this.iconMap,
 			inlineIconAnnotations: this.inlineAnnotations.toJSON(),

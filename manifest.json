@@ -1,7 +1,7 @@
 {
-	"id": "icon-studio",
-	"name": "Folder Fairy",
-	"version": "2.0.3",
+	"id": "icon-fairy",
+	"name": "Icon Fairy",
+	"version": "3.0.0",
 	"minAppVersion": "1.5.7",
 	"description": "Upload and use custom image icons across files, folders, tabs, note titles, and inline text.",
 	"author": "t1seo",

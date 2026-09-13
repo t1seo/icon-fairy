@@ -1,4 +1,4 @@
-import type { IconStudioSettings } from "./types";
+import type { IconFairySettings } from "./types";
 
 /** Icon size rendered in the file explorer (px) */
 export const EXPLORER_ICON_SIZE = 17;
@@ -10,7 +10,7 @@ export const TAB_ICON_SIZE = 16;
 export const TITLE_ICON_SIZE = 48;
 
 /** Default plugin settings */
-export const DEFAULT_SETTINGS: IconStudioSettings = {
+export const DEFAULT_SETTINGS: IconFairySettings = {
 	enableInlineIcons: false,
 	inlineIconSize: 20,
 	inlineIconPrefix: "ci",

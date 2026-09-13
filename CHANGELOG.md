@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0] - 2026-09-13
+
+### Changed
+
+- Unified the product name as **Icon Fairy**, with plugin ID `icon-fairy`, repository `t1seo/icon-fairy`, and package metadata `obsidian-icon-fairy`
+- Applied the selected A2 original logo and updated the sample vault, current documentation, and logo comparison gallery
+- Preserved the warning fixes, minimum Obsidian 1.5.7, existing settings and annotation format, and `:ci-...:` note syntax
+
+### Migration
+
+- This is a separate installation because the published `icon-studio` identifier cannot be changed in place
+- Existing Folder Fairy 2.x (`icon-studio`) and Custom Icon / Icon Studio 1.x (`custom-icon`) users can copy their backed-up data, library, and icons from one previous installation using the migration guide; hotkeys must be assigned to the new commands
+- Previous repositories and releases remain available at [t1seo/icon-studio](https://github.com/t1seo/icon-studio) and [t1seo/obsidian-icon-studio](https://github.com/t1seo/obsidian-icon-studio)
+
 ## [2.0.3] - 2026-09-13
 
 ### Fixed

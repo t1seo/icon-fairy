@@ -1,5 +1,5 @@
 import { Component, MarkdownRenderer } from "obsidian";
-import type IconStudioPlugin from "../../main";
+import type IconFairyPlugin from "../../main";
 
 const previewHiders = new WeakMap<HTMLElement, () => void>();
 
@@ -11,7 +11,7 @@ export function hideInlineHoverPreviews(container: HTMLElement): void {
 
 export function attachHoverPreview(
 	span: HTMLElement,
-	plugin: Pick<IconStudioPlugin, "app" | "inlineAnnotations">,
+	plugin: Pick<IconFairyPlugin, "app" | "inlineAnnotations">,
 	iconUrl: string,
 	iconName: string,
 	annotationId: string | undefined,

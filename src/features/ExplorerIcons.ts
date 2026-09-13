@@ -1,5 +1,5 @@
 import { CSS_PREFIX, EXPLORER_ICON_SIZE } from "../constants";
-import type IconStudioPlugin from "../main";
+import type IconFairyPlugin from "../main";
 import type { IconData } from "../types";
 import { ExplorerObserver } from "./explorer/ExplorerObserver";
 
@@ -9,7 +9,7 @@ export class ExplorerIcons {
 	private enabled = false;
 	private eventsRegistered = false;
 
-	constructor(private plugin: IconStudioPlugin) {}
+	constructor(private plugin: IconFairyPlugin) {}
 
 	enable() {
 		if (this.enabled) return;

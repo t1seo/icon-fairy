@@ -1,6 +1,6 @@
 import { type App, PluginSettingTab, Setting, type SettingDefinitionItem } from "obsidian";
 import { DEFAULT_SETTINGS } from "./constants";
-import type IconStudioPlugin from "./main";
+import type IconFairyPlugin from "./main";
 
 type InlineSetting = {
 	readonly name: string;
@@ -8,10 +8,10 @@ type InlineSetting = {
 	readonly render: (setting: Setting) => void;
 };
 
-export class IconStudioSettingTab extends PluginSettingTab {
+export class IconFairySettingTab extends PluginSettingTab {
 	constructor(
 		app: App,
-		private plugin: IconStudioPlugin,
+		private plugin: IconFairyPlugin,
 	) {
 		super(app, plugin);
 	}

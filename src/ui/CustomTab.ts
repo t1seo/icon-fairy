@@ -1,12 +1,12 @@
 import { setIcon } from "obsidian";
 import { CSS_PREFIX } from "../constants";
-import type IconStudioPlugin from "../main";
+import type IconFairyPlugin from "../main";
 import type { CustomIcon } from "../types";
 import type { IconPickerModal, TabRenderer } from "./IconPickerModal";
 
-type CustomTabPlugin = Pick<IconStudioPlugin, "iconMap" | "removeIcon"> & {
+type CustomTabPlugin = Pick<IconFairyPlugin, "iconMap" | "removeIcon"> & {
 	readonly iconLibrary: Pick<
-		IconStudioPlugin["iconLibrary"],
+		IconFairyPlugin["iconLibrary"],
 		"getAll" | "search" | "getIconUrl" | "rename" | "remove"
 	>;
 };

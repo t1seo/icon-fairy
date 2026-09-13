@@ -1,9 +1,9 @@
 {
 	"icons": [
 		{
-			"id": "icon-studio",
-			"name": "Icon Studio",
-			"path": "icons/icon-studio.png",
+			"id": "icon-fairy",
+			"name": "Icon Fairy",
+			"path": "icons/icon-fairy.png",
 			"createdAt": 1787083200000,
 			"ext": "png"
 		},

@@ -96,3 +96,28 @@ The installed manifest and stylesheet are byte-identical to their release assets
 The original QA data, library, and icon files were then restored while the plugin was unloaded. The catalog-installed plugin reloaded one library icon, two assignments, the original settings and annotation, and five loaded PNG elements. All five restored baseline files match their backup. Hosted review status is recorded separately in [the release audit](research/obsidian-community-release.md).
 
 At 08:17 UTC, the hosted automated review for 2.0.3 / `3c8c5cb` completed with zero errors and zero warnings, including successful byte-for-byte build reproduction. The public page shows **Review: Passed**, **Health: Excellent**, and an enabled installation link. The earlier failed review belongs to 2.0.1. QA windows were closed and the temporarily enabled CLI was restored to its original disabled state.
+
+## Icon Fairy 3.0.0 identity alignment — 2026-09-13
+
+The maintainer selected **Icon Fairy**, installation ID `icon-fairy`, repository `t1seo/icon-fairy`, and original logo **A2**. This new installation identity retains the 2.0.3 runtime behavior, data format, `:ci-...:` syntax, and minimum Obsidian 1.5.7. TypeScript changes only rename brand symbols and reorder the affected imports.
+
+`npm run verify` passed the existing 18 test files / 150 tests, current Obsidian lint with zero warnings, formatting, TypeScript, build, and release validation. The dependency graph is unchanged. New release checks reject a stale sample manifest ID, an incorrect enabled plugin ID, missing library images, and inconsistent sample mappings. Temporary failure fixtures demonstrated the previous gaps and the new rejections without changing production files.
+
+The selected A2, `assets/icon-fairy-mark.png`, and sample `icons/icon-fairy.png` are byte-identical. The sample contains seven icons and seven assignments, including `Welcome to Icon Fairy.md`; its other six SVGs, settings, note shortcodes, and annotation payload are unchanged. The original six logo candidates and historical artwork remain available.
+
+Actual Obsidian 1.13.7 checks passed in four isolated vaults:
+
+| Area | Observed result |
+| --- | --- |
+| Fresh installation | Icon Fairy / `icon-fairy` / 3.0.0, empty library and assignments, default settings, and exactly three new commands |
+| Folder Fairy migration | One icon, two assignments, 20 px size, `ci` prefix, and the original annotation loaded from the single `icon-studio` source |
+| Icon Studio migration | Seven icons, seven assignments, 24 px size, `ci` prefix, and the original annotation loaded from the single `custom-icon` source |
+| Hotkeys | Legacy entries remained unchanged; assigning a new `icon-fairy:` command created a separate binding |
+| Sample and rendering | Seven icons and assignments; original A2 loaded in Reading and Live Preview; unknown shortcodes remained literal; existing annotation Markdown rendered |
+| Settings | Three Icon Fairy search results; saved settings, assignments, and annotations survived reload |
+| Screenshots | Nine new actual-app captures inspected visually, including official desktop mobile emulation at a 390 × 820 viewport |
+| Preservation | All 13 and 34 original fixture files, copied legacy directories, and migrated data/library/images remained byte-identical; all four vaults used the frozen release candidate |
+
+All five review scopes passed. The user's working vault was not used for plugin testing. The mobile capture is desktop emulation, not a physical-device test. These checks cover the identity/A2 change; they do not claim to repeat the previous version's 37 broader scenarios. The A2 mark, nine screenshots, and current documentation links were also independently inspected.
+
+Public release, hosted review, and actual Community catalog installation remain separate pending gates; the fresh installation above used the verified local candidate.

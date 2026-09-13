@@ -1,4 +1,4 @@
-import type IconStudioPlugin from "../main";
+import type IconFairyPlugin from "../main";
 import { IconPickerModal } from "../ui/IconPickerModal";
 
 /**
@@ -6,7 +6,7 @@ import { IconPickerModal } from "../ui/IconPickerModal";
  * and registers Command Palette commands.
  */
 export class ContextMenu {
-	constructor(private plugin: IconStudioPlugin) {}
+	constructor(private plugin: IconFairyPlugin) {}
 
 	enable() {
 		// File explorer context menu

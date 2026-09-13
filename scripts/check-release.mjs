@@ -5,6 +5,10 @@ const packageJson = JSON.parse(readFileSync("package.json", "utf8"));
 const versions = JSON.parse(readFileSync("versions.json", "utf8"));
 const errors = [];
 
+if (manifest.id !== "icon-fairy" || manifest.name !== "Icon Fairy") {
+	errors.push("manifest.id and manifest.name must use the canonical identity icon-fairy / Icon Fairy");
+}
+
 if (!/^[a-z-]+$/.test(manifest.id) || manifest.id.includes("obsidian") || manifest.id.endsWith("plugin")) {
 	errors.push("manifest.id must use lowercase letters and hyphens, exclude 'obsidian', and not end with 'plugin'");
 }
@@ -33,6 +37,42 @@ if (packageJson.name !== expectedPackageName) {
 
 if (versions[manifest.version] !== manifest.minAppVersion) {
 	errors.push(`versions.json must map ${manifest.version} to ${manifest.minAppVersion}`);
+}
+
+const sampleVault = "examples/programming-languages-vault";
+const samplePlugin = `${sampleVault}/.obsidian/plugins/icon-fairy`;
+const sampleManifest = JSON.parse(readFileSync(`${samplePlugin}/manifest.json`, "utf8"));
+for (const field of ["id", "name", "version", "minAppVersion"]) {
+	if (sampleManifest[field] !== manifest[field]) {
+		errors.push(`sample manifest.${field} must match the release manifest`);
+	}
+}
+
+const sampleEnabled = JSON.parse(readFileSync(`${sampleVault}/.obsidian/community-plugins.json`, "utf8"));
+if (!Array.isArray(sampleEnabled) || sampleEnabled.length !== 1 || sampleEnabled[0] !== manifest.id) {
+	errors.push("sample community-plugins.json must enable only icon-fairy");
+}
+
+const sampleLibrary = JSON.parse(readFileSync(`${samplePlugin}/icon-library.json`, "utf8"));
+const sampleLogo = sampleLibrary.icons.find((icon) => icon.id === "icon-fairy");
+if (sampleLogo?.name !== "Icon Fairy" || sampleLogo?.path !== "icons/icon-fairy.png") {
+	errors.push("sample logo must use icon-fairy / Icon Fairy / icons/icon-fairy.png");
+}
+for (const icon of sampleLibrary.icons) {
+	const asset = `${samplePlugin}/${icon.path}`;
+	if (!existsSync(asset) || !statSync(asset).isFile() || statSync(asset).size === 0) {
+		errors.push(`missing or empty sample library image: ${icon.path}`);
+	}
+}
+
+const sampleData = JSON.parse(readFileSync(`${samplePlugin}/data.json`, "utf8"));
+for (const [path, icon] of Object.entries(sampleData.iconMap)) {
+	if (!existsSync(`${sampleVault}/${path}`)) {
+		errors.push(`sample icon mapping points to a missing file or folder: ${path}`);
+	}
+	if (icon.type === "custom" && !sampleLibrary.icons.some((entry) => entry.id === icon.value)) {
+		errors.push(`sample icon mapping references a missing library icon: ${icon.value}`);
+	}
 }
 
 for (const asset of ["main.js", "manifest.json", "styles.css"]) {

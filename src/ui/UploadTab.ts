@@ -1,6 +1,6 @@
 import { setIcon } from "obsidian";
 import { CSS_PREFIX, ICONS_DIR } from "../constants";
-import type IconStudioPlugin from "../main";
+import type IconFairyPlugin from "../main";
 import {
 	type ProcessedImage,
 	type ProcessedSvg,
@@ -15,13 +15,13 @@ type UploadPlugin = {
 	readonly app: {
 		readonly vault: {
 			readonly adapter: Pick<
-				IconStudioPlugin["app"]["vault"]["adapter"],
+				IconFairyPlugin["app"]["vault"]["adapter"],
 				"exists" | "mkdir" | "writeBinary"
 			>;
 		};
 	};
-	readonly manifest: Pick<IconStudioPlugin["manifest"], "dir">;
-	readonly iconLibrary: Pick<IconStudioPlugin["iconLibrary"], "add" | "addBatch">;
+	readonly manifest: Pick<IconFairyPlugin["manifest"], "dir">;
+	readonly iconLibrary: Pick<IconFairyPlugin["iconLibrary"], "add" | "addBatch">;
 };
 
 /** Accepted file extensions for the file picker */

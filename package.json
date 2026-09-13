@@ -1,6 +1,6 @@
 {
-	"name": "obsidian-folder-fairy",
-	"version": "2.0.3",
+	"name": "obsidian-icon-fairy",
+	"version": "3.0.0",
 	"description": "Upload and use custom image icons across files, folders, tabs, note titles, and inline text.",
 	"main": "main.js",
 	"scripts": {
@@ -21,7 +21,7 @@
 		"obsidian",
 		"plugin",
 		"icon",
-		"icon-studio"
+		"icon-fairy"
 	],
 	"author": "t1seo",
 	"license": "MIT",
@@ -43,5 +43,13 @@
 		"typescript": "^5.6.0",
 		"typescript-eslint": "^8.54.0",
 		"vitest": "4.1.11"
-	}
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/t1seo/icon-fairy.git"
+	},
+	"bugs": {
+		"url": "https://github.com/t1seo/icon-fairy/issues"
+	},
+	"homepage": "https://github.com/t1seo/icon-fairy#readme"
 }

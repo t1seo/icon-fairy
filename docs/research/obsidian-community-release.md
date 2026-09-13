@@ -87,3 +87,13 @@ The six original logo candidates are published in the [HTML comparison gallery](
 At 08:17 UTC, the new hosted review explicitly identified **2.0.3 / 3c8c5cb** and reached **Completed** with **zero error groups and zero warning groups**. Release attestations, network analysis, dependencies, and byte-for-byte build reproduction passed; the previous source/CSS findings no longer appear in this review. The old 2.0.1 **Failed** and 2.0.2 warning results remain visible as historical rows.
 
 The [public listing](https://community.obsidian.md/plugins/icon-studio) now shows current version **2.0.3**, **Review: Passed**, **Health: Excellent**, and an enabled `obsidian://show-plugin?id=icon-studio` link. Both the primary directory feed and GitHub mirror contain the entry. Their manual-review disclaimer remains, so this audit does not claim staff approval.
+
+## Icon Fairy identity alignment — 2026-09-13 (preparation)
+
+The maintainer subsequently chose **Icon Fairy (아이콘 요정)** and original logo **A2**, and requested consistent product, repository, and installation-page naming. The proposed canonical identity is `icon-fairy` in `t1seo/icon-fairy`, version 3.0.0. This section records preparation, not completed publication.
+
+The [official Community FAQ](https://docs.obsidian.md/community-directory/faq) says that published identifiers cannot be changed through the normal edit flow; identifier changes require users to reinstall. Moving an entry to another GitHub location requires administrator assistance. The actual Folder Fairy edit form also exposes neither an identifier nor repository field. The existing 2.0.3 repository and release remain intact while a separate canonical entry is prepared, so its installed users are not sent a release with a different manifest ID. No external administrator message was sent.
+
+GitHub repository renames redirect most existing traffic, but the existing 2.0.3 attestation is signed for `t1seo/icon-studio`. Preserving that repository also preserves its original release provenance. The new repository will publish only its own 3.0.0 compatibility entry and attested release. See [GitHub repository rename documentation](https://docs.github.com/en/repositories/creating-and-managing-repositories/renaming-a-repository) and [attestation verification](https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations/verify-attestations-offline).
+
+The Folder Fairy listing will be archived only after the replacement passes review and actual Community catalog installation. Migration selects one prior installation, preserves its data/library/icons, and requires reassignment of hotkeys to `icon-fairy` commands. Historical results above continue to refer to their original names and IDs.

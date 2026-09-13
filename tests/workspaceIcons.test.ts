@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ExplorerIcons } from "../src/features/ExplorerIcons";
 import { TabIcons } from "../src/features/TabIcons";
 import { TitleIcons } from "../src/features/TitleIcons";
-import IconStudioPlugin from "../src/main";
+import IconFairyPlugin from "../src/main";
 import { IconLibraryService } from "../src/services/IconLibraryService";
 import { installWorkspaceDom, secondaryDocument } from "./helpers/workspaceDom";
 
@@ -19,7 +19,7 @@ vi.mock("../src/features/ContextMenu", () => ({
 		enable() {}
 	},
 }));
-vi.mock("../src/settings", () => ({ IconStudioSettingTab: class {} }));
+vi.mock("../src/settings", () => ({ IconFairySettingTab: class {} }));
 vi.mock("../src/ui/IconPickerModal", () => ({ IconPickerModal: class {} }));
 vi.mock("../src/services/IconLibraryService", () => ({
 	IconLibraryService: class {
@@ -34,10 +34,10 @@ vi.mock("../src/services/IconLibraryService", () => ({
 
 function fixture() {
 	const app = new App();
-	const plugin = new IconStudioPlugin(app, {
-		id: "icon-studio",
-		name: "Folder Fairy",
-		version: "2.0.3",
+	const plugin = new IconFairyPlugin(app, {
+		id: "icon-fairy",
+		name: "Icon Fairy",
+		version: "3.0.0",
 		minAppVersion: "1.5.7",
 		author: "Test",
 		description: "Test",

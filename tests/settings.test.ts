@@ -1,12 +1,12 @@
 import { App, Setting, SettingGroup } from "obsidian";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import IconStudioPlugin from "../src/main";
-import { IconStudioSettingTab } from "../src/settings";
-import type { IconStudioData } from "../src/types";
+import IconFairyPlugin from "../src/main";
+import { IconFairySettingTab } from "../src/settings";
+import type { IconFairyData } from "../src/types";
 
 vi.mock("obsidian", () => import("./helpers/settingsObsidian"));
 
-const seed: IconStudioData = {
+const seed: IconFairyData = {
 	settings: { enableInlineIcons: true, inlineIconSize: 24, inlineIconPrefix: "ci" },
 	iconMap: { "QA.md": { type: "custom", value: "fairy" } },
 	inlineIconAnnotations: {
@@ -16,10 +16,10 @@ const seed: IconStudioData = {
 
 async function fixture() {
 	const app = new App();
-	const plugin = new IconStudioPlugin(app, {
-		id: "icon-studio",
-		name: "Folder Fairy",
-		version: "2.0.3",
+	const plugin = new IconFairyPlugin(app, {
+		id: "icon-fairy",
+		name: "Icon Fairy",
+		version: "3.0.0",
 		minAppVersion: "1.5.7",
 		description: "Test",
 		author: "Test",
@@ -35,7 +35,7 @@ async function fixture() {
 	});
 	const resize = vi.spyOn(plugin, "updateInlineSizeCSSVar").mockImplementation(() => {});
 	await plugin.loadSettings();
-	const tab = new IconStudioSettingTab(app, plugin);
+	const tab = new IconFairySettingTab(app, plugin);
 	return { app, plugin, tab, saved, resize, updated };
 }
 
@@ -45,7 +45,7 @@ function input(container: HTMLElement, type: string): HTMLInputElement {
 	return element;
 }
 
-function render(tab: IconStudioSettingTab, mode: "legacy" | "searchable"): void {
+function render(tab: IconFairySettingTab, mode: "legacy" | "searchable"): void {
 	if (mode === "legacy") {
 		tab.display();
 		return;

@@ -1,6 +1,6 @@
 import { MarkdownView } from "obsidian";
 import { CSS_PREFIX, TITLE_ICON_SIZE } from "../constants";
-import type IconStudioPlugin from "../main";
+import type IconFairyPlugin from "../main";
 import { IconPickerModal } from "../ui/IconPickerModal";
 
 /** Displays an editable icon above the active note's inline title. */
@@ -9,7 +9,7 @@ export class TitleIcons {
 	private enabled = false;
 	private eventsRegistered = false;
 
-	constructor(private plugin: IconStudioPlugin) {}
+	constructor(private plugin: IconFairyPlugin) {}
 
 	enable() {
 		if (this.enabled) return;

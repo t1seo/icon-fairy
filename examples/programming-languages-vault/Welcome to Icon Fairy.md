@@ -1,4 +1,4 @@
-# Icon Studio
+# Icon Fairy
 
 Your images. Your icons. Your vault.
 

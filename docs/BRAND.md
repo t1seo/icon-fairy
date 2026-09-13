@@ -1,20 +1,22 @@
-# Folder Fairy brand
+# Icon Fairy brand
 
 ## Positioning
 
-Folder Fairy turns a user's own PNG, JPG, WebP, and SVG images into a visual navigation system for an Obsidian vault. It combines an icon library with file, folder, tab, note-title, and inline placements, including per-instance Markdown annotations.
+Icon Fairy turns a user's own PNG, JPG, WebP, and SVG images into icons for an Obsidian vault. It combines an icon library with file, folder, tab, note-title, and inline placements, including per-instance Markdown annotations.
 
 **Tagline:** Your images. Your icons. Your vault.
 
 ## Naming
 
-- Product name: **Folder Fairy**
-- Repository: `t1seo/icon-studio`
-- npm package metadata: `obsidian-folder-fairy`
-- Plugin ID from 2.0.0: `icon-studio`
+- Product name: **Icon Fairy**
+- Korean name: **아이콘 요정**
+- Repository: `t1seo/icon-fairy`
+- npm package metadata: `obsidian-icon-fairy`
+- Plugin ID from 3.0.0: `icon-fairy`
+- Minimum Obsidian version: **1.5.7**
 - Default inline syntax: `:ci-NAME:`
 
-The name matches the friendly folder character. The description explains that custom images work on files, folders, tabs, note titles, and inline text. The package name retains the `obsidian-` qualifier. Version 2.0.0 deliberately introduces a new installation identity; the [migration guide](MIGRATING.md) explains how to preserve old data. The shortcode syntax stays the same.
+The name covers the full range of icon placements. The folder character gives the product a friendly, recognizable face. Version 3.0.0 introduces a separate installation identity; the [migration guide](MIGRATING.md) explains how to preserve data from either previous identity. The shortcode syntax and existing library icon IDs stay the same.
 
 ## Voice
 
@@ -22,22 +24,22 @@ Use plain, concrete language. Lead with the user's action and the visible result
 
 ## Visual direction
 
-- Character body: lavender `#9166D9`
-- Character pocket and eyes: deep plum `#352047`
-- Background: peach `#EFC9B9`
+- Character body: coral `#ED8D79`
+- Character pocket and eyes: berry `#7C355E`
+- Background: lilac `#CFC3E6`
 
-The mark is a friendly folder fairy: a rounded folder body, broad front pocket, and small eyes, emerging from the lower-left. It represents a personal, approachable vault. `assets/icon-studio-mark.png` is the unmodified 1254 × 1254 original from candidate A1, generated with the built-in image_gen tool using the `ip-as-logo` workflow. The provider did not expose a model identifier. The requested colors describe semantic color families; the original includes the generator's tonal variation.
+The selected mark is candidate **A2**: a rounded folder character with a broad front pocket and small eyes, emerging from the lower-right. [icon-fairy-mark.png](../assets/icon-fairy-mark.png) is a byte-for-byte copy of its unmodified 1254 × 1254 original, generated with the built-in image_gen tool using the `ip-as-logo` workflow. The provider did not expose a model identifier. The requested colors describe semantic color families; the original includes the generator's tonal variation.
 
-Use the PNG in documentation, the sample vault, and screenshots. The Community directory only offers built-in Lucide glyphs for its small listing icon; the published entry uses the purple `folder-heart` glyph, while its overview and screenshot show the original folder fairy. Keep the generated original unchanged; the previous SVG image-tile mark is retained only as historical artwork. Exact generation instructions are recorded in [folder-fairy-prompt.txt](folder-fairy-prompt.txt).
+Use the PNG in documentation, the sample vault, and screenshots. The Community directory offers built-in Lucide glyphs for its small listing icon; the PNG belongs in the overview and screenshots. Keep the generated original unchanged. Exact generation instructions are recorded in [icon-fairy-prompt.txt](icon-fairy-prompt.txt), copied from the original A2 prompt.
 
 ## Logo candidates
 
-All six original folder-fairy candidates, prompts, and palettes are available in the [comparison gallery](../assets/logo-candidates/index.html). Open the HTML locally to compare them; A1 remains the current artwork until a different candidate is selected.
+All six original folder-character candidates, prompts, and palettes remain available in the [comparison gallery](../assets/logo-candidates/index.html). Open the HTML locally to compare them. **A2 is the current artwork**, selected for Icon Fairy. The A1 PNG, its previous mark copy, the previous SVG mark, and their generation records remain as historical artwork.
 
 ## Rename history
 
-The project started as Custom Icon and briefly used Vault Icon Studio. Version 1.3.1 adopts Icon Studio because it is easier to read, say, and find in Obsidian settings. This is a product naming decision, not legal trademark clearance.
+The project started as Custom Icon and briefly used Vault Icon Studio. Version 1.3.1 adopted Icon Studio. Those releases used plugin ID `custom-icon` and remain in [t1seo/obsidian-icon-studio](https://github.com/t1seo/obsidian-icon-studio).
 
-Version 2.0.0 is the same maintainer's successor with a new plugin ID, repository, and folder-fairy artwork. The original repository and its release history remain available. The new Community submission must disclose this continuity and pass the normal review process.
+Version 2.0.0 introduced plugin ID `icon-studio`, repository [t1seo/icon-studio](https://github.com/t1seo/icon-studio), and A1 artwork. Version 2.0.1 adopted **Folder Fairy** because the directory rejected the already-used Icon Studio display name even after the old entry was archived. The 2.x ID and repository stayed unchanged.
 
-Version 2.0.1 adopts **Folder Fairy** because the directory rejected the already-used Icon Studio display name even after the old entry was archived. The new ID and repository introduced in 2.0.0 remain unchanged.
+Version 3.0.0 adopts **Icon Fairy (아이콘 요정)** with ID and repository slug `icon-fairy` and the user-selected A2 artwork. The earlier repositories, releases, and user data are preserved. The new Community entry must disclose this continuity and complete the normal review process. These names record product decisions, not legal trademark clearance.

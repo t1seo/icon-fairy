@@ -48,7 +48,7 @@ function createTab() {
 					},
 				},
 			},
-			manifest: { dir: ".obsidian/plugins/icon-studio" },
+			manifest: { dir: ".obsidian/plugins/icon-fairy" },
 			iconLibrary: {
 				add: vi.fn(() => Promise.resolve()),
 				addBatch: vi.fn(() => Promise.resolve()),

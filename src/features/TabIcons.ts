@@ -1,6 +1,6 @@
 import { MarkdownView, type WorkspaceLeaf } from "obsidian";
 import { CSS_PREFIX, TAB_ICON_SIZE } from "../constants";
-import type IconStudioPlugin from "../main";
+import type IconFairyPlugin from "../main";
 import type { IconData } from "../types";
 
 /** Internal Obsidian tab DOM; the public API does not expose the header element. */
@@ -14,7 +14,7 @@ export class TabIcons {
 	private enabled = false;
 	private eventsRegistered = false;
 
-	constructor(private plugin: IconStudioPlugin) {}
+	constructor(private plugin: IconFairyPlugin) {}
 
 	enable() {
 		if (this.enabled) return;

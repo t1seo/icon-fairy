@@ -35,7 +35,7 @@ export interface InlineIconAnnotation {
 export type InlineIconAnnotationMapping = Record<string, InlineIconAnnotation>;
 
 /** Plugin settings stored in data.json */
-export interface IconStudioSettings {
+export interface IconFairySettings {
 	/** Enable inline :icon: shortcodes in notes */
 	enableInlineIcons: boolean;
 	/** Inline icon size in px */
@@ -45,8 +45,8 @@ export interface IconStudioSettings {
 }
 
 /** Persisted plugin data (settings + icon mappings combined) */
-export interface IconStudioData {
-	settings: IconStudioSettings;
+export interface IconFairyData {
+	settings: IconFairySettings;
 	iconMap: IconMapping;
 	inlineIconAnnotations: InlineIconAnnotationMapping;
 }

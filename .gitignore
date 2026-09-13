@@ -21,11 +21,11 @@ icon-library.json
 icons/
 
 # Keep the documented sample vault self-contained
-!examples/programming-languages-vault/.obsidian/plugins/icon-studio/data.json
-!examples/programming-languages-vault/.obsidian/plugins/icon-studio/icon-library.json
-!examples/programming-languages-vault/.obsidian/plugins/icon-studio/icons/
-!examples/programming-languages-vault/.obsidian/plugins/icon-studio/icons/*.svg
-!examples/programming-languages-vault/.obsidian/plugins/icon-studio/icons/*.png
+!examples/programming-languages-vault/.obsidian/plugins/icon-fairy/data.json
+!examples/programming-languages-vault/.obsidian/plugins/icon-fairy/icon-library.json
+!examples/programming-languages-vault/.obsidian/plugins/icon-fairy/icons/
+!examples/programming-languages-vault/.obsidian/plugins/icon-fairy/icons/*.svg
+!examples/programming-languages-vault/.obsidian/plugins/icon-fairy/icons/*.png
 
 # Sample icons (for screenshots only)
 assets/sample_icons/
