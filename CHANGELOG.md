@@ -7,9 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-09-13
+
 ### Changed
 
-- Updated the Community directory documentation after submitting Icon Studio 1.3.1 for manual review
+- Relaunched as a separate plugin with ID `icon-studio` from `t1seo/icon-studio`
+- Replaced the image-tile mark with a folder-fairy character
+- Updated the sample vault and installation paths for the new plugin identity
+- Added a backup-first migration guide for icons, settings, assignments, and annotations from `custom-icon`
+- Preserved the `:ci-...:` note syntax; existing installations and hotkeys require explicit migration
+
+The previous `custom-icon` repository and releases remain at [t1seo/obsidian-icon-studio](https://github.com/t1seo/obsidian-icon-studio). Community approval is a separate step from the GitHub release.
+
+### Documentation
+
+- Recorded the earlier 1.3.1 Community directory submission and its manual review request
 
 ## [1.3.1] - 2026-08-19
 

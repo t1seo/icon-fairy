@@ -1,56 +1,46 @@
-# Icon Studio 1.3.1 QA
+# Icon Studio 2.0.0 QA
 
-QA date: 2026-08-19
+QA date: 2026-09-13. Scope: new installation identity, folder-fairy branding, sample consistency, and migration from `custom-icon`. Runtime TypeScript and CSS are unchanged from 1.3.1. The [August 19 report](QA-1.3.1.md) preserves the broader historical UI and mobile tests; those results are not presented as new tests.
 
-## Environment
+## Environment and method
 
-- macOS desktop
-- Obsidian 1.13.7
-- Isolated vault: a temporary copy of `examples/programming-languages-vault`
-- Plugin build: Icon Studio 1.3.1
-- Mobile surface: Obsidian's documented desktop mobile emulation, enabled with `this.app.emulateMobile(true)`
+Two disposable vaults were used on macOS: **Icon Studio Fresh QA** and **Icon Studio Migration QA**. Initial fresh-install checks ran in Obsidian 1.12.7; independent fresh checks and migration checks ran in 1.13.7 after the application restarted. The installer was 1.10.6. The user's working vault was not used for plugin tests.
 
-## Automated gate
+The real Obsidian application was driven through its CLI, DOM events, and desktop controls. PNG import used the actual upload file-input handler and **Save to library → Apply**. Folder/note assignment and annotation persistence were additionally exercised through the loaded plugin's methods. Screenshots and DOM image-load checks verified the rendered results. This was not a full mouse-only repeat of every 1.3.1 UI flow.
 
-Run `npm run verify`. The gate covers formatting, Obsidian ESLint rules, unit tests with 100% target coverage, TypeScript, the production bundle, manifest consistency, and release assets.
+## Automated checks
 
-The command-registration regression test also checks that `change-icon`, `remove-icon`, and `insert-inline-icon` are each registered exactly once. This was added after manual QA exposed a duplicate registration that caused Obsidian to omit the insert command.
+- `npm ci` and `npm run verify`: passed formatting, Obsidian lint, 9 test files / 76 tests, TypeScript, build, and release validation.
+- Configured unit-coverage scope: 100%; this does not mean all Obsidian UI code is covered.
+- Separate assertions: root/sample manifests, package/lock versions, new ID, sole `versions.json` entry, seven sample icons, and identical selected/sample PNG.
+- `npm audit --omit=dev`: zero production vulnerabilities. Existing development-dependency advisories remain outside this metadata/branding change.
+- Five independent review scopes passed: goal/constraints, QA, code quality, security, and project history. The independent local QA report covered 25 scenarios, including the checks below.
 
-## Hands-on scenarios
+## Observed results
 
-| Scenario | Result | Observed surface |
-| --- | --- | --- |
-| Plugin installation and metadata | Pass | Community plugins settings showed Icon Studio 1.3.1 by t1seo |
-| File and folder assignment | Pass | Right-click change/remove actions persisted and refreshed the explorer |
-| Explorer, tab, and note-title icons | Pass | Programming Languages and all five language notes rendered their assigned SVGs |
-| Library picker | Pass | Seven clean sample icons rendered; contextual title, search, labeled random selection, keyboard tabs, and selection worked |
-| Modal exclusivity | Pass | Three repeated command launches left exactly one picker open |
-| Single upload | Pass | Keyboard-accessible upload zone processed an SVG into sidebar and editor previews |
-| Batch SVG import | Pass | Two SVGs were reviewed, renamed, imported, persisted, and then removed from the final sample; an edited name survived removal of its neighboring row |
-| Inline icons in Live Preview | Pass | Five language shortcodes rendered at the configured 24 px size |
-| Inline icons in Reading view | Pass | `Cmd+E` rendered the same five icons outside the editor |
-| Insert command | Pass | Command opened the picker, TypeScript was selected by keyboard, and `:ci-typescript:` was inserted at the cursor |
-| Change and remove commands | Pass | All three branded commands appeared in the command palette |
-| Annotation add/edit/remove UI | Pass | Context menu, Markdown editor, live preview, wiki link, save shortcut, accent marker, and persisted JSON worked |
-| Settings | Pass | Size slider and prefix field saved without an Apply button; values survived reload and were restored to the sample's 24 px / `ci` state |
-| Restart persistence | Pass | Disabling the plugin exposed raw shortcodes; re-enabling restored folder, note, inline, and annotated icons, while `data.json` and `icon-library.json` hashes stayed unchanged |
-| Autocomplete | Pass | With the ABC input source selected, typing `:ci-` in the editor opened all seven icon suggestions; pressing Return inserted the selected shortcode |
-| Mobile | Pass | In Obsidian's [documented desktop mobile emulation](https://docs.obsidian.md/Plugins/Getting%20started/Mobile%20development), five inline icons and the annotation marker rendered; the remove command, insert command, and seven-item picker were exercised in the mobile layout |
+| Scenario | Result |
+| --- | --- |
+| Empty vault installs `icon-studio` 2.0.0 | Pass; only the new plugin was loaded and its library started empty |
+| Command identity | Pass; exactly `icon-studio:change-icon`, `icon-studio:remove-icon`, and `icon-studio:insert-inline-icon` were registered |
+| Folder-fairy PNG import | Pass; image processed, saved to the library, and loaded from the new plugin directory |
+| Folder, note, tab, and title assignments | Pass; real rendered images loaded successfully |
+| Inline settings | Pass; enabled the initially disabled inline option through the settings control |
+| Fresh Live Preview and Reading view | Pass; inline PNG and annotation marker rendered in both modes |
+| Fresh persistence after application restart | Pass; library item, two assignments, settings, annotation, and three commands remained intact |
+| Fresh legacy-directory isolation | Pass; no `custom-icon` directory was created |
+| Migration from preserved legacy fixture | Pass; copied only data, library, and icons into the new installation before opening the vault |
+| Migrated settings and library | Pass; seven icons, seven assignments, 24 px / `ci` settings, and the existing TypeScript annotation loaded |
+| Migrated Live Preview and Reading view | Pass; five visible inline images loaded, including the annotated TypeScript icon |
+| Migrated annotation write and reload | Pass; edited annotation persisted under `icon-studio` and survived plugin reload |
+| Legacy preservation | Pass; every file in the old plugin directory remained byte-identical to its backup, and all six Markdown notes were unchanged |
+| No duplicate plugin activation | Pass; only `icon-studio` was loaded after migration and reload |
 
-## Screenshot evidence
+## Visual evidence
 
-The repository screenshots were captured from the isolated QA vault after the final sample data was restored:
+- [Fresh Live Preview](../assets/qa-2.0.0/fresh-live.png)
+- [Fresh Reading view](../assets/qa-2.0.0/fresh-reading.png)
+- [Migrated Reading view](../assets/qa-2.0.0/migration-reading.png)
 
-- `assets/icon-studio-overview.png`
-- `assets/icon-studio-library.png`
-- `assets/icon-studio-upload.png`
-- `assets/icon-studio-batch-import.png`
-- `assets/icon-studio-context-menu.png`
-- `assets/icon-studio-commands.png`
-- `assets/icon-studio-annotation.png`
-- `assets/icon-studio-settings.png`
-- `assets/icon-studio-mobile.png`
+The migrated screenshot intentionally retains the old library's logo: migration preserves a user's existing images. The committed new sample uses the folder-fairy PNG.
 
-No screenshot was fabricated or taken from the user's main vault.
-
-The design audit, reference sources, accessibility choices, and before/after decisions are recorded in [`docs/research/ux-ui-design.md`](research/ux-ui-design.md).
+GitHub publication and Community approval are separate from local QA. Their verified status is recorded in [the release audit](research/obsidian-community-release.md).

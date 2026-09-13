@@ -35,3 +35,11 @@ Icon Studio keeps the existing `custom-icon` plugin ID, publishes version `1.3.1
 - [Set up and claim](https://docs.obsidian.md/community-directory/set-up-and-claim)
 - [Manage a directory entry](https://docs.obsidian.md/community-directory/manage-entry)
 - [Release with GitHub Actions](https://docs.obsidian.md/Plugins/Releasing/Release+your+plugin+with+GitHub+Actions)
+
+## Successor preparation — 2026-09-13
+
+The maintainer chose a separate installation identity, `icon-studio`, version 2.0.0, in `t1seo/icon-studio`, with a folder-fairy logo. This supersedes the August 19 decision to retain `custom-icon`; that decision and its review history are preserved above.
+
+The old account page still reported that the automated review could not be completed and an administrator would investigate. Its August 19 manual rename request remained open, and public installation remained unavailable. The successor is the same maintainer's continuation and must pass the normal review process. A new ID does not itself grant approval.
+
+Local automated checks, real fresh/migrated Obsidian checks, and five review scopes passed. See [2.0.0 QA](../QA.md) and the [migration guide](../MIGRATING.md). The original repository and releases are preserved. Publication and directory results will be recorded separately after submission.

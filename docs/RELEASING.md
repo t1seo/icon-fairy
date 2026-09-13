@@ -11,16 +11,23 @@ npm run verify
 
 `verify` checks formatting, Obsidian lint rules, unit coverage, TypeScript, the production bundle, manifest rules, version consistency, and required release assets.
 
-## Publish the prepared 1.3.1 release
+## New installation identity
 
-Version 1.3.1 is already aligned across `package.json`, `manifest.json`, `versions.json`, and `CHANGELOG.md`. Publish that exact prepared version without incrementing it again:
+Starting with 2.0.0, the plugin ID is `icon-studio` and releases are published from `t1seo/icon-studio`. The old `t1seo/obsidian-icon-studio` repository and its `custom-icon` releases remain intact. Users of the previous identity need the [migration guide](MIGRATING.md).
+
+`versions.json` only lists versions published from the new repository. Historical changelog entries describe releases in the old repository; do not push their tags to the new one.
+
+## Publish the prepared 2.0.0 release
+
+The release is aligned across `package.json`, `manifest.json`, `versions.json`, and `CHANGELOG.md`. In the transition checkout, `origin` still points to the previous repository and `relaunch` points to the new repository. Push explicitly to the new remote:
 
 ```sh
-git tag 1.3.1
-git push origin 1.3.1
+git push relaunch HEAD:main
+git tag 2.0.0
+git push relaunch 2.0.0
 ```
 
-The tag must be the exact semantic version from `manifest.json`, without a `v` prefix. Pushing it starts the release workflow, rebuilds and verifies the plugin, attests the artifacts, and publishes a GitHub release containing:
+Verify that the new repository's default branch is `main` and its CI passed before pushing the tag. The tag must exactly match `manifest.json`, without a `v` prefix. Pushing it starts the release workflow, verifies the plugin, attests the artifacts, and publishes a GitHub release containing:
 
 - `main.js`
 - `manifest.json`
@@ -28,14 +35,20 @@ The tag must be the exact semantic version from `manifest.json`, without a `v` p
 
 ## Prepare a future version
 
-For a later patch or minor release, update `CHANGELOG.md`, then use npm's version command so `package.json`, `manifest.json`, and `versions.json` stay aligned:
+In a fresh clone of `t1seo/icon-studio`, update `CHANGELOG.md`, then use npm's version command so `package.json`, `manifest.json`, and `versions.json` stay aligned. Synchronize the committed sample manifest too:
 
 ```sh
-npm version patch # or: npm version minor
-git push origin main --follow-tags
+npm version patch --no-git-tag-version # or: minor
+cp manifest.json examples/programming-languages-vault/.obsidian/plugins/icon-studio/manifest.json
+git add package.json package-lock.json manifest.json versions.json CHANGELOG.md examples/programming-languages-vault/.obsidian/plugins/icon-studio/manifest.json
+npm run verify
+git commit -m "🔖 chore: prepare release"
+git tag <new-version>
+git push origin main
+git push origin <new-version>
 ```
 
-The repository `.npmrc` keeps npm's tag prefix empty, so the next patch command creates `1.3.2` rather than `v1.3.2` and satisfies the release workflow's exact tag check.
+The repository `.npmrc` keeps npm's tag prefix empty. In the transition checkout, use `relaunch` in place of `origin`. Never use `--tags`, which would publish legacy tags into the new repository.
 
 ## Verify the release
 
@@ -46,10 +59,14 @@ Confirm that the release tag matches `manifest.json` and that all three assets c
 Initial submission happens through [community.obsidian.md](https://community.obsidian.md), not through a pull request to `obsidianmd/obsidian-releases`.
 
 1. Sign in with an Obsidian account.
-2. Connect the GitHub account that owns `t1seo/obsidian-icon-studio` so the directory can verify repository access.
-3. Open **Plugins**, select **New plugin**, and enter `https://github.com/t1seo/obsidian-icon-studio`.
+2. Connect the GitHub account that owns `t1seo/icon-studio` so the directory can verify repository access.
+3. Open **Plugins**, select **New plugin**, and enter `https://github.com/t1seo/icon-studio`.
 4. Select the Community directory **Owner**: either the signed-in submitter or an eligible organization they belong to.
 5. Review and accept the Developer policies, then confirm continued support or removal/transfer if support can no longer be provided.
 6. Submit the entry, run the preview scan or request review, and resolve any blocking scanner errors with a new incremented release.
 
-The first listing requires an Obsidian account connected to the repository owner's GitHub account. The directory entry itself can be owned by that submitter or an eligible Community organization. Later versions are discovered automatically from GitHub releases.
+Describe this as the same maintainer's successor to `custom-icon`, including the old incomplete automated review and manual rename request. A new ID does not replace review or guarantee approval. Use the folder-fairy PNG as the listing icon.
+
+The first listing requires an Obsidian account connected to the repository owner's GitHub account. Later versions are discovered from GitHub releases. Record separately whether the GitHub release exists, the new entry was accepted, review passed, and installation is enabled. While review is pending, keep BRAT/manual installation instructions available.
+
+The supported way to retire the old directory entry is **More actions → Archive → Yes, archive**. Preserve the original GitHub repository and releases. If the new submission reports a name conflict, record it before archiving the old entry and retrying; restore the old entry if the successor cannot be created.

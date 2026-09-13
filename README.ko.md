@@ -1,14 +1,14 @@
 # Icon Studio
 
 <p align="center">
-  <img src="assets/icon-studio-mark.svg" width="112" alt="Icon Studio 로고" />
+  <img src="assets/icon-studio-mark.png" width="112" alt="Icon Studio 로고" />
 </p>
 
 <p align="center"><strong>내 이미지로, 내 아이콘으로, 내 볼트를.</strong></p>
 
 <p align="center">
-  <a href="https://github.com/t1seo/obsidian-icon-studio/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/t1seo/obsidian-icon-studio/ci.yml?branch=main&style=flat-square&label=CI" alt="CI" /></a>
-  <a href="https://github.com/t1seo/obsidian-icon-studio/releases/latest"><img src="https://img.shields.io/github/v/release/t1seo/obsidian-icon-studio?style=flat-square" alt="최신 릴리스" /></a>
+  <a href="https://github.com/t1seo/icon-studio/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/t1seo/icon-studio/ci.yml?branch=main&style=flat-square&label=CI" alt="CI" /></a>
+  <a href="https://github.com/t1seo/icon-studio/releases/latest"><img src="https://img.shields.io/github/v/release/t1seo/icon-studio?style=flat-square" alt="최신 릴리스" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-7257E8?style=flat-square" alt="MIT 라이선스" /></a>
   <a href="README.md"><img src="https://img.shields.io/badge/lang-English-F08A68?style=flat-square" alt="English" /></a>
 </p>
@@ -117,7 +117,7 @@ Programming Languages/       </> 폴더 아이콘
 
 ### Obsidian 커뮤니티 플러그인
 
-Icon Studio는 아직 커뮤니티 디렉터리에 등록되지 않았습니다. 자격을 갖춘 디렉터리 소유자가 계정 기반 제출과 Obsidian 심사를 완료하기 전까지는 BRAT 또는 수동 설치를 이용해 주세요. 승인 후에는 다음처럼 설치할 수 있습니다.
+Icon Studio 2.0.0은 새 플러그인 ID `icon-studio`와 저장소 `t1seo/icon-studio`로 출시합니다. 새 커뮤니티 디렉터리 등록을 준비하고 있으며 아직 앱 내 탐색에서 설치할 수 없습니다. 승인 전에는 BRAT 또는 수동 설치를 이용해 주세요. 승인 후에는 다음처럼 설치할 수 있습니다.
 
 1. **설정 → 커뮤니티 플러그인 → 탐색**을 엽니다.
 2. **Icon Studio**를 검색합니다.
@@ -127,24 +127,24 @@ Icon Studio는 아직 커뮤니티 디렉터리에 등록되지 않았습니다.
 
 1. [BRAT](https://obsidian.md/plugins?id=obsidian42-brat)을 설치하고 활성화합니다.
 2. **BRAT: Add a beta plugin for testing**을 실행합니다.
-3. `https://github.com/t1seo/obsidian-icon-studio`를 입력합니다.
+3. `https://github.com/t1seo/icon-studio`를 입력합니다.
 4. **설정 → 커뮤니티 플러그인**에서 **Icon Studio**를 활성화합니다.
 
 ### 수동 설치
 
-1. [최신 릴리스](https://github.com/t1seo/obsidian-icon-studio/releases/latest)에서 `main.js`, `manifest.json`, `styles.css`를 받습니다.
-2. 세 파일을 `<볼트>/.obsidian/plugins/custom-icon/`에 넣습니다.
+1. [최신 릴리스](https://github.com/t1seo/icon-studio/releases/latest)에서 `main.js`, `manifest.json`, `styles.css`를 받습니다.
+2. 세 파일을 `<볼트>/.obsidian/plugins/icon-studio/`에 넣습니다.
 3. Obsidian을 다시 불러온 뒤 **Icon Studio**를 활성화합니다.
 
-폴더와 플러그인 ID는 호환성을 위해 `custom-icon`으로 유지합니다. Custom Icon 또는 Vault Icon Studio에서 업데이트해도 기존 설정, 아이콘 라이브러리, BRAT 설치, 단축키, `:ci-...:` 노트 내용은 그대로 동작합니다.
+2.0.0은 기존 `custom-icon`과 별도로 설치되는 플러그인입니다. 같은 개발자가 만든 [Custom Icon / Icon Studio 1.x](https://github.com/t1seo/obsidian-icon-studio)의 후속 버전이며 이전 저장소와 릴리스는 보존됩니다. 기존 BRAT 구독과 단축키는 자동으로 옮겨지지 않습니다. 아이콘·지정 정보·설정·주석을 유지하려면 [이관 안내](docs/MIGRATING.md)를 따라 주세요. `:ci-...:` 노트 문법은 그대로 사용할 수 있습니다.
 
 ## 샘플 볼트
 
-저장소의 [examples/programming-languages-vault](examples/programming-languages-vault)는 README 스크린샷에 사용한 것과 같은 구조입니다. 릴리스의 세 파일을 샘플의 `.obsidian/plugins/custom-icon/`에 복사한 뒤 해당 폴더를 Obsidian 볼트로 열면 됩니다. 자세한 내용은 [샘플 가이드](docs/SAMPLE-VAULT.md)를 참고하세요.
+저장소의 [examples/programming-languages-vault](examples/programming-languages-vault)는 README 스크린샷에 사용한 것과 같은 구조입니다. 릴리스의 세 파일을 샘플의 `.obsidian/plugins/icon-studio/`에 복사한 뒤 해당 폴더를 Obsidian 볼트로 열면 됩니다. 자세한 내용은 [샘플 가이드](docs/SAMPLE-VAULT.md)를 참고하세요.
 
 ## 개인정보와 저장 위치
 
-Icon Studio는 네트워크 요청을 하지 않으며 런타임 의존성이 없습니다. 아이콘, 지정 정보, 설정, 주석은 모두 볼트의 `.obsidian/plugins/custom-icon/` 아래에 로컬로 저장됩니다.
+Icon Studio는 네트워크 요청을 하지 않으며 런타임 의존성이 없습니다. 아이콘, 지정 정보, 설정, 주석은 모두 볼트의 `.obsidian/plugins/icon-studio/` 아래에 로컬로 저장됩니다.
 
 ## 개발 및 릴리스
 
@@ -157,7 +157,7 @@ npm run verify
 
 ## 지원
 
-버그나 기능 요청은 [GitHub 이슈](https://github.com/t1seo/obsidian-icon-studio/issues)에 남겨주세요.
+버그나 기능 요청은 [GitHub 이슈](https://github.com/t1seo/icon-studio/issues)에 남겨주세요.
 
 [![Buy me a coffee](https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=&slug=taewonseo&button_colour=e3e7ef&font_colour=262626&font_family=Inter&outline_colour=262626&coffee_colour=a0522d)](https://www.buymeacoffee.com/taewonseo)
 

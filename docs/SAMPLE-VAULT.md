@@ -5,11 +5,11 @@ This repository includes the same sample vault used for the README screenshots a
 ## Open the sample
 
 1. Run `npm ci && npm run build` from the repository root.
-2. Copy `main.js`, `manifest.json`, and `styles.css` into `examples/programming-languages-vault/.obsidian/plugins/custom-icon/`.
+2. Copy `main.js`, `manifest.json`, and `styles.css` into `examples/programming-languages-vault/.obsidian/plugins/icon-studio/`.
 3. In Obsidian, choose **Open folder as vault** and select `examples/programming-languages-vault`.
 4. If Obsidian prompts about Restricted Mode, trust the vault and enable **Icon Studio**.
 
-The committed sample contains only local Markdown, SVG icons, and plugin configuration. The generated `main.js` bundle is deliberately not committed.
+The committed sample contains only local Markdown, SVG/PNG icons, and plugin configuration. The generated `main.js` bundle is deliberately not committed.
 
 ## What to try
 
@@ -31,4 +31,4 @@ Programming Languages/
 └── Swift.md
 ```
 
-The sample uses the stable plugin directory and ID `custom-icon`. This is intentional compatibility behavior after the product-name change.
+The sample uses the new plugin directory and ID `icon-studio`. For an existing `custom-icon` installation, use the [migration guide](MIGRATING.md) before enabling the new plugin.

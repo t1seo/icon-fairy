@@ -9,12 +9,12 @@ Icon Studio turns a user's own PNG, JPG, WebP, and SVG images into a visual navi
 ## Naming
 
 - Product name: **Icon Studio**
-- Repository: `t1seo/obsidian-icon-studio`
+- Repository: `t1seo/icon-studio`
 - npm package metadata: `obsidian-icon-studio`
-- Stable plugin ID: `custom-icon`
+- Plugin ID from 2.0.0: `icon-studio`
 - Default inline syntax: `:ci-NAME:`
 
-The product name is intentionally short and literal: an Obsidian user should understand the main job of the plugin before reading its description. The `obsidian-` qualifier belongs to the repository and package metadata, not the in-app name. The plugin ID and shortcode remain stable because they are persistent identifiers. Changing either would disconnect existing settings, icon libraries, shortcuts, BRAT installations, or note content from the renamed product.
+The product name is short and literal: an Obsidian user should understand the main job before reading its description. The package name retains the `obsidian-` qualifier. Version 2.0.0 deliberately introduces a new installation identity; the [migration guide](MIGRATING.md) explains how to preserve old data. The shortcode syntax stays the same.
 
 ## Voice
 
@@ -22,13 +22,16 @@ Use plain, concrete language. Lead with the user's action and the visible result
 
 ## Visual direction
 
-- Primary: `#7257E8`
-- Deep ink: `#242038`
-- Warm accent: `#F08A68`
-- Canvas: `#F7F5FC`
+- Character body: lavender `#9166D9`
+- Character pocket and eyes: deep plum `#352047`
+- Background: peach `#EFC9B9`
 
-The mark combines an image tile with an add badge, matching the upload-and-assign workflow. Use the full product name in documentation and directory listings. Use the mark alone only where the surrounding interface already identifies Icon Studio.
+The mark is a friendly folder fairy: a rounded folder body, broad front pocket, and small eyes, emerging from the lower-left. It represents a personal, approachable vault. `assets/icon-studio-mark.png` is the unmodified 1254 × 1254 original from candidate A1, generated with the built-in image_gen tool using the `ip-as-logo` workflow. The provider did not expose a model identifier. The requested colors describe semantic color families; the original includes the generator's tonal variation.
+
+Use the PNG in documentation and directory listings. Keep the generated original unchanged; the previous SVG image-tile mark is retained only as historical artwork. Exact generation instructions are recorded in [folder-fairy-prompt.txt](folder-fairy-prompt.txt).
 
 ## Rename history
 
 The project started as Custom Icon and briefly used Vault Icon Studio. Version 1.3.1 adopts Icon Studio because it is easier to read, say, and find in Obsidian settings. This is a product naming decision, not legal trademark clearance.
+
+Version 2.0.0 is the same maintainer's successor with a new plugin ID, repository, and folder-fairy artwork. The original repository and its release history remain available. The new Community submission must disclose this continuity and pass the normal review process.

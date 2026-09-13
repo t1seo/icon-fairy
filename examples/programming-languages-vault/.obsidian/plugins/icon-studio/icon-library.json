@@ -3,9 +3,9 @@
 		{
 			"id": "icon-studio",
 			"name": "Icon Studio",
-			"path": "icons/icon-studio.svg",
+			"path": "icons/icon-studio.png",
 			"createdAt": 1787083200000,
-			"ext": "svg"
+			"ext": "png"
 		},
 		{
 			"id": "programming",

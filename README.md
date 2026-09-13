@@ -1,14 +1,14 @@
 # Icon Studio
 
 <p align="center">
-  <img src="assets/icon-studio-mark.svg" width="112" alt="Icon Studio mark" />
+  <img src="assets/icon-studio-mark.png" width="112" alt="Icon Studio mark" />
 </p>
 
 <p align="center"><strong>Your images. Your icons. Your vault.</strong></p>
 
 <p align="center">
-  <a href="https://github.com/t1seo/obsidian-icon-studio/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/t1seo/obsidian-icon-studio/ci.yml?branch=main&style=flat-square&label=CI" alt="CI" /></a>
-  <a href="https://github.com/t1seo/obsidian-icon-studio/releases/latest"><img src="https://img.shields.io/github/v/release/t1seo/obsidian-icon-studio?style=flat-square" alt="Latest release" /></a>
+  <a href="https://github.com/t1seo/icon-studio/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/t1seo/icon-studio/ci.yml?branch=main&style=flat-square&label=CI" alt="CI" /></a>
+  <a href="https://github.com/t1seo/icon-studio/releases/latest"><img src="https://img.shields.io/github/v/release/t1seo/icon-studio?style=flat-square" alt="Latest release" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-7257E8?style=flat-square" alt="MIT license" /></a>
   <a href="README.ko.md"><img src="https://img.shields.io/badge/lang-한국어-F08A68?style=flat-square" alt="한국어" /></a>
 </p>
@@ -117,7 +117,7 @@ The explorer icons, inline icons, annotations, commands, and picker adapt to Obs
 
 ### Obsidian Community Plugins
 
-Icon Studio 1.3.1 has been submitted to the Community directory. The [public listing](https://community.obsidian.md/plugins/custom-icon) is available, and an administrator is reviewing the intentional display-name change from Custom Icon to Icon Studio. The **Add to Obsidian** button remains unavailable until that review is approved, so use BRAT or a manual installation in the meantime. After approval:
+Icon Studio 2.0.0 launches with the new plugin ID `icon-studio` and repository `t1seo/icon-studio`. Community directory submission is being prepared; it is not yet available through the in-app browser. Use BRAT or manual installation until the new entry is approved. After approval:
 
 1. Open **Settings → Community plugins → Browse**.
 2. Search for **Icon Studio**.
@@ -127,24 +127,24 @@ Icon Studio 1.3.1 has been submitted to the Community directory. The [public lis
 
 1. Install and enable [BRAT](https://obsidian.md/plugins?id=obsidian42-brat).
 2. Run **BRAT: Add a beta plugin for testing**.
-3. Enter `https://github.com/t1seo/obsidian-icon-studio`.
+3. Enter `https://github.com/t1seo/icon-studio`.
 4. Enable **Icon Studio** in **Settings → Community plugins**.
 
 ### Manual installation
 
-1. Download `main.js`, `manifest.json`, and `styles.css` from the [latest release](https://github.com/t1seo/obsidian-icon-studio/releases/latest).
-2. Put them in `<vault>/.obsidian/plugins/custom-icon/`.
+1. Download `main.js`, `manifest.json`, and `styles.css` from the [latest release](https://github.com/t1seo/icon-studio/releases/latest).
+2. Put them in `<vault>/.obsidian/plugins/icon-studio/`.
 3. Reload Obsidian and enable **Icon Studio**.
 
-The folder and plugin ID intentionally remain `custom-icon`. Existing settings, icon libraries, BRAT installations, hotkeys, and `:ci-...:` note content continue to work when upgrading from Custom Icon or Vault Icon Studio.
+Version 2.0.0 is a separate installation from the former `custom-icon` plugin. This is the same maintainer’s successor to [Custom Icon / Icon Studio 1.x](https://github.com/t1seo/obsidian-icon-studio), whose repository and releases remain available. Existing BRAT subscriptions and hotkeys do not transfer automatically. To keep your icons, assignments, settings, and annotations, follow the [migration guide](docs/MIGRATING.md). The `:ci-...:` note syntax stays the same.
 
 ## Sample vault
 
-The repository includes [examples/programming-languages-vault](examples/programming-languages-vault), the exact structure used for the screenshots. Copy the three release files into its `.obsidian/plugins/custom-icon/` directory, then open that folder as an Obsidian vault. See [the sample guide](docs/SAMPLE-VAULT.md) for details.
+The repository includes [examples/programming-languages-vault](examples/programming-languages-vault), the exact structure used for the screenshots. Copy the three release files into its `.obsidian/plugins/icon-studio/` directory, then open that folder as an Obsidian vault. See [the sample guide](docs/SAMPLE-VAULT.md) for details.
 
 ## Privacy and storage
 
-Icon Studio makes no network requests and has no runtime dependencies. Imported icons, assignments, settings, and annotations are stored locally under your vault's `.obsidian/plugins/custom-icon/` directory.
+Icon Studio makes no network requests and has no runtime dependencies. Imported icons, assignments, settings, and annotations are stored locally under your vault's `.obsidian/plugins/icon-studio/` directory.
 
 ## Development and release
 
@@ -157,7 +157,7 @@ See [QA evidence](docs/QA.md), [UX/UI research and design decisions](docs/resear
 
 ## Support
 
-Please [open an issue](https://github.com/t1seo/obsidian-icon-studio/issues) for bugs or feature requests.
+Please [open an issue](https://github.com/t1seo/icon-studio/issues) for bugs or feature requests.
 
 [![Buy me a coffee](https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=&slug=taewonseo&button_colour=e3e7ef&font_colour=262626&font_family=Inter&outline_colour=262626&coffee_colour=a0522d)](https://www.buymeacoffee.com/taewonseo)
 

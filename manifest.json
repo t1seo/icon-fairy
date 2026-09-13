@@ -1,7 +1,7 @@
 {
-	"id": "custom-icon",
+	"id": "icon-studio",
 	"name": "Icon Studio",
-	"version": "1.3.1",
+	"version": "2.0.0",
 	"minAppVersion": "1.4.0",
 	"description": "Upload and use custom image icons across files, folders, tabs, note titles, and inline text.",
 	"author": "t1seo",
