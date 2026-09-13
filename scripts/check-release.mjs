@@ -46,4 +46,4 @@ if (errors.length > 0) {
 	process.exit(1);
 }
 
-console.log(`Release metadata and assets are valid for Icon Studio ${manifest.version}.`);
+console.log(`Release metadata and assets are valid for ${manifest.name} ${manifest.version}.`);

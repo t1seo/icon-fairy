@@ -44,3 +44,9 @@ The real Obsidian application was driven through its CLI, DOM events, and deskto
 The migrated screenshot intentionally retains the old library's logo: migration preserves a user's existing images. The committed new sample uses the folder-fairy PNG.
 
 GitHub publication and Community approval are separate from local QA. Their verified status is recorded in [the release audit](research/obsidian-community-release.md).
+
+## Folder Fairy 2.0.1 follow-up — 2026-09-13
+
+The directory rejected the occupied **Icon Studio** name even after the old listing was archived, so the display name changed to **Folder Fairy**. ID `icon-studio`, runtime bundle, data formats, and artwork remain unchanged. The published 2.0.0 tag is preserved.
+
+`npm run verify` passed again with 76 tests. Root and sample metadata match Folder Fairy 2.0.1. Reloading the real fresh QA installation showed the new name/version, exactly three commands prefixed **Folder Fairy**, and the existing library/settings unchanged. The 2.0.0 downloaded files were also installed and smoke-tested; all three anonymous downloads matched the locally verified files.

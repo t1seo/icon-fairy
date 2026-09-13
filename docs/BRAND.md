@@ -1,20 +1,20 @@
-# Icon Studio brand
+# Folder Fairy brand
 
 ## Positioning
 
-Icon Studio turns a user's own PNG, JPG, WebP, and SVG images into a visual navigation system for an Obsidian vault. It combines an icon library with file, folder, tab, note-title, and inline placements, including per-instance Markdown annotations.
+Folder Fairy turns a user's own PNG, JPG, WebP, and SVG images into a visual navigation system for an Obsidian vault. It combines an icon library with file, folder, tab, note-title, and inline placements, including per-instance Markdown annotations.
 
 **Tagline:** Your images. Your icons. Your vault.
 
 ## Naming
 
-- Product name: **Icon Studio**
+- Product name: **Folder Fairy**
 - Repository: `t1seo/icon-studio`
-- npm package metadata: `obsidian-icon-studio`
+- npm package metadata: `obsidian-folder-fairy`
 - Plugin ID from 2.0.0: `icon-studio`
 - Default inline syntax: `:ci-NAME:`
 
-The product name is short and literal: an Obsidian user should understand the main job before reading its description. The package name retains the `obsidian-` qualifier. Version 2.0.0 deliberately introduces a new installation identity; the [migration guide](MIGRATING.md) explains how to preserve old data. The shortcode syntax stays the same.
+The name matches the friendly folder character. The description explains that custom images work on files, folders, tabs, note titles, and inline text. The package name retains the `obsidian-` qualifier. Version 2.0.0 deliberately introduces a new installation identity; the [migration guide](MIGRATING.md) explains how to preserve old data. The shortcode syntax stays the same.
 
 ## Voice
 
@@ -35,3 +35,5 @@ Use the PNG in documentation and directory listings. Keep the generated original
 The project started as Custom Icon and briefly used Vault Icon Studio. Version 1.3.1 adopts Icon Studio because it is easier to read, say, and find in Obsidian settings. This is a product naming decision, not legal trademark clearance.
 
 Version 2.0.0 is the same maintainer's successor with a new plugin ID, repository, and folder-fairy artwork. The original repository and its release history remain available. The new Community submission must disclose this continuity and pass the normal review process.
+
+Version 2.0.1 adopts **Folder Fairy** because the directory rejected the already-used Icon Studio display name even after the old entry was archived. The new ID and repository introduced in 2.0.0 remain unchanged.

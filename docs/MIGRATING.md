@@ -1,6 +1,6 @@
 # Move from Custom Icon / Icon Studio 1.x
 
-Icon Studio 2.0.0 is the same maintainer's successor, published from [t1seo/icon-studio](https://github.com/t1seo/icon-studio) with plugin ID `icon-studio`. The previous repository, [t1seo/obsidian-icon-studio](https://github.com/t1seo/obsidian-icon-studio), continues to hold the `custom-icon` releases.
+Folder Fairy 2.0.1 is the same maintainer's successor, published from [t1seo/icon-studio](https://github.com/t1seo/icon-studio) with plugin ID `icon-studio`. The previous repository, [t1seo/obsidian-icon-studio](https://github.com/t1seo/obsidian-icon-studio), continues to hold the `custom-icon` releases.
 
 This is a separate installation. An existing BRAT subscription does not switch repositories automatically. Full command IDs also change, so you must assign your hotkeys again. Notes keep their existing `:ci-...:` syntax, including annotation suffixes.
 
@@ -15,7 +15,7 @@ This is a separate installation. An existing BRAT subscription does not switch r
    - `icon-library.json`: icon names, IDs, and relative image paths.
    - `icons/`: the complete image directory.
 6. Preserve the new plugin's `manifest.json`, `main.js`, and `styles.css`. Do not replace them with the old versions.
-7. Open Obsidian and enable only the new **Icon Studio** installation. Verify your library, assigned icons, inline icons, and annotations, then assign your hotkeys again.
+7. Open Obsidian and enable only the new **Folder Fairy** installation. Verify your library, assigned icons, inline icons, and annotations, then assign your hotkeys again.
 
 These steps assume the new installation has no data you want to keep yet. If you have already imported icons or written annotations in it, back up both directories and merge deliberately; do not overwrite its files blindly.
 
@@ -23,7 +23,7 @@ Keep the old folder and its backup until you have verified the new installation.
 
 ## 한국어 안내
 
-2.0.0은 새 ID `icon-studio`로 별도 설치됩니다. 기존 BRAT 구독은 새 저장소로 자동 전환되지 않으며, 단축키도 다시 지정해야 합니다. 노트의 `:ci-...:` 문법과 주석 접미사는 유지됩니다.
+Folder Fairy는 2.0.0에서 도입한 새 ID `icon-studio`로 별도 설치됩니다. 기존 BRAT 구독은 새 저장소로 자동 전환되지 않으며, 단축키도 다시 지정해야 합니다. 노트의 `:ci-...:` 문법과 주석 접미사는 유지됩니다.
 
 1. 볼트와 `.obsidian/plugins/custom-icon/` 폴더를 백업합니다.
 2. 기존 플러그인을 비활성화합니다.

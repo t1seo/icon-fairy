@@ -1,7 +1,7 @@
-# Icon Studio
+# Folder Fairy
 
 <p align="center">
-  <img src="assets/icon-studio-mark.png" width="112" alt="Icon Studio 로고" />
+  <img src="assets/icon-studio-mark.png" width="112" alt="Folder Fairy 로고" />
 </p>
 
 <p align="center"><strong>내 이미지로, 내 아이콘으로, 내 볼트를.</strong></p>
@@ -16,6 +16,8 @@
 PNG, JPG, WebP, SVG 이미지를 업로드해 Obsidian의 폴더, 노트, 탭, 노트 제목, 본문 아이콘으로 사용하세요. 모든 데이터는 볼트 안에 저장됩니다.
 
 ![Programming Languages 폴더와 커스텀 아이콘을 적용한 샘플 Obsidian 볼트](assets/icon-studio-overview.png)
+
+아래 화면 일부에는 이전 이름인 Icon Studio가 표시됩니다. Folder Fairy에서도 같은 화면과 기능을 사용합니다.
 
 ## 2분 만에 시작하기
 
@@ -33,7 +35,7 @@ PNG, JPG, WebP, SVG 이미지를 업로드해 Obsidian의 폴더, 노트, 탭, �
 
 <p align="center">
   <img src="assets/icon-studio-context-menu.png" width="48%" alt="파일 메뉴의 커스텀 아이콘 변경 및 제거 명령" />
-  <img src="assets/icon-studio-library.png" width="48%" alt="Icon Studio 아이콘 라이브러리" />
+  <img src="assets/icon-studio-library.png" width="48%" alt="Folder Fairy 아이콘 라이브러리" />
 </p>
 
 피커에는 현재 작업과 대상이 표시되어 아이콘이 어디에 적용될지 바로 알 수 있습니다. 이름으로 검색하거나 **Random**으로 빠르게 고를 수 있습니다. 키보드에서는 `왼쪽`/`오른쪽` 방향키로 소스 탭을 바꾸고, 아이콘에 포커스를 옮긴 뒤 방향키와 `Enter`로 선택할 수 있습니다. 피커는 한 번에 하나만 열립니다.
@@ -89,17 +91,17 @@ Programming Languages/       </> 폴더 아이콘
 
 ## 명령 팔레트
 
-`Cmd/Ctrl+P`를 누르고 **Icon Studio**를 검색하면 세 명령을 사용할 수 있습니다.
+`Cmd/Ctrl+P`를 누르고 **Folder Fairy**를 검색하면 세 명령을 사용할 수 있습니다.
 
 - **Insert inline icon**
 - **Change icon for current file**
 - **Remove icon from current file**
 
-![Obsidian 명령 팔레트의 Icon Studio 세 명령](assets/icon-studio-commands.png)
+![Obsidian 명령 팔레트의 Folder Fairy 세 명령](assets/icon-studio-commands.png)
 
 ## 설정
 
-![Icon Studio 설정 화면](assets/icon-studio-settings.png)
+![Folder Fairy 설정 화면](assets/icon-studio-settings.png)
 
 | 설정 | 용도 | 기본값 |
 | --- | --- | --- |
@@ -111,16 +113,16 @@ Programming Languages/       </> 폴더 아이콘
 
 탐색기 아이콘, 인라인 아이콘, 주석, 명령, 아이콘 피커는 Obsidian의 데스크톱과 모바일 레이아웃에 맞게 동작합니다. 아래 화면은 샘플 볼트를 Obsidian 공식 데스크톱 모바일 에뮬레이션으로 실행해 직접 캡처했습니다.
 
-![Obsidian 모바일 레이아웃에서 실행한 Icon Studio 아이콘 피커와 프로그래밍 언어 아이콘](assets/icon-studio-mobile.png)
+![Obsidian 모바일 레이아웃에서 실행한 Folder Fairy 아이콘 피커와 프로그래밍 언어 아이콘](assets/icon-studio-mobile.png)
 
 ## 설치
 
 ### Obsidian 커뮤니티 플러그인
 
-Icon Studio 2.0.0은 새 플러그인 ID `icon-studio`와 저장소 `t1seo/icon-studio`로 출시합니다. 새 커뮤니티 디렉터리 등록을 준비하고 있으며 아직 앱 내 탐색에서 설치할 수 없습니다. 승인 전에는 BRAT 또는 수동 설치를 이용해 주세요. 승인 후에는 다음처럼 설치할 수 있습니다.
+Folder Fairy 2.0.1은 새 플러그인 ID `icon-studio`와 저장소 `t1seo/icon-studio`로 출시합니다. 새 커뮤니티 디렉터리 등록을 준비하고 있으며 아직 앱 내 탐색에서 설치할 수 없습니다. 승인 전에는 BRAT 또는 수동 설치를 이용해 주세요. 승인 후에는 다음처럼 설치할 수 있습니다.
 
 1. **설정 → 커뮤니티 플러그인 → 탐색**을 엽니다.
-2. **Icon Studio**를 검색합니다.
+2. **Folder Fairy**를 검색합니다.
 3. **설치** 후 **활성화**합니다.
 
 ### BRAT
@@ -128,13 +130,13 @@ Icon Studio 2.0.0은 새 플러그인 ID `icon-studio`와 저장소 `t1seo/icon-
 1. [BRAT](https://obsidian.md/plugins?id=obsidian42-brat)을 설치하고 활성화합니다.
 2. **BRAT: Add a beta plugin for testing**을 실행합니다.
 3. `https://github.com/t1seo/icon-studio`를 입력합니다.
-4. **설정 → 커뮤니티 플러그인**에서 **Icon Studio**를 활성화합니다.
+4. **설정 → 커뮤니티 플러그인**에서 **Folder Fairy**를 활성화합니다.
 
 ### 수동 설치
 
 1. [최신 릴리스](https://github.com/t1seo/icon-studio/releases/latest)에서 `main.js`, `manifest.json`, `styles.css`를 받습니다.
 2. 세 파일을 `<볼트>/.obsidian/plugins/icon-studio/`에 넣습니다.
-3. Obsidian을 다시 불러온 뒤 **Icon Studio**를 활성화합니다.
+3. Obsidian을 다시 불러온 뒤 **Folder Fairy**를 활성화합니다.
 
 2.0.0은 기존 `custom-icon`과 별도로 설치되는 플러그인입니다. 같은 개발자가 만든 [Custom Icon / Icon Studio 1.x](https://github.com/t1seo/obsidian-icon-studio)의 후속 버전이며 이전 저장소와 릴리스는 보존됩니다. 기존 BRAT 구독과 단축키는 자동으로 옮겨지지 않습니다. 아이콘·지정 정보·설정·주석을 유지하려면 [이관 안내](docs/MIGRATING.md)를 따라 주세요. `:ci-...:` 노트 문법은 그대로 사용할 수 있습니다.
 
@@ -144,7 +146,7 @@ Icon Studio 2.0.0은 새 플러그인 ID `icon-studio`와 저장소 `t1seo/icon-
 
 ## 개인정보와 저장 위치
 
-Icon Studio는 네트워크 요청을 하지 않으며 런타임 의존성이 없습니다. 아이콘, 지정 정보, 설정, 주석은 모두 볼트의 `.obsidian/plugins/icon-studio/` 아래에 로컬로 저장됩니다.
+Folder Fairy는 네트워크 요청을 하지 않으며 런타임 의존성이 없습니다. 아이콘, 지정 정보, 설정, 주석은 모두 볼트의 `.obsidian/plugins/icon-studio/` 아래에 로컬로 저장됩니다.
 
 ## 개발 및 릴리스
 

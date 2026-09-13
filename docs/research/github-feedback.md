@@ -28,3 +28,9 @@ The annotation code was merged, but the repository still exposed 1.2.0 as its la
 The `1.3.0` tag and GitHub release were published on 2026-08-19, so BRAT can install the annotation build. Version 1.3.1 carries the final Icon Studio brand and the renamed `t1seo/obsidian-icon-studio` repository.
 
 On 2026-08-19, the repository owner's GitHub account was connected to the existing `custom-icon` directory entry and the 1.3.1 release scan was queued. The public listing now shows **Icon Studio** and version 1.3.1. The preview scan found only the intentional display-name mismatch with the previous **Custom Icon** release, so a manual review request was submitted explaining the rebrand, stable plugin ID, repository rename, fixed source finding, and attested release assets. That request is open for administrator review; **Add to Obsidian** remains disabled until approval.
+
+## Follow-up checked on 2026-09-13
+
+The earlier waiting state above is historical. In a [later August 19 comment](https://github.com/t1seo/obsidian-icon-studio/issues/11#issuecomment-5343853882), the reporter confirmed testing the delivered update successfully, including the annotation accent marker.
+
+The September successor work addresses the still-unavailable Community installation and the maintainer's decision to launch with a new ID. It is not based on a claim that the annotation feature was never delivered. Version 2.0.0 uses `icon-studio` in `t1seo/icon-studio`; the prior repository, releases, and discussion are preserved. See the [current release audit](obsidian-community-release.md).

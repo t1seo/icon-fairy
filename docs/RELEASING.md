@@ -1,4 +1,4 @@
-# Releasing Icon Studio
+# Releasing Folder Fairy
 
 ## Quality gate
 
@@ -17,14 +17,14 @@ Starting with 2.0.0, the plugin ID is `icon-studio` and releases are published f
 
 `versions.json` only lists versions published from the new repository. Historical changelog entries describe releases in the old repository; do not push their tags to the new one.
 
-## Publish the prepared 2.0.0 release
+## Publish the prepared 2.0.1 release
 
 The release is aligned across `package.json`, `manifest.json`, `versions.json`, and `CHANGELOG.md`. In the transition checkout, `origin` still points to the previous repository and `relaunch` points to the new repository. Push explicitly to the new remote:
 
 ```sh
 git push relaunch HEAD:main
-git tag 2.0.0
-git push relaunch 2.0.0
+git tag 2.0.1
+git push relaunch 2.0.1
 ```
 
 Verify that the new repository's default branch is `main` and its CI passed before pushing the tag. The tag must exactly match `manifest.json`, without a `v` prefix. Pushing it starts the release workflow, verifies the plugin, attests the artifacts, and publishes a GitHub release containing:
@@ -32,6 +32,8 @@ Verify that the new repository's default branch is `main` and its CI passed befo
 - `main.js`
 - `manifest.json`
 - `styles.css`
+
+Version 2.0.0 is already published and must not be retagged. Version 2.0.1 changes the display name to Folder Fairy after the directory rejected the occupied Icon Studio name.
 
 ## Prepare a future version
 
@@ -69,4 +71,4 @@ Describe this as the same maintainer's successor to `custom-icon`, including the
 
 The first listing requires an Obsidian account connected to the repository owner's GitHub account. Later versions are discovered from GitHub releases. Record separately whether the GitHub release exists, the new entry was accepted, review passed, and installation is enabled. While review is pending, keep BRAT/manual installation instructions available.
 
-The supported way to retire the old directory entry is **More actions → Archive → Yes, archive**. Preserve the original GitHub repository and releases. If the new submission reports a name conflict, record it before archiving the old entry and retrying; restore the old entry if the successor cannot be created.
+The supported way to retire the old directory entry is **More actions → Archive → Yes, archive**. Preserve the original GitHub repository and releases. The September 13 attempt confirmed that archiving does not free the old display name. Use the new Folder Fairy name; do not repeat the archive/retry experiment. Archive the old entry after the successor is accepted.

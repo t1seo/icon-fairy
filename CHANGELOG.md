@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.1] - 2026-09-13
+
+### Changed
+
+- Changed the display name to **Folder Fairy** after the Community directory rejected the existing Icon Studio name, including after archival of the old entry
+- Kept the new `icon-studio` ID, `t1seo/icon-studio` repository, folder-fairy artwork, runtime behavior, and migration format unchanged
+
+
 ## [2.0.0] - 2026-09-13
 
 ### Changed

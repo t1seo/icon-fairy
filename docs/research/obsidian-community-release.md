@@ -43,3 +43,11 @@ The maintainer chose a separate installation identity, `icon-studio`, version 2.
 The old account page still reported that the automated review could not be completed and an administrator would investigate. Its August 19 manual rename request remained open, and public installation remained unavailable. The successor is the same maintainer's continuation and must pass the normal review process. A new ID does not itself grant approval.
 
 Local automated checks, real fresh/migrated Obsidian checks, and five review scopes passed. See [2.0.0 QA](../QA.md) and the [migration guide](../MIGRATING.md). The original repository and releases are preserved. Publication and directory results will be recorded separately after submission.
+
+## Publication and name validation — 2026-09-13
+
+The public successor repository [t1seo/icon-studio](https://github.com/t1seo/icon-studio) and [2.0.0 release](https://github.com/t1seo/icon-studio/releases/tag/2.0.0) were published at commit `37a9763b76dab04113699fe74a43e5b8c7371c51`. CI and the release workflow passed. Anonymous downloads of all three assets matched the locally verified files byte for byte.
+
+The new submission was rejected with `An entry with this name already exists.` The old `custom-icon` entry was archived through the supported UI and the submission was retried once; the same validation error remained. The old entry was then unarchived, restoring its prior state. Archiving does not free this display name for a new entry. The original repository and 1.3.1 release were unchanged.
+
+The successor display name was changed to **Folder Fairy** in 2.0.1, matching the folder-fairy artwork. The new ID `icon-studio` and repository `t1seo/icon-studio` remain unchanged. The 2.0.0 release is preserved rather than retagged. This is still the same maintainer's successor and requires normal review.

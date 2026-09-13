@@ -1,7 +1,7 @@
-# Icon Studio
+# Folder Fairy
 
 <p align="center">
-  <img src="assets/icon-studio-mark.png" width="112" alt="Icon Studio mark" />
+  <img src="assets/icon-studio-mark.png" width="112" alt="Folder Fairy mark" />
 </p>
 
 <p align="center"><strong>Your images. Your icons. Your vault.</strong></p>
@@ -16,6 +16,8 @@
 Upload your own PNG, JPG, WebP, or SVG images and use them as Obsidian icons for folders, notes, tabs, note titles, and inline text. Everything stays inside your vault.
 
 ![A sample Obsidian vault with a Programming Languages folder and custom icons](assets/icon-studio-overview.png)
+
+Screenshots below show the earlier Icon Studio name; Folder Fairy retains the same interface and features.
 
 ## A two-minute tour
 
@@ -33,10 +35,10 @@ Upload your own PNG, JPG, WebP, or SVG images and use them as Obsidian icons for
 
 <p align="center">
   <img src="assets/icon-studio-context-menu.png" width="48%" alt="Change and remove custom icon actions in the file menu" />
-  <img src="assets/icon-studio-library.png" width="48%" alt="Icon Studio icon library" />
+  <img src="assets/icon-studio-library.png" width="48%" alt="Folder Fairy icon library" />
 </p>
 
-The picker names the current task and target, so it is always clear where the next icon will go. Search by name, choose **Random** for a quick pick, or use the keyboard: `Left`/`Right` changes the source tab, and arrow keys plus `Enter` select a focused icon. Icon Studio keeps only one picker open at a time.
+The picker names the current task and target, so it is always clear where the next icon will go. Search by name, choose **Random** for a quick pick, or use the keyboard: `Left`/`Right` changes the source tab, and arrow keys plus `Enter` select a focused icon. Folder Fairy keeps only one picker open at a time.
 
 ## Example: a programming language library
 
@@ -85,21 +87,21 @@ Right-click a rendered inline icon and choose **Add icon annotation** or **Edit 
 
 ![Markdown annotation editor with a wiki-link preview](assets/icon-studio-annotation.png)
 
-Annotations are per occurrence. Icon Studio adds an instance suffix such as `:ci-typescript~note-a1b2c3d4:` so two uses of the same icon can carry different notes.
+Annotations are per occurrence. Folder Fairy adds an instance suffix such as `:ci-typescript~note-a1b2c3d4:` so two uses of the same icon can carry different notes.
 
 ## Commands
 
-Open the command palette with `Cmd/Ctrl+P` and search for **Icon Studio**:
+Open the command palette with `Cmd/Ctrl+P` and search for **Folder Fairy**:
 
 - **Insert inline icon**
 - **Change icon for current file**
 - **Remove icon from current file**
 
-![All three Icon Studio commands in Obsidian](assets/icon-studio-commands.png)
+![All three Folder Fairy commands in Obsidian](assets/icon-studio-commands.png)
 
 ## Settings
 
-![Icon Studio settings](assets/icon-studio-settings.png)
+![Folder Fairy settings](assets/icon-studio-settings.png)
 
 | Setting | Purpose | Default |
 | --- | --- | --- |
@@ -111,16 +113,16 @@ Open the command palette with `Cmd/Ctrl+P` and search for **Icon Studio**:
 
 The explorer icons, inline icons, annotations, commands, and picker adapt to Obsidian's desktop and mobile layouts. The mobile view below was captured from the sample vault with Obsidian's official desktop mobile emulation enabled.
 
-![Icon Studio icon picker and programming-language icons in Obsidian's mobile layout](assets/icon-studio-mobile.png)
+![Folder Fairy icon picker and programming-language icons in Obsidian's mobile layout](assets/icon-studio-mobile.png)
 
 ## Installation
 
 ### Obsidian Community Plugins
 
-Icon Studio 2.0.0 launches with the new plugin ID `icon-studio` and repository `t1seo/icon-studio`. Community directory submission is being prepared; it is not yet available through the in-app browser. Use BRAT or manual installation until the new entry is approved. After approval:
+Folder Fairy 2.0.1 launches with the new plugin ID `icon-studio` and repository `t1seo/icon-studio`. Community directory submission is being prepared; it is not yet available through the in-app browser. Use BRAT or manual installation until the new entry is approved. After approval:
 
 1. Open **Settings → Community plugins → Browse**.
-2. Search for **Icon Studio**.
+2. Search for **Folder Fairy**.
 3. Select **Install**, then **Enable**.
 
 ### BRAT
@@ -128,13 +130,13 @@ Icon Studio 2.0.0 launches with the new plugin ID `icon-studio` and repository `
 1. Install and enable [BRAT](https://obsidian.md/plugins?id=obsidian42-brat).
 2. Run **BRAT: Add a beta plugin for testing**.
 3. Enter `https://github.com/t1seo/icon-studio`.
-4. Enable **Icon Studio** in **Settings → Community plugins**.
+4. Enable **Folder Fairy** in **Settings → Community plugins**.
 
 ### Manual installation
 
 1. Download `main.js`, `manifest.json`, and `styles.css` from the [latest release](https://github.com/t1seo/icon-studio/releases/latest).
 2. Put them in `<vault>/.obsidian/plugins/icon-studio/`.
-3. Reload Obsidian and enable **Icon Studio**.
+3. Reload Obsidian and enable **Folder Fairy**.
 
 Version 2.0.0 is a separate installation from the former `custom-icon` plugin. This is the same maintainer’s successor to [Custom Icon / Icon Studio 1.x](https://github.com/t1seo/obsidian-icon-studio), whose repository and releases remain available. Existing BRAT subscriptions and hotkeys do not transfer automatically. To keep your icons, assignments, settings, and annotations, follow the [migration guide](docs/MIGRATING.md). The `:ci-...:` note syntax stays the same.
 
@@ -144,7 +146,7 @@ The repository includes [examples/programming-languages-vault](examples/programm
 
 ## Privacy and storage
 
-Icon Studio makes no network requests and has no runtime dependencies. Imported icons, assignments, settings, and annotations are stored locally under your vault's `.obsidian/plugins/icon-studio/` directory.
+Folder Fairy makes no network requests and has no runtime dependencies. Imported icons, assignments, settings, and annotations are stored locally under your vault's `.obsidian/plugins/icon-studio/` directory.
 
 ## Development and release
 
