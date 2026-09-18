@@ -125,3 +125,30 @@ The maintainer chose the existing Community folder-heart tile as the common logo
 At 14:50 UTC, the supported **Edit listing** form had uploaded the new light overview, removed the previous dark A2 attachment, and saved the entry. The public page served the new image as attachment `11436`, displaying the same folder-heart logo as the existing listing tile. The owner page still identified `t1seo/icon-fairy`, version 3.0.0, and its Completed review at `2521d51`; the public page retained Review Passed, Health Excellent, and the enabled installation URI. Name, ID, repository, glyph, color, descriptions, categories, and payment type were unchanged.
 
 This is an artwork, sample, and documentation update. All three runtime files remain byte-identical to the reviewed 3.0.0 release. No new version, retagging, review request, or change to either archived predecessor was needed or performed. The initial A2 release and installation evidence above remains a dated historical record.
+
+## UI update and hosted compatibility follow-up — 2026-09-19
+
+[PR #1](https://github.com/t1seo/icon-fairy/pull/1) merged the UI improvements at
+`f22ac4df60b65c8c9dc9b57a5928edefa099cb8e`. All six checks passed on both the
+[PR](https://github.com/t1seo/icon-fairy/actions/runs/35394030040) and
+[merged commit](https://github.com/t1seo/icon-fairy/actions/runs/35394116442).
+The [3.1.0 release](https://github.com/t1seo/icon-fairy/releases/tag/3.1.0) was
+published by the successful [attesting workflow](https://github.com/t1seo/icon-fairy/actions/runs/35394195865).
+All three anonymous downloads matched the actual-app candidate, and each artifact
+attestation verified against the canonical repository and exact release commit.
+
+In the disposable vault, native **Check for updates → Update to version 3.1.0**
+upgraded the installed 3.0.0 plugin. Manifest/CSS match the release exactly;
+JavaScript matches the release plus only Obsidian's `\n/* nosourcemap */` suffix.
+Library JSON, plugin data and all existing icon files remained byte-identical.
+The enabled plugin retained seven library entries and seven assignments, rendered
+five inline images in both Reading and Live Preview, and passed the new picker
+smoke check without captured app errors. See [the native update](../../assets/qa-3.1.0/community-updated.png).
+
+Using the existing owner's Chrome session, **Check for new releases** queued the
+exact 3.1.0 / `f22ac4d` scan. The hosted CSS check reported a compatibility warning
+for mobile `column-gap: 8px` at `styles.css:1176`, classified as partially supported
+multicolumn CSS. This hosted finding is distinct from the zero-warning local
+source lint. Version 3.1.1 replaces it with the equivalent `gap: 14px 8px`; actual
+mobile geometry is unchanged and the JavaScript bundle is identical. The original
+3.1.0 tag and review history remain intact. See [patch verification](../QA-3.1.0.md#hosted-css-review-follow-up-311).

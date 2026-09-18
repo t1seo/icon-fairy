@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.1] - 2026-09-19
+
+### Fixed
+
+- Use the grid gap shorthand to resolve the hosted CSS compatibility warning while preserving the exact mobile card spacing
+
 ## [3.1.0] - 2026-09-19
 
 ### Changed

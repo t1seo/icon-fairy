@@ -82,6 +82,9 @@ quality, security, actual application execution, and context/history. The qualit
 reviewer's original overlapping-edit reproduction and 14 surrounding scenarios
 pass after the fix, including serialized storage of the second edit. The actual-app
 reviewer independently confirms the same rename/delete cases and normal UI flows.
+That execution covers 24 normal scenarios, five edge cases and the two additional
+edit races. Its 20 layout cases produce 80 query measurements; every search-height
+delta is 0 CSS px, with loaded images and no horizontal overflow.
 
 The final disposable vault has seven library icons and seven assignments; its
 data, library JSON and icon files match the original fixture. It is restored to
@@ -90,3 +93,24 @@ Physical mobile devices, Windows/Linux and Obsidian 1.5.7 were not run.
 
 CI and publication results are recorded separately in the
 [Community release audit](research/obsidian-community-release.md).
+
+## Hosted CSS review follow-up: 3.1.1
+
+The 3.1.0 hosted scan reported one compatibility warning for the mobile grid's
+`column-gap: 8px`, classified as partially supported multicolumn CSS. Version 3.1.1
+uses `gap: 14px 8px` instead. Actual Obsidian mobile-emulation measurements before
+and after the change show identical row/column gaps, modal bounds and all seven
+card rectangles at 390 × 820. No JavaScript or interaction code changed, so the
+five review verdicts above remain evidence for that unchanged code.
+
+The complete 241-test `npm run verify` suite passes again with zero local lint
+warnings. Root/sample styles and manifests agree. Final candidate hashes:
+
+```text
+e0187bb4fa0457fa97a0e248c28e4b6b1054b20d9af246e039aa8e1b49df1758  main.js
+ad11e08d0838cb6d7f4feeaaad8f2276b34ff83be62d512f06633a8ddc360dbc  manifest.json
+cf62ffb88bfedb9d02333f944c3a949ee4147d44e7b50c73a857ee9c7f027355  styles.css
+```
+
+The published 3.1.0 tag is preserved; final hosted-review and installation results
+for 3.1.1 are recorded in the release audit when verified.

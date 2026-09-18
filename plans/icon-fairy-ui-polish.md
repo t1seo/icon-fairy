@@ -101,12 +101,16 @@ tests; CSS/copy changes are primarily verified visually rather than string snaps
   device test. Register and clean every temporary QA resource.
 - [x] Obtain all five independent review passes: goal, quality, security, actual
   execution and context/history. Fix blocking findings and reverify affected work.
-- [ ] Update version/package lock/root+sample manifests/versions/changelog/README
+- [x] Update version/package lock/root+sample manifests/versions/changelog/README
   and QA evidence. Commit and push only intended files; preserve unrelated main
   worktree files. Open PR, require six CI checks passing, merge without bypassing
   protections or force pushing. Verify merged runtime matches the QA candidate.
-- [ ] Tag merged commit `3.1.0`, let existing Release workflow publish attested
+- [x] Tag merged commit `3.1.0`, let existing Release workflow publish attested
   `main.js`, `manifest.json`, `styles.css`, verify anonymous downloads and attestations.
+  PR #1 merged at `f22ac4d`; PR/main CI and release run `35394195865` passed.
+  Native 3.0.0 → 3.1.0 update preserved the library and data. The hosted scan then
+  flagged mobile `column-gap`; publish a 3.1.1 patch using the equivalent `gap`
+  shorthand, preserving the original tag, and recheck hosted results.
 - [ ] Use supported Community management flow to detect/review the new release,
   check exact-version results, verify native installation/update in a disposable
   Obsidian vault, and document actual status without conflating GitHub publication,
