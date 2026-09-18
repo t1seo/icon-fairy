@@ -38,18 +38,19 @@ Never move or replace the published 3.0.0 tag. Fix any subsequent problem in an 
 
 ## Prepare later versions
 
-Update `CHANGELOG.md`, then use npm's version command so `package.json`, `manifest.json`, and `versions.json` stay aligned. Synchronize the committed sample manifest too:
+On a release branch, update `CHANGELOG.md`, then use npm's version command so `package.json`, `manifest.json`, and `versions.json` stay aligned. Synchronize the committed sample manifest and stylesheet too:
 
 ```sh
 npm version patch --no-git-tag-version # or: minor
 cp manifest.json examples/programming-languages-vault/.obsidian/plugins/icon-fairy/manifest.json
-git add package.json package-lock.json manifest.json versions.json CHANGELOG.md examples/programming-languages-vault/.obsidian/plugins/icon-fairy/manifest.json
+cp styles.css examples/programming-languages-vault/.obsidian/plugins/icon-fairy/styles.css
+git add package.json package-lock.json manifest.json versions.json CHANGELOG.md examples/programming-languages-vault/.obsidian/plugins/icon-fairy/manifest.json examples/programming-languages-vault/.obsidian/plugins/icon-fairy/styles.css
 npm run verify
 git commit -m "🔖 chore: prepare release"
-git push origin HEAD:main
+git push -u origin HEAD
 ```
 
-Wait for CI to pass on the pushed commit, then tag the new manifest version and push only that tag to `origin`. Keep existing compatibility entries intact. The repository `.npmrc` keeps npm's tag prefix empty. Confirm that `origin` points to `t1seo/icon-fairy` in every checkout.
+Open a pull request to `main`, complete review, and wait for all six CI checks to pass before merging. Fetch the merged commit, confirm its runtime files match the app-tested candidate, then tag that commit with the new manifest version and push only that tag to `origin`. Keep existing compatibility entries intact. The repository `.npmrc` keeps npm's tag prefix empty. Confirm that `origin` points to `t1seo/icon-fairy` in every checkout.
 
 ## Verify the release
 

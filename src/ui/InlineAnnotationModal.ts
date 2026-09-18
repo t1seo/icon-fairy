@@ -4,6 +4,7 @@ import {
 	MarkdownRenderer,
 	Modal,
 	Notice,
+	Platform,
 	TextAreaComponent,
 } from "obsidian";
 
@@ -46,7 +47,7 @@ export class InlineAnnotationModal extends Modal {
 		const editor = new TextAreaComponent(this.contentEl);
 		editor.inputEl.addClass("custom-icon-annotation-editor");
 		editor.inputEl.setAttribute("aria-label", editorLabel.textContent ?? "Annotation");
-		editor.inputEl.rows = 9;
+		editor.inputEl.rows = 5;
 		editor.setPlaceholder("Add a comment or annotation…");
 		editor.setValue(this.options.markdown);
 
@@ -54,7 +55,9 @@ export class InlineAnnotationModal extends Modal {
 			cls: "custom-icon-annotation-preview-title",
 		});
 		previewTitle.createSpan({ text: "Preview" });
-		previewTitle.createEl("kbd", { text: "⌘↵ to save" });
+		previewTitle.createEl("kbd", {
+			text: Platform.isMacOS ? "⌘ Enter to save" : "Ctrl Enter to save",
+		});
 		const previewEl = this.contentEl.createDiv({ cls: "custom-icon-annotation-preview" });
 		const actionsEl = this.contentEl.createDiv({ cls: "custom-icon-annotation-actions" });
 		const destructiveActionsEl = actionsEl.createDiv({
@@ -108,7 +111,6 @@ export class InlineAnnotationModal extends Modal {
 						setBusy(false);
 					}
 				});
-			removeButton.buttonEl.addClass("mod-warning");
 		}
 
 		saveButton.onClick(save);

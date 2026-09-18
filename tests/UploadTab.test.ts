@@ -1,87 +1,10 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { processImage } from "../src/services/ImageProcessor";
-import { UploadTab } from "../src/ui/UploadTab";
-import { createPickerWindow, installPickerDom } from "./helpers/pickerDom";
-
-vi.mock("obsidian", () => ({ setIcon: vi.fn() }));
-vi.mock("../src/services/ImageProcessor", () => ({
-	isSvgFile: (file: File) => file.name.endsWith(".svg"),
-	processImage: vi.fn(() =>
-		Promise.resolve({ data: new ArrayBuffer(4), dataUrl: "data:image/png;base64,AAAA" }),
-	),
-	processSvg: vi.fn(() =>
-		Promise.resolve({ data: new ArrayBuffer(4), dataUrl: "data:image/svg+xml;base64,AAAA" }),
-	),
-}));
-
-function makeFileList(files: readonly File[]): FileList & Iterable<File> {
-	return {
-		...files,
-		length: files.length,
-		item: (index: number) => files[index] ?? null,
-		[Symbol.iterator]: function* () {
-			yield* files;
-		},
-	};
-}
-
-function pasteImage(doc: Document) {
-	const file = new File(["image"], "fairy.png", { type: "image/png" });
-	const event = new Event("paste", { bubbles: true, cancelable: true });
-	Object.defineProperty(event, "clipboardData", {
-		value: { items: [{ type: file.type, getAsFile: () => file }] },
-	});
-	doc.dispatchEvent(event);
-	return event;
-}
-
-function createTab() {
-	const owner = createPickerWindow();
-	const tab = new UploadTab(
-		{
-			app: {
-				vault: {
-					adapter: {
-						exists: vi.fn(() => Promise.resolve(true)),
-						mkdir: vi.fn(() => Promise.resolve()),
-						writeBinary: vi.fn(() => Promise.resolve()),
-					},
-				},
-			},
-			manifest: { dir: ".obsidian/plugins/icon-fairy" },
-			iconLibrary: {
-				add: vi.fn(() => Promise.resolve()),
-				addBatch: vi.fn(() => Promise.resolve()),
-			},
-		},
-		{ selectIcon: vi.fn(), close: vi.fn() },
-	);
-	tab.render(owner.doc.body);
-	return { ...owner, tab };
-}
-
-beforeEach(() => {
-	installPickerDom(document);
-	vi.stubGlobal(
-		"DataTransfer",
-		class {
-			private entries: File[] = [];
-			items = { add: (file: File) => this.entries.push(file) };
-			get files() {
-				return makeFileList(this.entries);
-			}
-		},
-	);
-	vi.spyOn(URL, "createObjectURL").mockReturnValue("blob:preview");
-	vi.spyOn(URL, "revokeObjectURL").mockImplementation(() => {});
-	vi.mocked(processImage).mockClear();
-});
-
-afterEach(() => {
-	vi.restoreAllMocks();
-	vi.unstubAllGlobals();
-	document.body.replaceChildren();
-});
+import { describe, expect, it, vi } from "vitest";
+import {
+	createUploadTab as createTab,
+	makeFileList,
+	pasteImage,
+	imageProcessor as processImage,
+} from "./helpers/uploadFixture";
 
 describe("UploadTab document ownership", () => {
 	it("previews clipboard images pasted into its owning window", async () => {
@@ -89,7 +12,7 @@ describe("UploadTab document ownership", () => {
 		const { tab, doc } = createTab();
 		// When an image is pasted into that window.
 		const event = pasteImage(doc);
-		await Promise.resolve();
+		await vi.waitFor(() => expect(doc.querySelectorAll("img")).toHaveLength(2));
 		// Then the image is processed and previewed in that document.
 		expect(event.defaultPrevented).toBe(true);
 		expect(processImage).toHaveBeenCalledOnce();

@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.0] - 2026-09-19
+
+### Changed
+
+- Added accessible per-icon menus for renaming and deleting library icons, plus a visible current-assignment marker
+- Simplified the picker header, search field and Library/Upload tabs with compact, stable layouts and clearer empty states
+- Clarified apply, insert and batch-import actions; preview uploaded icons in sidebar and note-title contexts
+- Made annotation editing more compact, corrected platform shortcut hints, and updated settings examples as the shortcode prefix changes
+- Preserved the folder-heart artwork, plugin identity, existing data and Obsidian 1.5.7 minimum version
+
+### Fixed
+
+- Prevented inline PNG insertion until the icon is saved to the library
+- Preserved search and keyboard focus through library management, including rename cancellation
+- Prevented late upload processing from replacing a closed or switched view
+
 ## [3.0.0] - 2026-09-13
 
 ### Changed

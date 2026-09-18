@@ -1,4 +1,4 @@
-import { App } from "obsidian";
+import { App, Platform } from "obsidian";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { InlineAnnotationModal } from "../src/ui/InlineAnnotationModal";
 import { createOwnerClock, createPickerWindow, installPickerDom } from "./helpers/pickerDom";
@@ -13,6 +13,7 @@ const rendering = vi.hoisted(() => ({
 
 vi.mock("obsidian", () => ({
 	App: class {},
+	Platform: { isMacOS: true },
 	Modal: class {
 		contentEl = document.createElement("div");
 		modalEl = document.createElement("div");
@@ -74,7 +75,7 @@ vi.mock("obsidian", () => ({
 	},
 }));
 
-function createModal() {
+function createModal(canRemove = false) {
 	const owner = createPickerWindow();
 	const clock = createOwnerClock(owner.ownerWindow);
 	const modal = new InlineAnnotationModal(
@@ -82,7 +83,7 @@ function createModal() {
 			iconName: "Fairy",
 			markdown: "Keep this annotation",
 			sourcePath: "Fairy.md",
-			canRemove: false,
+			canRemove,
 			onSave: () => Promise.resolve(),
 			onRemove: () => Promise.resolve(),
 		},
@@ -96,6 +97,7 @@ function createModal() {
 
 beforeEach(() => {
 	vi.useFakeTimers();
+	Platform.isMacOS = true;
 	installPickerDom(document);
 	vi.stubGlobal("createDiv", () => document.createElement("div"));
 	rendering.render.mockClear();
@@ -107,6 +109,42 @@ afterEach(() => {
 	vi.unstubAllGlobals();
 	vi.useRealTimers();
 	document.body.replaceChildren();
+});
+
+describe("InlineAnnotationModal presentation", () => {
+	it.each([
+		{ isMacOS: true, hint: "⌘ Enter to save" },
+		{ isMacOS: false, hint: "Ctrl Enter to save" },
+	])("shows $hint for the current platform", ({ isMacOS, hint }) => {
+		// Given the platform used by Obsidian's Mod shortcut.
+		Platform.isMacOS = isMacOS;
+		// When the editor opens.
+		const { modal, doc } = createModal();
+		// Then the visible shortcut matches that platform.
+		expect(doc.querySelector("kbd")?.textContent).toBe(hint);
+		modal.onClose();
+	});
+
+	it("starts with five rows when editing a short annotation", () => {
+		// Given a short existing annotation, when the editor opens.
+		const { modal, doc } = createModal();
+		// Then the editor keeps its content in a compact initial area.
+		expect(doc.querySelector("textarea")?.rows).toBe(5);
+		expect(doc.querySelector("textarea")?.value).toBe("Keep this annotation");
+		modal.onClose();
+	});
+
+	it("keeps removal separate without a filled warning button", () => {
+		// Given a removable annotation, when its actions render.
+		const { modal, doc } = createModal(true);
+		const remove = doc.querySelector(".custom-icon-annotation-destructive-actions button");
+		// Then removal remains explicit and only saving uses the primary fill.
+		expect(remove?.textContent).toBe("Remove annotation");
+		expect(remove?.classList.contains("mod-warning")).toBe(false);
+		expect(remove?.classList.contains("mod-cta")).toBe(false);
+		expect(doc.querySelector(".mod-cta")?.textContent).toBe("Save annotation");
+		modal.onClose();
+	});
 });
 
 describe("InlineAnnotationModal owner window lifecycle", () => {

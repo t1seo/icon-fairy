@@ -14,7 +14,7 @@ const seed: IconFairyData = {
 	},
 };
 
-async function fixture() {
+async function fixture(prefix = "ci") {
 	const app = new App();
 	const plugin = new IconFairyPlugin(app, {
 		id: "icon-fairy",
@@ -28,7 +28,10 @@ async function fixture() {
 	const updated = new Promise<void>((resolve) => {
 		vi.spyOn(app.workspace, "updateOptions").mockImplementation(() => resolve());
 	});
-	vi.spyOn(plugin, "loadData").mockResolvedValue(structuredClone(seed));
+	vi.spyOn(plugin, "loadData").mockResolvedValue({
+		...structuredClone(seed),
+		settings: { ...seed.settings, inlineIconPrefix: prefix },
+	});
 	vi.spyOn(plugin, "saveData").mockImplementation((data: unknown) => {
 		saved.push(JSON.stringify(data));
 		return Promise.resolve();
@@ -36,6 +39,7 @@ async function fixture() {
 	const resize = vi.spyOn(plugin, "updateInlineSizeCSSVar").mockImplementation(() => {});
 	await plugin.loadSettings();
 	const tab = new IconFairySettingTab(app, plugin);
+	document.body.append(tab.containerEl);
 	return { app, plugin, tab, saved, resize, updated };
 }
 
@@ -64,6 +68,61 @@ function render(tab: IconFairySettingTab, mode: "legacy" | "searchable"): void {
 beforeEach(() => document.body.replaceChildren());
 
 describe.each(["legacy", "searchable"] as const)("%s settings", (mode) => {
+	it.each([
+		["ci", " art! ", "art"],
+		["art", " !!! ", "ci"],
+		["ci", " !!! ", "ci"],
+	])(
+		"updates %s examples to %s without replacing the focused input",
+		async (initial, raw, expected) => {
+			// Given the current prefix and its native searchable metadata.
+			const { plugin, tab, saved, updated } = await fixture(initial);
+			const definitions = tab.getSettingDefinitions();
+			render(tab, mode);
+			const text = input(tab.containerEl, "text");
+			const prefixDescription = text
+				.closest(".setting-item")
+				?.querySelector(".setting-item-description");
+			expect(prefixDescription?.textContent).toContain(`:${initial}-icon-name:`);
+			text.focus();
+			// When a prefix edit is committed and normalized.
+			text.value = raw;
+			text.dispatchEvent(new Event("change"));
+			if (initial !== expected) await updated;
+			// Then visible and searchable examples change without losing focus or persisted data.
+			expect(prefixDescription?.textContent).toContain(`:${expected}-icon-name:`);
+			expect(tab.containerEl.textContent).toContain(`:${expected}-name:`);
+			expect(input(tab.containerEl, "text")).toBe(text);
+			expect(document.activeElement).toBe(text);
+			expect(text.value).toBe(expected);
+			expect(
+				definitions.find(
+					(definition) => "name" in definition && definition.name === "Inline icon prefix",
+				),
+			).toMatchObject({ desc: expect.stringContaining(`:${expected}-icon-name:`) });
+			expect(saved).toEqual(
+				initial === expected
+					? []
+					: [
+							JSON.stringify({
+								...seed,
+								settings: { ...seed.settings, inlineIconPrefix: expected },
+							}),
+						],
+			);
+			if (initial !== expected) {
+				const persisted: unknown = JSON.parse(saved[0] ?? "null");
+				vi.spyOn(plugin, "loadData").mockResolvedValue(persisted);
+				await plugin.loadSettings();
+				render(tab, mode);
+				expect(input(tab.containerEl, "text").value).toBe(expected);
+				expect(tab.containerEl.textContent).toContain(`:${expected}-icon-name:`);
+				expect(plugin.iconMap).toEqual(seed.iconMap);
+				expect(plugin.inlineAnnotations.toJSON()).toEqual(seed.inlineIconAnnotations);
+			}
+		},
+	);
+
 	it("preserves the full data envelope when the toggle changes", async () => {
 		const { app, plugin, tab, saved, updated } = await fixture();
 		render(tab, mode);
