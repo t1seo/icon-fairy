@@ -73,7 +73,9 @@ Select multiple files to review, rename, or remove individual items before one b
 
 ![Review one PNG and two SVG files before importing](assets/icon-fairy-batch-import.png)
 
-In the **Icons** tab, double-click a label to rename an icon. Use the remove button to delete it; assignments using that library item are cleared as well.
+In **Library**, the assigned icon is marked **Current**. Open an icon’s **More actions** menu to **Rename** or **Delete from library**; double-clicking its name also starts renaming. Deleting a library item clears assignments using that item. To remove only a file’s assignment, use **Remove assigned icon** in its file menu.
+
+For a single upload, **Apply icon** assigns it to the selected file or folder. **Save to library** makes it reusable; SVGs and inline insertion require this. Batch upload uses **Add N icons to library** and does not change the current assignment.
 
 ## Inline icons and annotations
 
@@ -95,7 +97,7 @@ Open the command palette with `Cmd/Ctrl+P` and search for **Icon Fairy**:
 
 - **Insert inline icon**
 - **Change icon for current file**
-- **Remove icon from current file**
+- **Remove assigned icon from current file**
 
 ![All three Icon Fairy commands in Obsidian](assets/icon-fairy-commands.png)
 
@@ -119,7 +121,7 @@ The explorer icons, inline icons, annotations, commands, and picker adapt to Obs
 
 ### Obsidian Community Plugins
 
-Icon Fairy requires **Obsidian 1.5.7+** and is available in [Community Plugins](https://community.obsidian.md/plugins/icon-fairy). Version 3.0.0 passed automated review with zero errors and warnings, and installation through Obsidian's Community browser is verified. Its plugin ID is `icon-fairy` and its repository is `t1seo/icon-fairy`.
+Icon Fairy requires **Obsidian 1.5.7+** and is available in [Community Plugins](https://community.obsidian.md/plugins/icon-fairy). Its plugin ID is `icon-fairy` and its repository is `t1seo/icon-fairy`.
 
 1. Open **Settings → Community plugins → Browse**.
 2. Search for **Icon Fairy**.

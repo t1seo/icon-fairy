@@ -31,7 +31,7 @@ function createTab() {
 	const library = createLibrary();
 	const tab = new CustomTab(
 		{ iconLibrary: library, iconMap: {}, removeIcon: vi.fn() },
-		{ selectIcon: vi.fn() },
+		{ selectIcon: vi.fn(), getTargetPath: () => "", setRandomEnabled: vi.fn() },
 	);
 	tab.render(owner.doc.body);
 	return { ...owner, clock, library, tab };
@@ -104,7 +104,7 @@ describe("CustomTab owner window lifecycle", () => {
 		input.dispatchEvent(new KeyboardEvent("keydown", { key, bubbles: true }));
 		await Promise.resolve();
 		// Then the visible name and saved library reflect that action.
-		expect(label.textContent).toBe(name);
+		expect(doc.querySelector(".custom-icon-custom-item-label")?.textContent).toBe(name);
 		expect(library.rename).toHaveBeenCalledTimes(calls);
 		tab.destroy();
 	});

@@ -1,20 +1,23 @@
 import { type App, Modal, setIcon } from "obsidian";
 import { CSS_PREFIX } from "../constants";
-import type IconFairyPlugin from "../main";
 import type { IconData, IconSelectCallback, PickerTab } from "../types";
 import { CustomTab } from "./CustomTab";
+import { type GridDirection, activatePickerIcon, navigatePickerGrid } from "./PickerKeyboard";
 import { UploadTab } from "./UploadTab";
 
 /** Tab definition for the picker */
 interface TabDef {
-	key: PickerTab;
-	label: string;
+	readonly key: PickerTab;
+	readonly label: string;
 }
 
-const TABS: TabDef[] = [
-	{ key: "custom", label: "Icons" },
+const TABS: readonly TabDef[] = [
+	{ key: "custom", label: "Library" },
 	{ key: "upload", label: "Upload" },
 ];
+
+type PickerPlugin = ConstructorParameters<typeof CustomTab>[0] &
+	ConstructorParameters<typeof UploadTab>[0];
 
 /**
  * Main icon picker modal with 2 tabs: Custom | Upload
@@ -25,16 +28,18 @@ export class IconPickerModal extends Modal {
 	private tabContentEl!: HTMLElement;
 	private searchEl!: HTMLInputElement;
 	private searchBarEl!: HTMLElement;
+	private randomButtonEl: HTMLButtonElement | null = null;
 	private tabButtons = new Map<PickerTab, HTMLButtonElement>();
 	private onSelect: IconSelectCallback;
 	private currentPath: string;
+	private cancelInitialFocus: (() => void) | null = null;
 
 	/** Tab renderers registered by each tab module */
 	private tabRenderers = new Map<PickerTab, TabRenderer>();
 
 	constructor(
 		app: App,
-		private plugin: IconFairyPlugin,
+		private readonly plugin: PickerPlugin,
 		path: string,
 		onSelect: IconSelectCallback,
 	) {
@@ -64,8 +69,13 @@ export class IconPickerModal extends Modal {
 
 		this.switchTab(this.activeTab);
 
-		// Auto-focus search input for immediate filtering
-		this.searchEl.focus();
+		this.cancelInitialFocus?.();
+		const ownerWindow = contentEl.win;
+		const focusTimeout = ownerWindow.setTimeout(() => {
+			this.cancelInitialFocus = null;
+			if (this.activeTab === "custom" && this.searchEl.isConnected) this.searchEl.focus();
+		}, 0);
+		this.cancelInitialFocus = () => ownerWindow.clearTimeout(focusTimeout);
 
 		// Keyboard navigation
 		this.scope.register([], "ArrowDown", (e) => this.navigateGrid(e, "down"));
@@ -81,6 +91,8 @@ export class IconPickerModal extends Modal {
 	}
 
 	onClose() {
+		this.cancelInitialFocus?.();
+		this.cancelInitialFocus = null;
 		if (IconPickerModal.activeModal === this) IconPickerModal.activeModal = null;
 		for (const renderer of this.tabRenderers.values()) {
 			renderer.destroy?.();
@@ -102,6 +114,10 @@ export class IconPickerModal extends Modal {
 		return this.currentPath;
 	}
 
+	setRandomEnabled(enabled: boolean): void {
+		if (this.randomButtonEl) this.randomButtonEl.disabled = !enabled;
+	}
+
 	selectIcon(icon: IconData) {
 		this.onSelect(icon);
 		this.close();
@@ -119,8 +135,8 @@ export class IconPickerModal extends Modal {
 		header.createEl("p", {
 			cls: `${CSS_PREFIX}-picker-description`,
 			text: this.currentPath
-				? `Choose an icon for “${this.currentPath.split("/").pop() ?? this.currentPath}”.`
-				: "Choose an icon to insert into the current note.",
+				? `For ${this.currentPath.split("/").pop() ?? this.currentPath}`
+				: "Insert into note",
 		});
 
 		const tabs = header.createDiv({
@@ -149,16 +165,17 @@ export class IconPickerModal extends Modal {
 	private buildSearchBar(parent: HTMLElement) {
 		const bar = parent.createDiv({ cls: `${CSS_PREFIX}-picker-search` });
 		this.searchBarEl = bar;
-		const searchIcon = bar.createSpan({ cls: `${CSS_PREFIX}-search-icon` });
+		const field = bar.createDiv({ cls: `${CSS_PREFIX}-search-field` });
+		const searchIcon = field.createSpan({ cls: `${CSS_PREFIX}-search-icon` });
 		setIcon(searchIcon, "search");
 		searchIcon.setAttribute("aria-hidden", "true");
 
-		this.searchEl = bar.createEl("input", {
+		this.searchEl = field.createEl("input", {
 			cls: `${CSS_PREFIX}-search-input`,
 			attr: {
 				type: "search",
-				placeholder: "Search your icon library",
-				"aria-label": "Search your icon library",
+				placeholder: "Search icons",
+				"aria-label": "Search icons",
 			},
 		});
 		this.searchEl.addEventListener("input", () => {
@@ -174,6 +191,7 @@ export class IconPickerModal extends Modal {
 				title: "Choose a random icon",
 			},
 		});
+		this.randomButtonEl = randomBtn;
 		setIcon(randomBtn, "shuffle");
 		randomBtn.createSpan({ text: "Random" });
 		randomBtn.addEventListener("click", () => {
@@ -193,63 +211,16 @@ export class IconPickerModal extends Modal {
 		});
 	}
 
-	private navigateGrid(e: KeyboardEvent, direction: "up" | "down" | "left" | "right") {
-		const activeElement = this.contentEl.doc.activeElement;
-		if (activeElement === this.searchEl || activeElement?.matches(`.${CSS_PREFIX}-tab-btn`)) {
-			return;
-		}
-
-		const gridSelector = `.${CSS_PREFIX}-custom-item-btn`;
-		const items = Array.from(this.tabContentEl.querySelectorAll<HTMLElement>(gridSelector));
-		if (items.length === 0) return;
-
-		e.preventDefault();
-
-		const currentIndex = items.findIndex((item) => item === activeElement);
-
-		if (currentIndex === -1) {
-			items[0].focus();
-			return;
-		}
-
-		const grid = items[0].parentElement;
-		if (!grid) return;
-		const cols = Math.floor(grid.clientWidth / items[0].offsetWidth) || 1;
-
-		let nextIndex = currentIndex;
-		switch (direction) {
-			case "left":
-				nextIndex = Math.max(0, currentIndex - 1);
-				break;
-			case "right":
-				nextIndex = Math.min(items.length - 1, currentIndex + 1);
-				break;
-			case "up":
-				nextIndex = Math.max(0, currentIndex - cols);
-				break;
-			case "down":
-				nextIndex = Math.min(items.length - 1, currentIndex + cols);
-				break;
-		}
-
-		if (nextIndex !== currentIndex) {
-			items[nextIndex].focus();
-			items[nextIndex].scrollIntoView({ block: "nearest" });
-		}
+	private navigateGrid(event: KeyboardEvent, direction: GridDirection): void {
+		navigatePickerGrid(
+			{ contentEl: this.contentEl, tabContentEl: this.tabContentEl },
+			event,
+			direction,
+		);
 	}
 
-	private activateFocused(e: KeyboardEvent) {
-		const activeElement = this.contentEl.doc.activeElement;
-		if (activeElement === this.searchEl) return;
-
-		const gridSelector = `.${CSS_PREFIX}-custom-item-btn`;
-		const items = Array.from(this.tabContentEl.querySelectorAll<HTMLElement>(gridSelector));
-		const focused = items.find((item) => item === activeElement);
-
-		if (focused) {
-			e.preventDefault();
-			focused.click();
-		}
+	private activateFocused(event: KeyboardEvent): void {
+		activatePickerIcon({ contentEl: this.contentEl, tabContentEl: this.tabContentEl }, event);
 	}
 
 	private navigateTabs(event: KeyboardEvent, currentTab: PickerTab) {

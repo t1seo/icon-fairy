@@ -83,6 +83,9 @@ for (const asset of ["main.js", "manifest.json", "styles.css"]) {
 
 if (existsSync("styles.css")) {
 	const stylesheet = readFileSync("styles.css", "utf8");
+	if (readFileSync(`${samplePlugin}/styles.css`, "utf8") !== stylesheet) {
+		errors.push("sample styles.css must match the release stylesheet");
+	}
 	if (/!\s*important\b/i.test(stylesheet)) {
 		errors.push("styles.css must use scoped selectors instead of !important");
 	}

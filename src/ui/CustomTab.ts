@@ -3,6 +3,7 @@ import { CSS_PREFIX } from "../constants";
 import type IconFairyPlugin from "../main";
 import type { CustomIcon } from "../types";
 import type { IconPickerModal, TabRenderer } from "./IconPickerModal";
+import { LibraryIconCard } from "./LibraryIconCard";
 
 type CustomTabPlugin = Pick<IconFairyPlugin, "iconMap" | "removeIcon"> & {
 	readonly iconLibrary: Pick<
@@ -11,32 +12,39 @@ type CustomTabPlugin = Pick<IconFairyPlugin, "iconMap" | "removeIcon"> & {
 	>;
 };
 
-/**
- * Custom tab: displays saved custom icons from the workspace library.
- * Supports search, selection, and removal.
- */
 export class CustomTab implements TabRenderer {
-	private gridContainer!: HTMLElement;
-	private visibleIcons: CustomIcon[] = [];
+	private gridContainer: HTMLElement | null = null;
+	private container: HTMLElement | null = null;
+	private visibleIcons: readonly CustomIcon[] = [];
+	private cards = new Map<string, LibraryIconCard>();
 	private searchTimeout: number | null = null;
 	private searchWindow: Window | null = null;
-	private cancelRename: (() => void) | null = null;
+	private query = "";
 
 	constructor(
-		private plugin: CustomTabPlugin,
-		private modal: Pick<IconPickerModal, "selectIcon">,
+		private readonly plugin: CustomTabPlugin,
+		private readonly modal: Pick<
+			IconPickerModal,
+			"selectIcon" | "getTargetPath" | "setRandomEnabled"
+		>,
 	) {}
 
 	render(container: HTMLElement): void {
 		this.destroy();
+		this.container = container;
 		this.searchWindow = container.win;
+		this.query = "";
+		const icons = this.plugin.iconLibrary.getAll();
+		container.classList.add(`is-library-${icons.length <= 8 ? "compact" : "full"}`);
+		container.classList.toggle("is-library-small", icons.length <= 1);
 		this.gridContainer = container.createDiv({ cls: `${CSS_PREFIX}-custom-grid-area` });
-		this.renderIcons(this.plugin.iconLibrary.getAll());
+		this.renderIcons(icons);
 	}
 
 	onSearch(query: string): void {
 		const ownerWindow = this.searchWindow;
 		if (!ownerWindow) return;
+		this.query = query;
 		if (this.searchTimeout !== null) ownerWindow.clearTimeout(this.searchTimeout);
 
 		this.searchTimeout = ownerWindow.setTimeout(() => {
@@ -53,148 +61,124 @@ export class CustomTab implements TabRenderer {
 	}
 
 	destroy(): void {
-		this.cancelEditing();
+		for (const card of this.cards.values()) card.destroy();
+		this.cards.clear();
 		if (this.searchTimeout !== null) this.searchWindow?.clearTimeout(this.searchTimeout);
 		this.searchTimeout = null;
 		this.searchWindow = null;
+		this.visibleIcons = [];
+		this.gridContainer = null;
+		this.container?.classList.remove("is-library-small", "is-library-compact", "is-library-full");
+		this.container = null;
 	}
 
 	cancelEditing(): void {
-		const cancel = this.cancelRename;
-		this.cancelRename = null;
-		cancel?.();
+		for (const card of this.cards.values()) card.cancelEditing();
 	}
 
-	// ─── Private ────────────────────────────────────
-
-	private startRename(label: HTMLElement, icon: CustomIcon) {
-		this.cancelEditing();
-		label.textContent = "";
-		label.removeAttribute("title");
-		const input = label.createEl("input");
-		input.type = "text";
-		input.value = icon.name;
-		input.className = `${CSS_PREFIX}-rename-input`;
-
-		const commit = () => {
-			this.cancelRename = null;
-			const newName = input.value.trim();
-			if (newName && newName !== icon.name) {
-				void (async () => {
-					await this.plugin.iconLibrary.rename(icon.id, newName);
-					label.textContent = newName;
-					label.setAttribute("title", "Double-click to rename");
-				})();
-			} else {
-				label.textContent = icon.name;
-				label.setAttribute("title", "Double-click to rename");
-			}
-		};
-
-		this.cancelRename = () => {
-			input.removeEventListener("blur", commit);
-			input.value = icon.name;
-			label.textContent = icon.name;
-			label.setAttribute("title", "Double-click to rename");
-		};
-		input.addEventListener("blur", commit, { once: true });
-		input.addEventListener("keydown", (e) => {
-			if (e.key === "Enter") {
-				e.preventDefault();
-				input.blur();
-			} else if (e.key === "Escape") {
-				e.preventDefault();
-				this.cancelEditing();
-			}
-		});
-
-		input.focus();
-		input.select();
+	private async rename(id: string, name: string): Promise<void> {
+		const container = this.gridContainer;
+		await this.plugin.iconLibrary.rename(id, name);
+		if (container === this.gridContainer) this.refresh(id);
 	}
 
-	private renderIcons(icons: CustomIcon[]) {
+	private async remove(id: string): Promise<void> {
+		const container = this.gridContainer;
+		await this.plugin.iconLibrary.remove(id);
+		for (const [path, data] of Object.entries(this.plugin.iconMap)) {
+			if (data.type === "custom" && data.value === id) this.plugin.removeIcon(path);
+		}
+		if (container === this.gridContainer) this.refresh(id);
+	}
+
+	private refresh(focusId: string): void {
+		const focused = this.container?.doc.activeElement;
+		const preserveFocus =
+			focused?.isConnected &&
+			focused !== this.container?.doc.body &&
+			!this.cards.get(focusId)?.element.contains(focused);
+		const previousIndex = Math.max(
+			0,
+			this.visibleIcons.findIndex((icon) => icon.id === focusId),
+		);
+		this.renderIcons(this.plugin.iconLibrary.search(this.query), focusId);
+		if (preserveFocus && focused?.isConnected) return;
+		const fallback = this.visibleIcons[Math.min(previousIndex, this.visibleIcons.length - 1)];
+		const card = this.cards.get(focusId) ?? (fallback ? this.cards.get(fallback.id) : undefined);
+		if (card) card.focus();
+		else
+			this.container?.parentElement
+				?.querySelector<HTMLInputElement>(`.${CSS_PREFIX}-search-input`)
+				?.focus();
+	}
+
+	private renderIcons(icons: readonly CustomIcon[], changedId?: string): void {
+		const container = this.gridContainer;
+		if (!container) return;
+		const visibleIds = new Set(icons.map((icon) => icon.id));
+		for (const [id, card] of this.cards) {
+			if (changedId !== undefined && id !== changedId && visibleIds.has(id)) continue;
+			card.destroy();
+			card.element.remove();
+			this.cards.delete(id);
+		}
 		this.visibleIcons = icons;
-		this.gridContainer.empty();
+		this.modal.setRandomEnabled(icons.length > 0);
 
 		if (icons.length === 0) {
-			const empty = this.gridContainer.createDiv({
+			container.empty();
+			const empty = container.createDiv({
 				cls: `${CSS_PREFIX}-empty-state`,
 				attr: { role: "status" },
 			});
 			const emptyIcon = empty.createDiv({ cls: `${CSS_PREFIX}-empty-state-icon` });
 			setIcon(emptyIcon, "image-off");
-			empty.createEl("strong", { text: "No icons found" });
+			const hasLibrary = this.plugin.iconLibrary.getAll().length > 0;
+			empty.createEl("strong", {
+				text: hasLibrary ? "No matching icons" : "Your library is empty",
+			});
 			empty.createEl("p", {
-				text: "Try another search, or upload an image to build your library.",
+				text: hasLibrary
+					? "Try another search or clear the search field."
+					: "Open Upload to add your first icon.",
 			});
 			return;
 		}
 
-		this.gridContainer.createDiv({
-			text: "Select an icon to apply it. Double-click a name to rename.",
-			cls: `${CSS_PREFIX}-grid-hint`,
-		});
-
-		const grid = this.gridContainer.createDiv({
-			cls: `${CSS_PREFIX}-custom-grid`,
-			attr: { role: "list", "aria-label": "Icon library" },
-		});
-
-		for (const icon of icons) {
-			const item = grid.createDiv({
-				cls: `${CSS_PREFIX}-custom-item`,
-				attr: { role: "listitem" },
+		let grid = container.querySelector<HTMLElement>(`.${CSS_PREFIX}-custom-grid`);
+		if (!grid) {
+			container.empty();
+			grid = container.createDiv({
+				cls: `${CSS_PREFIX}-custom-grid`,
+				attr: { role: "list", "aria-label": "Icon library" },
 			});
+		}
 
-			const imgBtn = item.createEl("button", {
-				cls: `${CSS_PREFIX}-custom-item-btn`,
-				attr: { type: "button", "aria-label": `Use ${icon.name}`, title: `Use ${icon.name}` },
-			});
-
-			const img = imgBtn.createEl("img");
-			img.src = this.plugin.iconLibrary.getIconUrl(icon.id);
-			img.alt = icon.name;
-			img.width = 40;
-			img.height = 40;
-
-			imgBtn.addEventListener("click", () => {
-				this.modal.selectIcon({ type: "custom", value: icon.id });
-			});
-
-			const label = item.createDiv({
-				cls: `${CSS_PREFIX}-custom-item-label`,
-				attr: { title: "Double-click to rename" },
-			});
-			label.textContent = icon.name;
-
-			label.addEventListener("dblclick", (e) => {
-				e.stopPropagation();
-				this.startRename(label, icon);
-			});
-
-			// Remove button
-			const removeBtn = item.createEl("button", {
-				cls: `${CSS_PREFIX}-custom-item-remove`,
-				attr: {
-					type: "button",
-					"aria-label": `Delete ${icon.name} from library`,
-					title: `Delete ${icon.name}`,
-				},
-			});
-			setIcon(removeBtn, "x");
-			removeBtn.addEventListener("click", (e) => {
-				e.stopPropagation();
-				void (async () => {
-					await this.plugin.iconLibrary.remove(icon.id);
-					// Remove all iconMap references to this deleted icon
-					for (const [path, data] of Object.entries(this.plugin.iconMap)) {
-						if (data.value === icon.id) {
-							this.plugin.removeIcon(path);
-						}
-					}
-					this.renderIcons(this.plugin.iconLibrary.getAll());
-				})();
-			});
+		const path = this.modal.getTargetPath();
+		const current = path ? this.plugin.iconMap[path] : undefined;
+		for (const [index, icon] of icons.entries()) {
+			let card = this.cards.get(icon.id);
+			if (!card) {
+				card = new LibraryIconCard(
+					grid,
+					icon,
+					this.plugin.iconLibrary.getIconUrl(icon.id),
+					current?.type === "custom" && current.value === icon.id,
+					{
+						select: () => this.modal.selectIcon({ type: "custom", value: icon.id }),
+						rename: (name) => {
+							void this.rename(icon.id, name);
+						},
+						remove: () => {
+							void this.remove(icon.id);
+						},
+						beforeRename: () => this.cancelEditing(),
+					},
+				);
+				this.cards.set(icon.id, card);
+			}
+			const position = grid.children.item(index);
+			if (position !== card.element) grid.insertBefore(card.element, position);
 		}
 	}
 }

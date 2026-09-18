@@ -73,7 +73,9 @@ Programming Languages/       </> 폴더 아이콘
 
 ![PNG 한 개와 SVG 두 개를 일괄 가져오기 전에 이름을 검토하는 화면](assets/icon-fairy-batch-import.png)
 
-**Icons** 탭에서 이름을 더블클릭하면 아이콘 이름을 바꿀 수 있습니다. 제거 버튼으로 라이브러리에서 삭제하면 해당 아이콘을 사용하던 지정도 함께 정리됩니다.
+**Library** 탭에서는 현재 지정된 아이콘에 **Current**가 표시됩니다. 아이콘의 **더 보기(⋯)** 메뉴에서 **Rename** 또는 **Delete from library**를 선택할 수 있으며, 이름을 더블클릭해도 이름을 바꿀 수 있습니다. 라이브러리에서 삭제하면 해당 아이콘을 사용하던 지정도 함께 정리됩니다. 파일의 지정만 해제하려면 파일 메뉴의 **Remove assigned icon**을 사용하세요.
+
+단일 업로드의 **Apply icon**은 선택한 파일·폴더에 적용합니다. **Save to library**를 선택하면 다시 사용할 수 있으며, SVG와 인라인 삽입에는 라이브러리 저장이 필요합니다. 일괄 업로드의 **Add N icons to library**는 라이브러리에만 추가하고 현재 지정은 바꾸지 않습니다.
 
 ## 인라인 아이콘과 Markdown 주석
 
@@ -95,7 +97,7 @@ Programming Languages/       </> 폴더 아이콘
 
 - **Insert inline icon**
 - **Change icon for current file**
-- **Remove icon from current file**
+- **Remove assigned icon from current file**
 
 ![Obsidian 명령 팔레트의 Icon Fairy 세 명령](assets/icon-fairy-commands.png)
 
@@ -119,7 +121,7 @@ Programming Languages/       </> 폴더 아이콘
 
 ### Obsidian 커뮤니티 플러그인
 
-Icon Fairy(아이콘 요정)는 **Obsidian 1.5.7 이상**에서 [커뮤니티 플러그인](https://community.obsidian.md/plugins/icon-fairy)으로 설치하실 수 있습니다. 3.0.0은 자동 리뷰를 오류·경고 없이 통과했으며, Obsidian 앱 내 검색·설치·활성화까지 확인했습니다. 플러그인 ID는 `icon-fairy`, 저장소는 `t1seo/icon-fairy`입니다.
+Icon Fairy(아이콘 요정)는 **Obsidian 1.5.7 이상**에서 [커뮤니티 플러그인](https://community.obsidian.md/plugins/icon-fairy)으로 설치하실 수 있습니다. 플러그인 ID는 `icon-fairy`, 저장소는 `t1seo/icon-fairy`입니다.
 
 1. **설정 → 커뮤니티 플러그인 → 탐색**을 엽니다.
 2. **Icon Fairy**를 검색합니다.

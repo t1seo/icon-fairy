@@ -20,7 +20,7 @@ The sample opens in Obsidian’s light appearance, matching the current README s
 - Open **Welcome to Icon Fairy** in Live Preview and Reading view to compare inline rendering and the folder-heart logo.
 - Right-click the annotated TypeScript icon. Confirm that its Markdown annotation contains a working wiki link.
 - Open the command palette and search for **Icon Fairy**. All three commands should appear.
-- Right-click a file, choose **Change icon…**, and browse both the **Icons** and **Upload** tabs.
+- Right-click a file, choose **Change icon…**, and browse both the **Library** and **Upload** tabs. The current icon is marked **Current**; each icon's menu offers **Rename** and **Delete from library**.
 
 ## Sample layout
 

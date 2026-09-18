@@ -37,7 +37,7 @@ function createRenamingPicker() {
 				remove: () => Promise.resolve(),
 			},
 		},
-		{ selectIcon: vi.fn() },
+		{ selectIcon: vi.fn(), getTargetPath: () => "", setRandomEnabled: vi.fn() },
 	);
 	const context = {
 		contentEl: doc.body,

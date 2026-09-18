@@ -9,6 +9,8 @@ type InlineSetting = {
 };
 
 export class IconFairySettingTab extends PluginSettingTab {
+	private readonly renderedDescriptions = new Map<Setting, () => string>();
+
 	constructor(
 		app: App,
 		private plugin: IconFairyPlugin,
@@ -22,6 +24,7 @@ export class IconFairySettingTab extends PluginSettingTab {
 
 	display(): void {
 		const { containerEl } = this;
+		this.renderedDescriptions.clear();
 		containerEl.empty();
 		new Setting(containerEl).setName("Inline icons").setHeading();
 		for (const definition of this.getInlineSettings()) {
@@ -30,11 +33,19 @@ export class IconFairySettingTab extends PluginSettingTab {
 	}
 
 	private getInlineSettings(): InlineSetting[] {
+		const enableDescription = () =>
+			`Allow :${this.plugin.settings.inlineIconPrefix}-name: shortcodes in note content.`;
+		const prefixDescription = () =>
+			`Syntax: :${this.plugin.settings.inlineIconPrefix}-icon-name:. Use letters, numbers, or hyphens.`;
 		return [
 			{
 				name: "Enable inline icons",
-				desc: `Allow :${this.plugin.settings.inlineIconPrefix}-name: shortcodes in note content.`,
+				get desc() {
+					return enableDescription();
+				},
 				render: (setting) => {
+					this.renderedDescriptions.set(setting, enableDescription);
+					setting.setDesc(enableDescription());
 					setting.addToggle((toggle) =>
 						toggle.setValue(this.plugin.settings.enableInlineIcons).onChange(async (value) => {
 							this.plugin.settings.enableInlineIcons = value;
@@ -63,8 +74,12 @@ export class IconFairySettingTab extends PluginSettingTab {
 			},
 			{
 				name: "Inline icon prefix",
-				desc: "Syntax: :ci-icon-name:. Use letters, numbers, or hyphens.",
+				get desc() {
+					return prefixDescription();
+				},
 				render: (setting) => {
+					this.renderedDescriptions.set(setting, prefixDescription);
+					setting.setDesc(prefixDescription());
 					setting.addText((text) => {
 						text.setPlaceholder(DEFAULT_SETTINGS.inlineIconPrefix);
 						text.setValue(this.plugin.settings.inlineIconPrefix);
@@ -78,6 +93,7 @@ export class IconFairySettingTab extends PluginSettingTab {
 							text.setValue(value);
 							if (value === this.plugin.settings.inlineIconPrefix) return;
 							this.plugin.settings.inlineIconPrefix = value;
+							this.updateDescriptions();
 							void (async () => {
 								await this.plugin.saveSettings();
 								this.plugin.app.workspace.updateOptions();
@@ -87,5 +103,15 @@ export class IconFairySettingTab extends PluginSettingTab {
 				},
 			},
 		];
+	}
+
+	private updateDescriptions(): void {
+		for (const [setting, describe] of this.renderedDescriptions) {
+			if (setting.settingEl.isConnected) {
+				setting.setDesc(describe());
+			} else {
+				this.renderedDescriptions.delete(setting);
+			}
+		}
 	}
 }

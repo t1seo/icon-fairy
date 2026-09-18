@@ -22,7 +22,7 @@ export class ContextMenu {
 				if (this.plugin.iconMap[file.path]) {
 					menu.addItem((item) => {
 						item
-							.setTitle("Remove icon")
+							.setTitle("Remove assigned icon")
 							.setIcon("trash-2")
 							.onClick(() => this.plugin.removeIcon(file.path));
 					});
@@ -47,7 +47,7 @@ export class ContextMenu {
 		// Command palette: remove icon for active file
 		this.plugin.addCommand({
 			id: "remove-icon",
-			name: "Remove icon from current file",
+			name: "Remove assigned icon from current file",
 			checkCallback: (checking) => {
 				const file = this.plugin.app.workspace.getActiveFile();
 				if (!file) return false;

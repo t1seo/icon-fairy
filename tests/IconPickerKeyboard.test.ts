@@ -15,19 +15,26 @@ function createPicker(location: "main" | "popout") {
 	const searchEl = contentEl.createEl("input", { type: "search" });
 	const tabButton = contentEl.createEl("button", { cls: "custom-icon-tab-btn" });
 	const tabContentEl = contentEl.createDiv();
-	const items = ["Fairy", "Moon", "Cloud"].map((name) => {
-		const button = tabContentEl.createEl("button", {
+	const grid = tabContentEl.createDiv({ cls: "custom-icon-custom-grid" });
+	const items = ["Fairy", "Moon", "Cloud", "Sun"].map((name, index) => {
+		const card = grid.createDiv({ cls: "custom-icon-custom-item" });
+		Object.defineProperty(card, "offsetTop", { value: Math.floor(index / 2) * 100 });
+		const button = card.createEl("button", {
 			cls: "custom-icon-custom-item-btn",
 			text: name,
 		});
 		Object.defineProperty(button, "scrollIntoView", { value: vi.fn() });
 		return button;
 	});
+	const menuButton = grid.createEl("button", { cls: "custom-icon-custom-item-actions" });
+	const renameInput = grid.createEl("input", { cls: "custom-icon-rename-input" });
 	const context = { contentEl, searchEl, tabContentEl };
 	return {
 		doc,
 		searchEl,
 		tabButton,
+		menuButton,
+		renameInput,
 		items,
 		navigate(direction: "up" | "down" | "left" | "right") {
 			const event = new KeyboardEvent("keydown", { cancelable: true });
@@ -49,6 +56,24 @@ afterEach(() => {
 });
 
 describe.each(["main", "popout"] as const)("picker keyboard in %s window", (location) => {
+	it.each(["menuButton", "renameInput"] as const)("leaves arrow keys with %s", (control) => {
+		const picker = createPicker(location);
+		picker[control].focus();
+		const event = picker.navigate("right");
+		expect(picker.doc.activeElement).toBe(picker[control]);
+		expect(event.defaultPrevented).toBe(false);
+	});
+
+	it.each([
+		["down", 0, 2],
+		["up", 3, 1],
+	] as const)("moves %s using the rendered card columns", (direction, from, to) => {
+		const picker = createPicker(location);
+		picker.items[from].focus();
+		picker.navigate(direction);
+		expect(picker.doc.activeElement).toBe(picker.items[to]);
+	});
+
 	it("preserves search input focus when ArrowDown is pressed", () => {
 		// Given the search input has focus in its own document.
 		const picker = createPicker(location);
