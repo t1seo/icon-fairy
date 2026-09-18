@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-icon-fairy",
-	"version": "3.1.0",
+	"version": "3.1.1",
 	"description": "Upload and use custom image icons across files, folders, tabs, note titles, and inline text.",
 	"main": "main.js",
 	"scripts": {

@@ -1173,7 +1173,7 @@
 
 	.custom-icon-custom-grid {
 		grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-		column-gap: 8px;
+		gap: 14px 8px;
 	}
 
 	.custom-icon-modal .custom-icon-custom-item-actions,
