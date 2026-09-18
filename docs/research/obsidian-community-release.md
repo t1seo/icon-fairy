@@ -2,7 +2,7 @@
 
 Dated history from 2026-08-19 onward. Later sections supersede earlier submission and synchronization results.
 
-**Latest verified status — 2026-09-13 14:50 UTC:** [Icon Fairy 3.0.0](https://community.obsidian.md/plugins/icon-fairy) is published from `t1seo/icon-fairy`, and its automated review completed with zero errors and warnings. The public listing shows **Review: Passed**, **Health: Excellent**, and the correct `icon-fairy` installation link. Its overview attachment now shows the selected folder-heart logo in an actual light-mode sample. Both catalog feeds contain the new entry, and actual Obsidian Community search, installation, and activation succeeded as recorded below. The previous Folder Fairy listing was then archived; both old repositories and releases remain intact. Automated review is not a claim of manual staff approval.
+**Latest verified status — 2026-09-18 21:09 UTC:** [Icon Fairy 3.1.1](https://community.obsidian.md/plugins/icon-fairy) is published from `t1seo/icon-fairy`. Its exact `4205960` automated review is **Completed with zero errors and warnings**, including byte-for-byte build reproduction. The public listing shows **3.1.1**, **Review: Passed**, **Health: Excellent**, and the enabled `icon-fairy` installation link. Native updates from 3.0.0 to 3.1.0 and then 3.1.1 preserved the library and data. The folder-heart identity and both archived predecessors remain unchanged. See the final sections for the UI update, one corrected 3.1.0 CSS warning, and deployment evidence. Automated review is not a claim of manual staff approval.
 
 ## Decision
 
@@ -152,3 +152,46 @@ multicolumn CSS. This hosted finding is distinct from the zero-warning local
 source lint. Version 3.1.1 replaces it with the equivalent `gap: 14px 8px`; actual
 mobile geometry is unchanged and the JavaScript bundle is identical. The original
 3.1.0 tag and review history remain intact. See [patch verification](../QA-3.1.0.md#hosted-css-review-follow-up-311).
+
+### 3.1.1 publication and native update
+
+[PR #2](https://github.com/t1seo/icon-fairy/pull/2) merged at
+`4205960366c9d9bc9cdc762c17a9d4110b61b1c3` after all six
+[PR CI checks](https://github.com/t1seo/icon-fairy/actions/runs/35394638553) passed.
+[Merged-commit CI](https://github.com/t1seo/icon-fairy/actions/runs/35394729172)
+and the [release workflow](https://github.com/t1seo/icon-fairy/actions/runs/35394803996)
+passed. The [3.1.1 release](https://github.com/t1seo/icon-fairy/releases/tag/3.1.1)
+was published at 2026-09-18 21:04:27 UTC. All three anonymous downloads match the
+verified patch. Attestation verification explicitly enforces `refs/tags/3.1.1`
+and the exact merged source digest; the JavaScript is also identical to 3.1.0.
+
+Native **Check for updates → Update to version 3.1.1** upgraded the disposable
+3.1.0 installation. Installed assets match the release with only the usual exact
+JavaScript suffix. Plugin data, library JSON and all ten pre-update icon files
+remain byte-identical; seven library entries and seven assignments remain enabled.
+Reading and Live Preview each render five loaded inline images. The picker opens
+with search focused, seven loaded icons and the Current marker, then applies and
+closes successfully. The app reports no captured errors. See the
+[3.1.1 installation evidence](../../assets/qa-3.1.1/community-updated.png).
+
+Both the primary Community catalog and GitHub mirror still contain the correct
+`Icon Fairy / icon-fairy / t1seo/icon-fairy` identity. All task-owned worker terminals
+and Obsidian QA/settings windows are closed; the global CLI option is restored to
+disabled. The user's working vault window remains open.
+
+### Final hosted review and public listing
+
+At 21:08–21:09 UTC, the exact **3.1.1 / `4205960`** owner review reached
+**Completed**, with **zero error groups and zero warning groups**. The previous
+mobile CSS warning is absent. Release attestations, network analysis, dependency
+checks and byte-for-byte reproduction of `main.js` pass. The 3.1.0 result remains
+as a dated historical row, not the current verdict. See the
+[completed review screenshot](../../assets/qa-3.1.1/review-passed.png).
+
+The [public listing](https://community.obsidian.md/plugins/icon-fairy) independently
+shows **Current version 3.1.1**, **Review Passed**, **Health Excellent**, and an
+enabled `obsidian://show-plugin?id=icon-fairy` link. Its fetched README contains the
+new Library/Current/menu and upload guidance. Both catalogs still resolve the
+canonical repository; no new submission, identifier change, or archive operation
+was needed. Download counts include verification traffic and do not measure
+distinct users. No manual staff approval is claimed.
