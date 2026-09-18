@@ -8,7 +8,8 @@ the entire workflow, including an isolated worktree and deployment.
 
 - Canonical repository: `t1seo/icon-fairy`; plugin ID: `icon-fairy`.
 - Baseline: `f64cf528d99ff4b90a1225ecd3c5ae47e4f9721b` / release `3.0.0`.
-- Branch: `t1seo/icon-fairy-ui-polish`; target: `main`; planned release: `3.1.0`.
+- Branch: `t1seo/icon-fairy-ui-polish`; target: `main`; initial release: `3.1.0`;
+  final release: `3.1.1` after the hosted CSS compatibility follow-up.
 - Orca Run: `run_6b3818a7ece6`.
 - Worktree: isolated checkout created by Orca under `icon-fairy-ui-polish/`.
 - Preserve folder-heart artwork, data formats, existing icons/assignments,
@@ -111,11 +112,18 @@ tests; CSS/copy changes are primarily verified visually rather than string snaps
   Native 3.0.0 → 3.1.0 update preserved the library and data. The hosted scan then
   flagged mobile `column-gap`; publish a 3.1.1 patch using the equivalent `gap`
   shorthand, preserving the original tag, and recheck hosted results.
-- [ ] Use supported Community management flow to detect/review the new release,
+- [x] Publish 3.1.1 from merged PR #2 (`4205960`). Its PR/main CI and attesting
+  release workflow `35394803996` passed. Anonymous assets match the tested patch,
+  and provenance verifies the exact tag and commit. Native 3.1.0 → 3.1.1 update
+  preserves plugin data, library JSON and icon files; post-update UI checks pass.
+- [x] Use supported Community management flow to detect/review the new release,
   check exact-version results, verify native installation/update in a disposable
   Obsidian vault, and document actual status without conflating GitHub publication,
   catalog propagation, automated review and manual staff approval.
-- [ ] Release workers, close only task-owned QA windows/sessions, restore temporary
+  Exact 3.1.1 / `4205960` review: Completed, zero errors/warnings. Public listing:
+  3.1.1, Review Passed, Health Excellent, enabled install link. Both catalog feeds
+  retain the canonical identity, and native upgrade with preserved data passes.
+- [x] Release workers, close only task-owned QA windows/sessions, restore temporary
   application settings, retain evidence, and report PR/release/review links.
 
 ## Evidence and final gates

@@ -1,5 +1,7 @@
 # Releasing Icon Fairy
 
+Latest verified release: [3.1.1](https://github.com/t1seo/icon-fairy/releases/tag/3.1.1). Its hosted review completed with zero errors and warnings, and native Community update preserved existing data. See the [release audit](research/obsidian-community-release.md) and [UI QA](QA-3.1.0.md).
+
 ## Quality gate
 
 Run:

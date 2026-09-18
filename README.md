@@ -157,7 +157,7 @@ npm ci
 npm run verify
 ```
 
-See the [contribution guide](CONTRIBUTING.md), [QA evidence](docs/QA.md), [UX/UI research and design decisions](docs/research/ux-ui-design.md), [release instructions](docs/RELEASING.md), [GitHub feedback and deployment diagnosis](docs/research/github-feedback.md), and [Community directory research](docs/research/obsidian-community-release.md).
+See the [contribution guide](CONTRIBUTING.md), [QA evidence](docs/QA-3.1.0.md), [UX/UI research and design decisions](docs/research/icon-fairy-ui-audit-2026-09-19.md), [release instructions](docs/RELEASING.md), [GitHub feedback and deployment diagnosis](docs/research/github-feedback.md), and [Community directory research](docs/research/obsidian-community-release.md).
 
 ## Support
 

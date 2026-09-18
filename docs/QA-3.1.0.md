@@ -112,5 +112,6 @@ ad11e08d0838cb6d7f4feeaaad8f2276b34ff83be62d512f06633a8ddc360dbc  manifest.json
 cf62ffb88bfedb9d02333f944c3a949ee4147d44e7b50c73a857ee9c7f027355  styles.css
 ```
 
-The published 3.1.0 tag is preserved; final hosted-review and installation results
-for 3.1.1 are recorded in the release audit when verified.
+The published 3.1.0 tag is preserved. The 3.1.1 hosted review is Completed with
+zero errors and warnings, and native update plus post-update UI/data checks pass.
+Exact release/CI/installation evidence is in the release audit.

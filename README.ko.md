@@ -157,7 +157,7 @@ npm ci
 npm run verify
 ```
 
-[기여 안내](CONTRIBUTING.md), [QA 근거](docs/QA.md), [UX/UI 리서치와 디자인 결정](docs/research/ux-ui-design.md), [릴리스 안내](docs/RELEASING.md), [GitHub 피드백 및 배포 문제 분석](docs/research/github-feedback.md), [커뮤니티 디렉터리 리서치](docs/research/obsidian-community-release.md)를 참고하세요.
+[기여 안내](CONTRIBUTING.md), [QA 근거](docs/QA-3.1.0.md), [UX/UI 리서치와 디자인 결정](docs/research/icon-fairy-ui-audit-2026-09-19.md), [릴리스 안내](docs/RELEASING.md), [GitHub 피드백 및 배포 문제 분석](docs/research/github-feedback.md), [커뮤니티 디렉터리 리서치](docs/research/obsidian-community-release.md)를 참고하세요.
 
 ## 지원
 
