@@ -1,0 +1,18 @@
+{
+  "label": "A1-chameleon",
+  "status": "superseded by explicit user subject change",
+  "provider": "built-in image_gen",
+  "model": "not exposed by tool response",
+  "constraintDelivery": "main-prompt constraints",
+  "corner": "lower-left",
+  "colors": {
+    "dominant": "#36B88A",
+    "secondary": "#34213F",
+    "background": "#D5C5EB"
+  },
+  "dimensions": {
+    "width": 1254,
+    "height": 1254
+  },
+  "assetPath": "A1-chameleon.png"
+}

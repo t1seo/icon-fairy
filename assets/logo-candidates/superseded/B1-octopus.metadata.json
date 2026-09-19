@@ -1,0 +1,25 @@
+{
+  "label": "B1",
+  "direction": "Baby octopus",
+  "status": "superseded by explicit user direction change",
+  "provider": "Built-in image_gen",
+  "model": null,
+  "modelNote": "The tool neither exposes model selection nor returned actual model identity.",
+  "constraintDeliveryMode": "main-prompt constraints",
+  "constraintText": "Use no text or watermark. Add no borders, frames, cards, or presentation masks. Include one character only, with no extra subjects or scenery. Use no fragile lines, sharp tips, unnecessary outlines, tiny details, or decorative marks. Add no photorealistic material, dramatic bevel, glossy hotspot, deep occlusion, extrusion, strong three-dimensional rendering, or external cast shadow. Keep the background solid and uniform, with no texture, vignette, or lighting variation.",
+  "colors": {
+    "dominantIP": "#F58B78",
+    "secondaryIP": "#50336A",
+    "background": "#B9D8D3"
+  },
+  "corner": "lower-left",
+  "dimensions": {
+    "width": 1254,
+    "height": 1254
+  },
+  "savedPath": "assets/logo-candidates/superseded/B1-octopus.png",
+  "promptPath": "assets/logo-candidates/superseded/B1-octopus.prompt.txt",
+  "generationCount": 1,
+  "postProcessing": "None. Source copied byte-for-byte.",
+  "assetPath": "B1-octopus.png"
+}
