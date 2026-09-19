@@ -1,0 +1,19 @@
+{
+  "label": "A2-chameleon",
+  "status": "superseded by user subject selection after generation",
+  "provider": "built-in image_gen",
+  "model": null,
+  "constraint_delivery_mode": "main-prompt constraints",
+  "corner": "lower-right",
+  "colors": {
+    "body": "#F4A15E",
+    "tail_and_eyes": "#82385D",
+    "background": "#AFADE0"
+  },
+  "dimensions": {
+    "width": 1254,
+    "height": 1254
+  },
+  "post_processing": "none; byte-for-byte copy",
+  "assetPath": "A2-chameleon.png"
+}
